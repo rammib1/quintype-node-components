@@ -41,7 +41,7 @@ function hamburgerOpenedReducer(state = false, action) {
   }
 }
 
-export {
+export const ComponentReducers = {
   breakingNews: breakingNewsReducer,
   clientSideRendered: clientSideRenderedReducer,
   pageLoading: pageLoadingReducer,
