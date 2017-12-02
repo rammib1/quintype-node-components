@@ -1,5 +1,13 @@
 import { createStore, combineReducers } from 'redux';
-import * from './actions';
+import {
+  BREAKING_NEWS_UPDATED,
+  CLIENT_SIDE_RENDERED,
+  PAGE_LOADING,
+  NAVIGATE_TO_PAGE,
+  PAGE_FINISHED_LOADING,
+  HAMBURGER_CLICKED,
+  HAMBURGER_CLOSED
+} from './actions';
 
 function breakingNewsReducer(state = [], action) {
   switch (action.type) {
