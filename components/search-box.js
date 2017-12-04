@@ -21,11 +21,13 @@ export class SearchBox extends NavigationComponentBase {
     return <form role="search" action="/search" onSubmit={(e) => this.onSubmit(e)} className={this.props.className}>
       <Render>
         <input type="search"
-                name="q"
-                placeholder={this.props.placeholder}
-                value={this.state.query}
-                onChange={(e) => this.setState({query: e.target.value})}
-                className={this.props.inputClassName}/>
+               name="q"
+               placeholder={this.props.placeholder}
+               value={this.state.query}
+               onChange={(e) => this.setState({query: e.target.value})}
+               className={this.props.inputClassName}
+               id={this.props.inputId}
+               ref={this.props.inputRef}/>
       </Render>
     </form>
   }
