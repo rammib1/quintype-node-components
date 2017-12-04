@@ -17,13 +17,16 @@ export class SearchBox extends NavigationComponentBase {
   }
 
   render() {
+    const Render = this.props.template || (x => x.children);
     return <form role="search" action="/search" onSubmit={(e) => this.onSubmit(e)} className={this.props.className}>
-      <input type="search"
-              name="q"
-              placeholder={this.props.placeholder}
-              value={this.state.query}
-              onChange={(e) => this.setState({query: e.target.value})}/>
-      {this.props.children}
+      <Render>
+        <input type="search"
+                name="q"
+                placeholder={this.props.placeholder}
+                value={this.state.query}
+                onChange={(e) => this.setState({query: e.target.value})}
+                className={this.props.inputClassName}/>
+      </Render>
     </form>
   }
 

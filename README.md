@@ -132,13 +132,12 @@ const { ResponsiveImage } = require("@quintype/components");
 ### Search box
 This component provides a form with a search text box. On submit, the user is redirected to the search page via AJAX.
 
-Other buttons can be passed in via children
+A template function can also be passed in, to do custom rendering. The template prop will be called with childen having the child text box. See [madrid](https://github.com/quintype/madrid/blob/master/app/isomorphic/components/basic/search.js) as an example
 
 ```javascript
 const { SearchBox } = require("@quintype/components");
-<SearchBox className="foobar" placeholder="search">
-  <input type="submit" className="round-search-button" />
-</SearchBox>
+
+<SearchBox className="foobar" placeholder="search" inputClassName="foobar-box" />
 ```
 
 ### StoryElement
