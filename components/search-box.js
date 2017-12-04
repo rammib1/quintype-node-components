@@ -20,6 +20,11 @@ export class SearchBox extends NavigationComponentBase {
     this.props.onSubmitHandler(this.state.query);
   }
 
+  keyPress(e) {
+    if(e.keyCode == 27)
+      this.props.onEscape && this.props.onEscape();
+  }
+
   render() {
     const Render = this.props.template || DefaultTemplate;
     return <form role="search" action="/search" onSubmit={(e) => this.onSubmit(e)} className={this.props.className}>
@@ -31,7 +36,8 @@ export class SearchBox extends NavigationComponentBase {
                onChange={(e) => this.setState({query: e.target.value})}
                className={this.props.inputClassName}
                id={this.props.inputId}
-               ref={this.props.inputRef}/>
+               ref={this.props.inputRef}
+               onKeydown={(e) => this.keyPress(e)}/>
       </Render>
     </form>
   }

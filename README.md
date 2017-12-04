@@ -137,7 +137,7 @@ A template function can also be passed in, to do custom rendering. The template 
 ```javascript
 const { SearchBox } = require("@quintype/components");
 
-<SearchBox className="foobar" placeholder="search" inputClassName="foobar-box" />
+<SearchBox className="foobar" placeholder="search" inputClassName="foobar-box" inputId="stg" inputRef={(x) => this.foo = x} onEscape={() => this.closeDialog()}/>
 ```
 
 ### StoryElement
