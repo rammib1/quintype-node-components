@@ -17,7 +17,7 @@ export class SearchBox extends NavigationComponentBase {
   }
 
   render() {
-    const Render = this.props.template || (x => x.children);
+    const Render = this.props.template || (x => <div>{x.children}</div>);
     return <form role="search" action="/search" onSubmit={(e) => this.onSubmit(e)} className={this.props.className}>
       <Render>
         <input type="search"
