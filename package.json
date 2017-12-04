@@ -1,6 +1,6 @@
 {
   "name": "@quintype/components",
-  "version": "1.0.10",
+  "version": "1.0.11",
   "description": "Components to help build Quintype Node.js apps",
   "main": "dist/index.cjs.js",
   "module": "dist/index.es.js",
@@ -39,6 +39,7 @@
   },
   "scripts": {
     "build": "rollup -c",
-    "publish": "yarn run build && git push --tags origin master"
+    "prepack": "yarn run build",
+    "postpublish": "git push --tags origin master"
   }
 }
