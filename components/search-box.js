@@ -1,6 +1,10 @@
 import React from 'react';
 import {NavigationComponentBase} from "./navigation-component-base";
 
+function DefaultTemplate({children}) {
+  return children;
+}
+
 export class SearchBox extends NavigationComponentBase {
   constructor(props) {
     super(props);
@@ -17,7 +21,7 @@ export class SearchBox extends NavigationComponentBase {
   }
 
   render() {
-    const Render = this.props.template || (x => <div>{x.children}</div>);
+    const Render = this.props.template || DefaultTemplate;
     return <form role="search" action="/search" onSubmit={(e) => this.onSubmit(e)} className={this.props.className}>
       <Render>
         <input type="search"
