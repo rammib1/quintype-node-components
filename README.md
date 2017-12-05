@@ -129,6 +129,17 @@ const { ResponsiveImage } = require("@quintype/components");
 </figure>
 ```
 
+### Search
+This component is to handle search functionality and also handles load more.
+
+A foundTemplate must be passed in to render search results and notFoundTemplate can be passed in to render when there are no search results. Fields can be passed to get specific results
+
+```javascript
+import { SearchPageBase } from "@quintype/components";
+
+<SearchPageBase foundTemplate={SearchPageFound} notFoundTemplate={SearchPageNotFound} fields={"id,headline"} {...props}/>
+```
+
 ### Search box
 This component provides a form with a search text box. On submit, the user is redirected to the search page via AJAX.
 

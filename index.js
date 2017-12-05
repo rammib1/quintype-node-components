@@ -9,4 +9,5 @@ export * from './components/menu';
 export * from './components/navigation-component-base';
 export * from './components/responsive-image';
 export * from './components/search-box';
+export * from './components/search-page-base';
 export * from './components/story-element';
