@@ -17,7 +17,8 @@ export class SearchBox extends NavigationComponentBase {
     e.preventDefault();
     if(this.state.query != "")
       this.navigateTo(`/search?q=${this.state.query}`)
-    this.props.onSubmitHandler(this.state.query);
+    if(this.props.onSubmitHandler)
+      this.props.onSubmitHandler(this.state.query);
   }
 
   keyPress(e) {
