@@ -1,6 +1,7 @@
 import React from "react";
 
 import { InfiniteScroll } from "./infinite-scroll.js";
+import { removeDuplicateStories } from '../utils';
 
 export class InfiniteStoryBase extends React.Component {
   constructor(props) {
@@ -15,11 +16,6 @@ export class InfiniteStoryBase extends React.Component {
 
   allItems() {
     return [this.props.data].concat(this.state.moreItems);
-  }
-
-  removeDuplicates(items) {
-    const existingStoryIds = this.allItems().map(item => item.story.id);
-    return items.filter(item => !existingStoryIds.includes(item.story.id));
   }
 
   onFocus(index) {
@@ -43,7 +39,7 @@ export class InfiniteStoryBase extends React.Component {
       this.props.loadItems(pageNumber).then((items) => {
         this.setState({
           loading: false,
-          moreItems: this.state.moreItems.concat(this.removeDuplicates(items))
+          moreItems: this.state.moreItems.concat(removeDuplicateStories(this.allItems(), items, item => item.story.id))
         })
       })
     })

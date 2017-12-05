@@ -11,3 +11,5 @@ export * from './components/responsive-image';
 export * from './components/search-box';
 export * from './components/search-page-base';
 export * from './components/story-element';
+
+export * from './utils';

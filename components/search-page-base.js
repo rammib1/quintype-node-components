@@ -1,6 +1,8 @@
 import React from 'react';
 import {get} from 'lodash';
 
+import { removeDuplicateStories } from '../utils';
+
 export class SearchPageBase extends React.Component {
   constructor(props) {
     super(props);
@@ -24,7 +26,7 @@ export class SearchPageBase extends React.Component {
       this.search(this.props.data.query, pageNumber).then((stories) => {
         this.setState({
           loading: false,
-          moreStories: this.state.moreStories.concat(stories)
+          moreStories: this.state.moreStories.concat(removeDuplicateStories(this.stories(), stories))
         })
       })
     })
@@ -44,7 +46,8 @@ export class SearchPageBase extends React.Component {
       return this.props.foundTemplate({
         query: this.props.data.query,
         stories: stories,
-        onLoadMore: (e) => this.loadMore(e)
+        onLoadMore: (e) => this.loadMore(e),
+        loading: this.state.loading
       });
     } else {
       return this.props.notFoundTemplate({
