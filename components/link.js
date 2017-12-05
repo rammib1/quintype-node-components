@@ -5,7 +5,13 @@ import _ from "lodash";
 function LinkBase(props) {
   return React.createElement("a", _(props)
     .omit("navigateTo")
-    .merge({onClick: (e) => {e.preventDefault(); e.stopPropagation(); props.navigateTo(props.href)}})
+    .merge({onClick: (e) => {
+      if (!global.disableAjaxLinks) {
+        e.preventDefault(); 
+        e.stopPropagation(); 
+        props.navigateTo(props.href)
+      }
+    }})
     .value()
   );
 }
