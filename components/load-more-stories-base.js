@@ -37,7 +37,7 @@ export class LoadMoreStoriesManager extends React.Component {
 
   render() {
     return this.props.template(Object.assign({}, this.props, {
-      stories: stories,
+      stories: this.stories(),
       onLoadMore: (e) => this.loadMore(e),
       loading: this.state.loading,
       noMoreStories: this.state.noMoreStories
