@@ -4,6 +4,7 @@ export * from './components/hamburger-button';
 export * from './components/infinite-scroll';
 export * from './components/infinite-story-base';
 export * from './components/link';
+export * from './components/load-more-stories-base';
 export * from './components/loading-indicator';
 export * from './components/menu';
 export * from './components/navigation-component-base';

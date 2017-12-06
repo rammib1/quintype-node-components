@@ -76,6 +76,26 @@ const { Link } = require("@quintype/components");
 <Link href="/section/story-slug" otherLinkAttribute="value">Text here</Link>
 ```
 
+### LoadMoreBase
+
+This component starts with a set of stories, and then provides a load more button. This calls out to `/api/v1/stories` with the properties passed via the `params` prop. The stories are concatenated with the stories in `props.data.stories`, and the contents of `props.data` are passed to the rendered template.
+
+```javascript
+import { LoadMoreStoriesBase } from '@quintype/components';
+
+function SectionPageWithStories({section, stories, loading, onLoadMore, noMoreStories}) {
+  return <div/>;
+}
+
+export function SectionPage(props) {
+  return <LoadMoreStoriesBase foundTemplate={SectionPageWithStories}
+                              notFoundTemplate={SectionMissing}
+                              fields={"id,headline"}
+                              {...props}
+                              params={{"section-id": props.data.section.id}}/>
+}
+```
+
 ### LoadingIndicator
 This component renders it's children when the app is moving between pages. It can be used to show a spinner. It always has the class "loading-indicator", and also "loading-indicator-loading" when loading.
 
@@ -129,13 +149,17 @@ const { ResponsiveImage } = require("@quintype/components");
 </figure>
 ```
 
-### Search
+### SearchPageBase
 This component is to handle search functionality and also handles load more.
 
-A foundTemplate must be passed in to render search results and notFoundTemplate can be passed in to render when there are no search results. Fields can be passed to get specific results
+A foundTemplate must be passed in to render search results and notFoundTemplate can be passed in to render when there are no search results. Fields can be passed to get specific results. The contents of `props.data` are passed to the rendered template.
 
 ```javascript
 import { SearchPageBase } from "@quintype/components";
+
+function SearchPageFound({query, stories, onLoadMore, loading, noMoreStories}) {
+  return <div />;
+}
 
 <SearchPageBase foundTemplate={SearchPageFound} notFoundTemplate={SearchPageNotFound} fields={"id,headline"} {...props}/>
 ```
