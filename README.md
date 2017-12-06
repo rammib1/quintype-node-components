@@ -88,8 +88,7 @@ function SectionPageWithStories({section, stories, loading, onLoadMore, noMoreSt
 }
 
 export function SectionPage(props) {
-  return <LoadMoreStoriesBase foundTemplate={SectionPageWithStories}
-                              notFoundTemplate={SectionMissing}
+  return <LoadMoreStoriesBase template={SectionPageWithStories}
                               fields={"id,headline"}
                               {...props}
                               params={{"section-id": props.data.section.id}}/>
@@ -152,16 +151,16 @@ const { ResponsiveImage } = require("@quintype/components");
 ### SearchPageBase
 This component is to handle search functionality and also handles load more.
 
-A foundTemplate must be passed in to render search results and notFoundTemplate can be passed in to render when there are no search results. Fields can be passed to get specific results. The contents of `props.data` are passed to the rendered template.
+A template must be passed in to render search results. Fields can be passed to get specific fields in the results. The contents of `props.data` are passed to the rendered template.
 
 ```javascript
 import { SearchPageBase } from "@quintype/components";
 
-function SearchPageFound({query, stories, onLoadMore, loading, noMoreStories}) {
+function SearchPageView({query, stories, onLoadMore, loading, noMoreStories}) {
   return <div />;
 }
 
-<SearchPageBase foundTemplate={SearchPageFound} notFoundTemplate={SearchPageNotFound} fields={"id,headline"} {...props}/>
+<SearchPageBase template={SearchPageView} fields={"id,headline"} {...props}/>
 ```
 
 ### Search box

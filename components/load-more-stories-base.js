@@ -36,17 +36,12 @@ export class LoadMoreStoriesManager extends React.Component {
   }
 
   render() {
-    const stories = this.stories()
-    if (stories.length > 0) {
-      return this.props.foundTemplate(Object.assign({}, this.props, {
-        stories: stories,
-        onLoadMore: (e) => this.loadMore(e),
-        loading: this.state.loading,
-        noMoreStories: this.state.noMoreStories
-      }));
-    } else {
-      return this.props.notFoundTemplate(this.props);
-    }
+    return this.props.template(Object.assign({}, this.props, {
+      stories: stories,
+      onLoadMore: (e) => this.loadMore(e),
+      loading: this.state.loading,
+      noMoreStories: this.state.noMoreStories
+    }));
   }
 }
 
@@ -60,8 +55,7 @@ export class LoadMoreStoriesBase extends React.Component {
 
   render() {
     return React.createElement(LoadMoreStoriesManager, Object.assign({}, this.props.data, {
-      foundTemplate: this.props.foundTemplate,
-      notFoundTemplate: this.props.notFoundTemplate,
+      template: this.props.template,
       loadStories: (pageNumber) => this.loadMoreStories(pageNumber)
     }));
   }
