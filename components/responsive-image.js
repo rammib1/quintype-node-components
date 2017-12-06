@@ -17,7 +17,7 @@ function responsiveProps(props) {
   return {
     className: props.className ? `qt-image ${props.className}` : 'qt-image',
     src: generatePath(props.defaultWidth),
-    srcSet: _(props.widths).map((size) => `${generatePath(size)} ${size}w`).join(",")
+    srcSet: props.widths ?  _(props.widths).map((size) => `${generatePath(size)} ${size}w`).join(",") : undefined
   }
 }
 
