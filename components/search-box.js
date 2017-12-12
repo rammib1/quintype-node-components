@@ -30,6 +30,12 @@ export class SearchBox extends NavigationComponentBase {
     this.textInput.focus();
   }
 
+  onInputFocus(e) {
+    const temp = e.target.value;
+    e.target.value = '';
+    e.target.value = temp;
+  }
+
   render() {
     const Render = this.props.template || DefaultTemplate;
     return <form role="search" action="/search" onSubmit={(e) => this.onSubmit(e)} className={this.props.className} ref={this.props.formRef}>
@@ -42,6 +48,7 @@ export class SearchBox extends NavigationComponentBase {
                className={this.props.inputClassName}
                id={this.props.inputId}
                ref={(input) => this.textInput = input}
+               onFocus={(e) => this.onInputFocus(e)}
                onKeyDown={(e) => this.keyPress(e)}/>
       </Render>
     </form>
