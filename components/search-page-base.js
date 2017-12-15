@@ -14,7 +14,7 @@ export class SearchPageBase extends React.Component {
 
   render() {
     return React.createElement(LoadMoreStoriesManager, Object.assign({}, this.props.data, {
-      template: (props) => this.props.template(props),
+      template: this.props.template,
       loadStories: (pageNumber) => this.search(pageNumber)
     }));
   }
