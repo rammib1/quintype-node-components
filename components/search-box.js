@@ -1,10 +1,6 @@
 import React from 'react';
 import {NavigationComponentBase} from "./navigation-component-base";
 
-function DefaultTemplate({children}) {
-  return children;
-}
-
 export class SearchBox extends NavigationComponentBase {
   constructor(props) {
     super(props);
@@ -26,18 +22,17 @@ export class SearchBox extends NavigationComponentBase {
       this.props.onEscape && this.props.onEscape();
   }
 
-  componentDidUpdate() {
-    this.textInput.focus();
+  focus() {
+    if(this.textInput)
+      this.textInput.focus();
   }
 
-  onInputFocus(e) {
-    const temp = e.target.value;
-    e.target.value = '';
-    e.target.value = temp;
+  defaultTemplate({children}) {
+    return children;
   }
 
   render() {
-    const Render = this.props.template || DefaultTemplate;
+    const Render = this.props.template || this.defaultTemplate;
     return <form role="search" action="/search" onSubmit={(e) => this.onSubmit(e)} className={this.props.className} ref={this.props.formRef}>
       <Render>
         <input type="search"
@@ -48,7 +43,6 @@ export class SearchBox extends NavigationComponentBase {
                className={this.props.inputClassName}
                id={this.props.inputId}
                ref={(input) => this.textInput = input}
-               onFocus={(e) => this.onInputFocus(e)}
                onKeyDown={(e) => this.keyPress(e)}/>
       </Render>
     </form>
