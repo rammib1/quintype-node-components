@@ -60,3 +60,23 @@ export class LoadMoreStoriesBase extends React.Component {
     }));
   }
 }
+
+export class LoadMoreCollectionStories extends React.Component {
+  loadMoreStories(pageNumber) {
+    return superagent.get(`/api/v1/collections/${this.props.collectionSlug}`, Object.assign(this.props.params, {
+      offset: (this.props.storiesPerPage || 20) * pageNumber
+    })).then(function(response){
+      var stories = _.map(response.body.items, function(collectionItem){
+        return (collectionItem.story);
+      });
+      return stories;
+    });
+  }
+
+  render() {
+    return React.createElement(LoadMoreStoriesManager, Object.assign({}, this.props.data, {
+      template: this.props.template,
+      loadStories: (pageNumber) => this.loadMoreStories(pageNumber)
+    }));
+  }
+}
