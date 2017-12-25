@@ -66,7 +66,7 @@ const DEFAULT_TEMPLATES = {
   "polltype": {render: storyElementPolltype}
 };
 
-export class StoryElement extends React.Component {
+class StoryElementBase extends React.Component {
   template() {
     const storyElement = this.props.element;
     const templates = Object.assign({}, DEFAULT_TEMPLATES, this.props.templates);
@@ -105,6 +105,29 @@ export class StoryElement extends React.Component {
         [subtypeClassName]: !!storyElement.subtype
       })
     }, this.template().render.call(this, this.props.element, this.props.story))
+  }
+}
+
+export class StoryElement extends React.Component {
+  constructor(props) {
+    super(props);
+    this.state = {crashed: false};
+  }
+
+  componentDidCatch(error, stack) {
+    this.setState({
+      crashed: true,
+      error: error
+    });
+    console && console.error(`Caught Exception: ${error && error.message}`)
+  }
+
+  render() {
+    if(this.state.crashed) {
+      return <div className="story-element story-element-crashed" />;
+    } else {
+      return React.createElement(StoryElementBase, this.props);
+    }
   }
 }
 
