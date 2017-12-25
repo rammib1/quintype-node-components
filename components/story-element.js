@@ -22,7 +22,7 @@ function storyElementImage(storyElement) {
       imgParams: {auto:['format', 'compress']}
     }),
     storyElement.title ? React.createElement("figcaption", {dangerouslySetInnerHTML: {__html: storyElement.title}, className: "story-element-image-title"}) : undefined,
-    storyElement.attribution ? React.createElement("figcaption", {dangerouslySetInnerHTML: {__html: storyElement.attribution}, className: "story-element-image-attribution"}) : undefined
+    storyElement['image-attribution'] ? React.createElement("figcaption", {dangerouslySetInnerHTML: {__html: storyElement['image-attribution']}, className: "story-element-image-attribution"}) : undefined
   );
 }
 
