@@ -104,7 +104,7 @@ class StoryElementBase extends React.Component {
         [typeClassName]: true,
         [subtypeClassName]: !!storyElement.subtype
       })
-    }, this.template().render.call(this, this.props.element, this.props.story))
+    }, this.template().render.call(this, this.props.element, this.props))
   }
 }
 
