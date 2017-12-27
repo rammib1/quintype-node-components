@@ -21,6 +21,32 @@ const { ClientSideOnly } = require("@quintype/components");
 </ClientSideOnly>
 ```
 
+### DfpAds
+This is a higher order component which can be used to manage ad units in a single place. A component must be created, and used with the `adtype` parameter
+
+```javascript
+import { createDfpAdComponent } from '@quintype/components';
+
+export const CONFIG = {
+  "homepage-2": { adUnit: "HP_728x90-3", sizes: [[728, 90], [320, 50]] },
+  "homepage-3": { adUnit: "HP_728x90-3", sizes: [[728, 90], [320, 50]] },
+}
+
+export const DfpAd = createDfpAdComponent({
+  defaultNetworkID: "123456789",
+  config: CONFIG,
+  targeting: function(state) {
+    const params = {};
+
+    // if(storyIsSponsored) params['sponsor'] = storySponsor
+
+    return params;
+  }
+});
+
+<DfpAd adtype="homepage-2" />
+```
+
 ### HamburgerButton
 This component can be used to trigger an action openening the Hamburger menu. The state can be accessed via state.hamburgerOpened
 
