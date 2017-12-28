@@ -2,6 +2,7 @@ import React from "react";
 import {connect} from "react-redux";
 import {BREAKING_NEWS_UPDATED} from '../store/actions';
 import {Link} from "./link";
+import {get} from 'lodash';
 
 class BreakingNewsBase extends React.Component {
   render() {
