@@ -7,8 +7,18 @@ This component will automatically fetch breaking news every 30 seconds, and rend
 
 ```javascript
 import { renderBreakingNews } from '@quintype/framework/client/start';
-const BreakingNewsView = (props) => <ul>{props.breakingNews.map((news) => <li key={news.id}>{news.headline}</li>)}</ul>
+const BreakingNewsView = (props) => <ul>{props.breakingNews.map((item, index) => <li key={index}><BreakingNewsItem item={item} /></li>)}</ul>
 renderBreakingNews('breaking-news-container', store, BreakingNewsView);
+```
+
+### BreakingNewsItem
+
+This component can be used to render a BreakingNewsItem.
+
+```javascript
+import {BreakingNewsItem} from '@quintype/components'
+
+<BreakingNewsItem item={item} className="breaking-news__headline"/>
 ```
 
 ### ClientSideOnly
