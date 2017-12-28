@@ -121,6 +121,26 @@ export function SectionPage(props) {
 }
 ```
 
+### LoadMoreCollectionStories
+
+This component is very similar to the LoadMoreBase component but fetches the stroies from a `collection`. The api call `/api/v1/collections/{collectionSlug}` is made with the passed collection slug value. The component accepts the `params` prop and a requires a Collection Slug from which to fetch the stories and returns a set of stories only.
+
+```
+import { LoadMoreCollectionStories } from '@quintype/components';
+
+function MoreCollectionStories({stories, loading, onLoadMore, noMoreStories}) {
+  return <div/>;
+}
+
+export function HomePage(props) {
+  return <LoadMoreCollectionStories template={MoreCollectionStories}
+                                    collectionSlug={props.data.collectionSLug}
+                                    {...props}
+                                    params={{"collectionSlug": props.data.collectionSlug}}/>
+}
+
+```
+
 ### LoadingIndicator
 This component renders it's children when the app is moving between pages. It can be used to show a spinner. It always has the class "loading-indicator", and also "loading-indicator-loading" when loading.
 
