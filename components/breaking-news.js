@@ -1,6 +1,7 @@
 import React from "react";
 import {connect} from "react-redux";
 import {BREAKING_NEWS_UPDATED} from '../store/actions';
+import {Link} from "./link";
 
 class BreakingNewsBase extends React.Component {
   render() {
