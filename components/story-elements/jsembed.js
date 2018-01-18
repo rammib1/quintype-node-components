@@ -1,5 +1,4 @@
 import React from 'react';
-import ReactDOM from 'react-dom';
 import atob from 'atob';
 
 function cloneScriptNode(node){
