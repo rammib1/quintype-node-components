@@ -9,7 +9,7 @@ export default {
   plugins: [
     babel({
       exclude: 'node_modules/**',
-      presets: ["react"]
+      presets: ["react", "es2015-rollup"]
     })
   ],
   external: ["react","redux","react-redux","react-soundcloud-widget","superagent-bluebird-promise","lodash","url","prop-types","quintype-js","classnames","get-youtube-id","react-youtube","react-dfp"]
