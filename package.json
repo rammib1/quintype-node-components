@@ -37,7 +37,6 @@
     "react-table": "^6.7.6"
   },
   "devDependencies": {
-    "atob": "^2.0.3",
     "babel-core": "^6.26.0",
     "babel-preset-es2015-rollup": "^3.0.0",
     "babel-preset-react": "^6.24.1",
