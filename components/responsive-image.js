@@ -7,6 +7,18 @@ const USED_PARAMS = ["imageCDN","defaultWidth","widths","imgParams","slug","meta
 
 // Add the following CSS somewhere: img.qt-image { width: 100%; object-fit: cover; }
 
+function hashString(string) {
+  if(!string)
+    return 0;
+
+  var hash = 0, i, chr;
+  for (i = 0; i < string.length; i++) {
+    hash  = ((hash << 5) - hash) + string.charCodeAt(i);
+    hash |= 0; // Convert to 32bit integer
+  }
+  return hash;
+};
+
 function responsiveProps(props) {
   const image = new FocusedImage(props.slug, props.metadata);
 
@@ -17,7 +29,8 @@ function responsiveProps(props) {
   return {
     className: props.className ? `qt-image ${props.className}` : 'qt-image',
     src: generatePath(props.defaultWidth),
-    srcSet: props.widths ?  _(props.widths).map((size) => `${generatePath(size)} ${size}w`).join(",") : undefined
+    srcSet: props.widths ?  _(props.widths).map((size) => `${generatePath(size)} ${size}w`).join(",") : undefined,
+    key: hashString(props.slug),
   }
 }
 
