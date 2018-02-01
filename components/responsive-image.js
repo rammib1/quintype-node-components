@@ -2,6 +2,7 @@ import React from "react";
 import {connect} from "react-redux";
 import _ from "lodash";
 import {FocusedImage} from "quintype-js";
+import {string} from 'prop-types';
 
 const USED_PARAMS = ["imageCDN","defaultWidth","widths","imgParams","slug","metadata","aspectRatio"];
 
@@ -27,15 +28,19 @@ function responsiveProps(props) {
   }
 
   return {
-    className: props.className ? `qt-image ${props.className}` : 'qt-image',
     src: generatePath(props.defaultWidth),
     srcSet: props.widths ?  _(props.widths).map((size) => `${generatePath(size)} ${size}w`).join(",") : undefined,
     key: hashString(props.slug),
   }
 }
 
-export function ResponsiveImageBase(props) {
-  return React.createElement("img", _(responsiveProps(props)).merge(props).omit(USED_PARAMS).value());
+export function ResponsiveImageBase(props, context) {
+  const imageProps = context.lazyLoad ? {src: context.lazyLoad} : responsiveProps(props);
+  return React.createElement("img", _(imageProps)
+                                      .merge(props)
+                                      .merge({className: props.className ? `qt-image ${props.className}` : 'qt-image'})
+                                      .omit(USED_PARAMS)
+                                      .value());
 }
 
 function mapStateToProps(state) {
@@ -45,3 +50,23 @@ function mapStateToProps(state) {
 }
 
 export const ResponsiveImage = connect(mapStateToProps, {})(ResponsiveImageBase);
+
+export class LazyLoadImages extends React.Component {
+  getChildContext() {
+    return {
+      lazyLoad: "data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7"
+    }
+  }
+
+  render() {
+    return this.props.children;
+  }
+}
+
+ResponsiveImageBase.contextTypes = {
+  lazyLoad: string
+}
+
+LazyLoadImages.childContextTypes = {
+  lazyLoad: string
+}

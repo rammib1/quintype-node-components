@@ -76,9 +76,9 @@ This component can be used to implement InfiniteScroll. This is an internal comp
 This component can be used to implement InfiniteScroll on the story page. You will need to specify the function which renders the story (which will recieve props.index and props.story), and functions for triggering analytics.
 
 ```javascript
-const React = require("react");
+import React from 'react';
 
-import { BlankStory } = requirfrom '@quintype/components';
+import { BlankStory } from './story-templates';
 import { InfiniteStoryBase } from '@quintype/components';
 
 function StoryPageBase({index, story, otherProp}) {
@@ -102,6 +102,27 @@ function StoryPage(props) {
 }
 
 exports.StoryPage = StoryPage;
+```
+
+### LazyLoadImages
+
+This component will ensure all [ResponsiveImages](#ResponsiveImage) that are in its descendent path will be loaded async. By default, the image is loaded with an empty gif, and the image becomes visible when the image scrolls 50 from the edge of the screen.
+
+```javascript
+import { LazyLoadImages } from '@quintype/components';
+
+function LazyLoadSecondImage() {
+  return <div>
+    <ResponsiveImage slug={props["eager-image-1"]} />
+    <LazyLoadImages margin={50}>
+      <div>
+        <UnrelatedContent/>
+        <ResponsiveImage slug={props["lazy-image"]} />
+      </div>
+    </LazyLoadImages>
+    <ResponsiveImage slug={props["eager-image-2"]} />
+  </div>
+}
 ```
 
 ### Link
