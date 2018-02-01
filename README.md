@@ -106,7 +106,7 @@ exports.StoryPage = StoryPage;
 
 ### LazyLoadImages
 
-This component will ensure all [ResponsiveImages](#ResponsiveImage) that are in its descendent path will be loaded async. By default, the image is loaded with an empty gif, and the image becomes visible when the image scrolls 50 from the edge of the screen.
+This component will ensure all [ResponsiveImages](#ResponsiveImage) that are in its descendent path will be loaded async. By default, the image is loaded with an empty gif, and the image becomes visible when the image scrolls 250 from the edge of the screen.
 
 ```javascript
 import { LazyLoadImages } from '@quintype/components';

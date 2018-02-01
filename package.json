@@ -1,6 +1,6 @@
 {
   "name": "@quintype/components",
-  "version": "1.6.3",
+  "version": "1.7.0",
   "description": "Components to help build Quintype Node.js apps",
   "main": "dist/index.cjs.js",
   "module": "dist/index.es.js",
@@ -20,21 +20,22 @@
   "dependencies": {
     "atob": "^2.0.3",
     "classnames": "^2.2.5",
+    "empty-web-gif": "^1.0.0",
     "get-youtube-id": "^1.0.0",
     "lodash": "^4.17.4",
+    "papaparse": "^4.3.6",
     "prop-types": "^15.6.0",
     "quintype-js": "^0.1.6",
     "react": "^16.2.0",
-    "react-dom": "^16.2.0",
     "react-dfp": "^0.6.0",
+    "react-dom": "^16.2.0",
     "react-redux": "^5.0.6",
     "react-soundcloud-widget": "git://github.com/gja/react-soundcloud-widget",
+    "react-table": "^6.7.6",
     "react-youtube": "^7.5.0",
     "redux": "^3.7.2",
     "superagent-bluebird-promise": "^4.2.0",
-    "url": "^0.11.0",
-    "papaparse": "^4.3.6",
-    "react-table": "^6.7.6"
+    "url": "^0.11.0"
   },
   "devDependencies": {
     "babel-core": "^6.26.0",

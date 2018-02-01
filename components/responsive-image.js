@@ -2,7 +2,8 @@ import React from "react";
 import {connect} from "react-redux";
 import _ from "lodash";
 import {FocusedImage} from "quintype-js";
-import {string} from 'prop-types';
+import {func} from 'prop-types';
+import emptyWebGif from 'empty-web-gif';
 
 const USED_PARAMS = ["imageCDN","defaultWidth","widths","imgParams","slug","metadata","aspectRatio"];
 
@@ -34,13 +35,37 @@ function responsiveProps(props) {
   }
 }
 
-export function ResponsiveImageBase(props, context) {
-  const imageProps = context.lazyLoad ? {src: context.lazyLoad} : responsiveProps(props);
-  return React.createElement("img", _(imageProps)
-                                      .merge(props)
-                                      .merge({className: props.className ? `qt-image ${props.className}` : 'qt-image'})
-                                      .omit(USED_PARAMS)
-                                      .value());
+export class ResponsiveImageBase extends React.Component {
+  constructor(props, context) {
+    super(props, context);
+    this.state = {
+      showImage: !context.lazyLoadObserveImage
+    }
+  }
+
+  render() {
+    const imageProps = this.state.showImage ? responsiveProps(this.props) : {src: emptyWebGif};
+    return React.createElement("img", _(imageProps)
+                                        .merge(this.props)
+                                        .merge({
+                                          ref: dom => this.dom = dom,
+                                          className: this.props.className ? `qt-image ${this.props.className}` : 'qt-image'
+                                        })
+                                        .omit(USED_PARAMS)
+                                        .value());
+  }
+
+  componentDidMount() {
+    this.context.lazyLoadObserveImage && this.context.lazyLoadObserveImage(this.dom, this);
+  }
+
+  componentWillUnmount() {
+    this.context.lazyLoadUnobserveImage && this.context.lazyLoadUnobserveImage(this.dom, this);
+  }
+
+  showImage() {
+    this.setState({showImage: true});
+  }
 }
 
 function mapStateToProps(state) {
@@ -52,9 +77,61 @@ function mapStateToProps(state) {
 export const ResponsiveImage = connect(mapStateToProps, {})(ResponsiveImageBase);
 
 export class LazyLoadImages extends React.Component {
+  constructor(props) {
+    super(props);
+    this.observedItems = [];
+  }
+
+  componentDidMount() {
+    this.observer = new global.IntersectionObserver((entries) => this.onObservation(entries), {
+      rootMargin: this.props.margin || "500px",
+      threshold: 0
+    })
+    this.observedItems.forEach(([dom, component]) => this.observer.observe(dom));
+  }
+
+  onObservation(entries) {
+    entries
+      .filter(entry => entry.isIntersecting)
+      .map(entry => entry.target)
+      .forEach(dom => {
+        const index = this.observedItems.findIndex(x => x[0] == dom);
+        if(index > -1) {
+          const component = this.observedItems[index][1];
+          component.showImage();
+          this.unregister(dom, component);
+        }
+      });
+  }
+
+  register(dom, component) {
+    if(!dom)
+      return;
+
+    this.observedItems.push([dom, component]);
+    this.observer && this.observer.observe(dom);
+  }
+
+  unregister(dom, component) {
+    if(!dom)
+      return;
+
+    const index = this.observedItems.findIndex(x => x[0] == dom);
+
+    if (index > -1) {
+      this.observedItems.splice(index, 1);
+      this.observer && this.observer.unobserve(dom);
+    }
+  }
+
+  componentWillUnmount() {
+    this.observer && this.observer.disconnect();
+  }
+
   getChildContext() {
     return {
-      lazyLoad: "data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7"
+      lazyLoadObserveImage: (dom, component) => this.register(dom, component),
+      lazyLoadUnobserveImage: (dom, component) => this.unregister(dom, component)
     }
   }
 
@@ -64,9 +141,11 @@ export class LazyLoadImages extends React.Component {
 }
 
 ResponsiveImageBase.contextTypes = {
-  lazyLoad: string
+  lazyLoadObserveImage: func,
+  lazyLoadUnobserveImage: func
 }
 
 LazyLoadImages.childContextTypes = {
-  lazyLoad: string
+  lazyLoadObserveImage: func,
+  lazyLoadUnobserveImage: func
 }
