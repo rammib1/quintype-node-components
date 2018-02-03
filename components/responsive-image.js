@@ -72,6 +72,24 @@ function mapStateToProps(state) {
 
 export const ResponsiveImage = connect(mapStateToProps, {})(ResponsiveImageBase);
 
+// A non lazy intersection observer (just load all the images)
+class FakeIntersectionObserver {
+  constructor(callback) {
+    this.callback = callback;
+    console && console.warn && console.warn("IntersectionObserver was not found");
+  }
+
+  observe(dom) {
+    this.callback([{isIntersecting: true, target: dom}])
+  }
+
+  unobserve() {
+  }
+
+  disconnect() {
+  }
+}
+
 export class LazyLoadImages extends React.Component {
   constructor(props) {
     super(props);
@@ -79,11 +97,13 @@ export class LazyLoadImages extends React.Component {
   }
 
   componentDidMount() {
-    this.observer = new global.IntersectionObserver((entries) => this.onObservation(entries), {
+    const clazz = global.IntersectionObserver ? global.IntersectionObserver : FakeIntersectionObserver;
+    this.observer = new clazz((entries) => this.onObservation(entries), {
       rootMargin: this.props.margin || "500px",
       threshold: 0
-    })
-    this.observedItems.forEach(([dom, component]) => this.observer.observe(dom));
+    });
+    // Concat Needed because FakeIntersectionObserver removes items from observedItems as you iterate
+    ([]).concat(this.observedItems).forEach(([dom, component]) => this.observer.observe(dom));
   }
 
   onObservation(entries) {
