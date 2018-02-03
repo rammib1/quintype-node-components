@@ -1,7 +1,7 @@
 import React from 'react';
 
 import { removeDuplicateStories } from '../utils';
-import api from './api-client';
+import { getRequest } from './api-client';
 
 export class LoadMoreStoriesManager extends React.Component {
   constructor(props) {
@@ -47,7 +47,7 @@ export class LoadMoreStoriesManager extends React.Component {
 
 export class LoadMoreStoriesBase extends React.Component {
   loadMoreStories(pageNumber) {
-    return api.get("/api/v1/stories", Object.assign(this.props.params, {
+    return getRequest("/api/v1/stories", Object.assign(this.props.params, {
       offset: (this.props.storiesPerPage || 20) * pageNumber,
       fields: this.props.fields
     })).json(response => response.stories || []);
@@ -64,7 +64,7 @@ export class LoadMoreStoriesBase extends React.Component {
 
 export class LoadMoreCollectionStories extends React.Component {
   loadMoreStories(pageNumber) {
-    return api.get(`/api/v1/collections/${this.props.collectionSlug}`, Object.assign(this.props.params, {
+    return getRequest(`/api/v1/collections/${this.props.collectionSlug}`, Object.assign(this.props.params, {
       offset: (this.props.storiesPerPage || 20) * pageNumber
     })).json(response => (response.items || []).map(item => item.story));
   }

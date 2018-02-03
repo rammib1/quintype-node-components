@@ -1,12 +1,12 @@
 import React from 'react';
 import get from 'lodash/get';
-import api from './api-client';
+import { getRequest } from './api-client';
 
 import { LoadMoreStoriesManager } from './load-more-stories-base'
 
 export class SearchPageBase extends React.Component {
   search(pageNumber) {
-    return api.get("/api/v1/search", Object.assign(this.props.params, {
+    return getRequest("/api/v1/search", Object.assign(this.props.params, {
       offset: (this.props.storiesPerPage || 20) * pageNumber,
       fields: this.props.fields
     })).json(response => get(response, ["results", "stories"], []));
