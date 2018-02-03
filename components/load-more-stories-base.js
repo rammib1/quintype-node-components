@@ -1,7 +1,7 @@
 import React from 'react';
 
 import { removeDuplicateStories } from '../utils';
-import get from 'lodash/get';
+import api from './api-client';
 
 export class LoadMoreStoriesManager extends React.Component {
   constructor(props) {
@@ -47,10 +47,10 @@ export class LoadMoreStoriesManager extends React.Component {
 
 export class LoadMoreStoriesBase extends React.Component {
   loadMoreStories(pageNumber) {
-    return superagent.get("/api/v1/stories", Object.assign(this.props.params, {
+    return api.get("/api/v1/stories", Object.assign(this.props.params, {
       offset: (this.props.storiesPerPage || 20) * pageNumber,
       fields: this.props.fields
-    })).then(response => get(response.body, ["stories"], []));
+    })).json(response => response.stories || []);
   }
 
   render() {
@@ -64,14 +64,9 @@ export class LoadMoreStoriesBase extends React.Component {
 
 export class LoadMoreCollectionStories extends React.Component {
   loadMoreStories(pageNumber) {
-    return superagent.get(`/api/v1/collections/${this.props.collectionSlug}`, Object.assign(this.props.params, {
+    return api.get(`/api/v1/collections/${this.props.collectionSlug}`, Object.assign(this.props.params, {
       offset: (this.props.storiesPerPage || 20) * pageNumber
-    })).then(function(response){
-      var stories = _.map(response.body.items, function(collectionItem){
-        return (collectionItem.story);
-      });
-      return stories;
-    });
+    })).json(response => (response.items || []).map(item => item.story));
   }
 
   render() {

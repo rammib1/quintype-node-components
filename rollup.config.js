@@ -12,5 +12,5 @@ export default {
       presets: ["react", "es2015-rollup"]
     })
   ],
-  external: ["react","redux","react-redux","react-soundcloud-widget","superagent-bluebird-promise","lodash/get","lodash/omit","url","prop-types","quintype-js","classnames","get-youtube-id","react-youtube","react-dfp","atob","papaparse","react-table","empty-web-gif"]
+  external: ["react","redux","react-redux","wretch","react-soundcloud-widget","lodash/get","lodash/omit","url","prop-types","quintype-js","classnames","get-youtube-id","react-youtube","react-dfp","atob","papaparse","react-table","empty-web-gif"]
 };

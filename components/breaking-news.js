@@ -3,6 +3,7 @@ import {connect} from "react-redux";
 import {BREAKING_NEWS_UPDATED} from '../store/actions';
 import {Link} from "./link";
 import get from 'lodash/get';
+import api from './api-client';
 
 class BreakingNewsBase extends React.Component {
   render() {
@@ -10,8 +11,8 @@ class BreakingNewsBase extends React.Component {
   }
 
   updateBreakingNews() {
-    superagent.get('/api/v1/breaking-news')
-      .then(response => this.props.breakingNewsUpdated(response.body.stories));
+    api.get('/api/v1/breaking-news')
+      .json(response => this.props.breakingNewsUpdated(response.stories));
   }
 
   componentDidMount() {
