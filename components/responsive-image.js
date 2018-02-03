@@ -1,6 +1,5 @@
 import React from "react";
 import {connect} from "react-redux";
-import _ from "lodash";
 import {FocusedImage} from "quintype-js";
 import {func} from 'prop-types';
 import emptyWebGif from 'empty-web-gif';
@@ -25,12 +24,12 @@ function responsiveProps(props) {
   const image = new FocusedImage(props.slug, props.metadata);
 
   function generatePath(size) {
-    return "//" + props.imageCDN + "/" + image.path(props.aspectRatio, _.merge({w: size}, props.imgParams));
+    return "//" + props.imageCDN + "/" + image.path(props.aspectRatio, Object.assign({w: size}, props.imgParams));
   }
 
   return {
     src: generatePath(props.defaultWidth),
-    srcSet: props.widths ?  _(props.widths).map((size) => `${generatePath(size)} ${size}w`).join(",") : undefined,
+    srcSet: props.widths ?  props.widths.map((size) => `${generatePath(size)} ${size}w`).join(",") : undefined,
     key: hashString(props.slug),
   }
 }
@@ -45,14 +44,10 @@ export class ResponsiveImageBase extends React.Component {
 
   render() {
     const imageProps = this.state.showImage ? responsiveProps(this.props) : {src: emptyWebGif};
-    return React.createElement("img", _(imageProps)
-                                        .merge(this.props)
-                                        .merge({
-                                          ref: dom => this.dom = dom,
-                                          className: this.props.className ? `qt-image ${this.props.className}` : 'qt-image'
-                                        })
-                                        .omit(USED_PARAMS)
-                                        .value());
+    return React.createElement("img", Object.assign(imageProps, omit(this.props, USED_PARAMS), {
+      ref: dom => this.dom = dom,
+      className: this.props.className ? `qt-image ${this.props.className}` : 'qt-image'
+    }));
   }
 
   componentDidMount() {

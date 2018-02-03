@@ -1,7 +1,7 @@
 import React from 'react';
 
 import { removeDuplicateStories } from '../utils';
-import {get} from 'lodash';
+import get from 'lodash/get';
 
 export class LoadMoreStoriesManager extends React.Component {
   constructor(props) {

@@ -1,7 +1,6 @@
 import React from "react";
 import papa from "papaparse";
 import ReactTable from "react-table";
-import _ from "lodash";
 
 class Table extends React.Component {
   constructor(props) {
@@ -34,15 +33,11 @@ class Table extends React.Component {
       return null;
     }
 
-    const columns = _.chain(this.state.tableData)
-      .first()
-      .keys()
-      .map(header => ({
-        Header: header,
-        accessor: header,
-        headerStyle: !this.props.hasHeader ? { display: "none" } : {}
-      }))
-      .value();
+    const columns = Object.keys(this.state.tableData[0]).map(header => ({
+      Header: header,
+      accessor: header,
+      headerStyle: !this.props.hasHeader ? { display: "none" } : {}
+    }));
 
     const className = `story-element-table-${this.props.id}`;
 

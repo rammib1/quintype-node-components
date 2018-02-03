@@ -1,11 +1,10 @@
 import React from "react";
 import {connect} from "react-redux";
-import _ from "lodash";
+import omit from "lodash/omit";
 
 function LinkBase(props) {
-  return React.createElement("a", _(props)
-    .omit("navigateTo")
-    .merge({onClick: (e) => {
+  return React.createElement("a", Object.assign(omit(props, "navigateTo"), {
+    onClick(e) {
       if(global.disableAjaxLinks)
         return;
 
@@ -15,9 +14,8 @@ function LinkBase(props) {
       e.preventDefault();
       e.stopPropagation();
       props.navigateTo(props.href)
-    }})
-    .value()
-  );
+    }
+  }));
 }
 
 function mapStateToProps(state) {
