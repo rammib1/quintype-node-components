@@ -90,20 +90,18 @@ class FakeIntersectionObserver {
   }
 }
 
-export class LazyLoadImages extends React.Component {
-  constructor(props) {
-    super(props);
+class IntersectionObserverWrapper {
+  constructor(callback) {
     this.observedItems = [];
+    this.callback = callback;
   }
 
-  componentDidMount() {
-    const clazz = global.IntersectionObserver ? global.IntersectionObserver : FakeIntersectionObserver;
-    this.observer = new clazz((entries) => this.onObservation(entries), {
-      rootMargin: this.props.margin || "500px",
-      threshold: 0
-    });
-    // Concat Needed because FakeIntersectionObserver removes items from observedItems as you iterate
-    ([]).concat(this.observedItems).forEach(([dom, component]) => this.observer.observe(dom));
+  start(margin) {
+    this.observer = new global.IntersectionObserver((entries) => this.onObservation(entries), {
+      rootMargin: margin,
+      threshold: 0,
+    })
+    this.observedItems.forEach(([dom, component]) => this.observer.observe(dom));
   }
 
   onObservation(entries) {
@@ -114,24 +112,18 @@ export class LazyLoadImages extends React.Component {
         const index = this.observedItems.findIndex(x => x[0] == dom);
         if(index > -1) {
           const component = this.observedItems[index][1];
-          component.showImage();
+          this.callback(component);
           this.unregister(dom, component);
         }
       });
   }
 
   register(dom, component) {
-    if(!dom)
-      return;
-
     this.observedItems.push([dom, component]);
     this.observer && this.observer.observe(dom);
   }
 
   unregister(dom, component) {
-    if(!dom)
-      return;
-
     const index = this.observedItems.findIndex(x => x[0] == dom);
 
     if (index > -1) {
@@ -140,14 +132,44 @@ export class LazyLoadImages extends React.Component {
     }
   }
 
+  disconnect() {
+    this.observer.disconnect();
+  }
+}
+
+class StubObserverWrapper {
+  constructor(callback) {
+    this.callback = callback;
+  }
+
+  register(dom, component) {
+    this.callback(component);
+  }
+
+  start() {}
+  unregister() {}
+  disconnect() {}
+}
+
+export class LazyLoadImages extends React.Component {
+  constructor(props) {
+    super(props);
+    const callback = component => component.showImage()
+    this.observerWrapper = global.IntersectionObserver ? new IntersectionObserverWrapper(callback) : new StubObserverWrapper(callback);
+  }
+
+  componentDidMount() {
+    this.observerWrapper.start(this.props.margin || "500px")
+  }
+
   componentWillUnmount() {
-    this.observer && this.observer.disconnect();
+    this.observerWrapper.disconnect();
   }
 
   getChildContext() {
     return {
-      lazyLoadObserveImage: (dom, component) => this.register(dom, component),
-      lazyLoadUnobserveImage: (dom, component) => this.unregister(dom, component)
+      lazyLoadObserveImage: (dom, component) => dom && this.observerWrapper.register(dom, component),
+      lazyLoadUnobserveImage: (dom, component) => dom && this.observerWrapper.unregister(dom, component)
     }
   }
 
