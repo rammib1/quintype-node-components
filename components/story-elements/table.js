@@ -1,14 +1,33 @@
 import React from "react";
 import papa from "papaparse";
-import ReactTable from "react-table";
 
-class Table extends React.Component {
+function TableHeader(columns) {
+  return <thead>
+    <tr>
+      {columns.map(col => <th>{col.Header}</th>)}
+    </tr>
+  </thead>;
+}
+
+export function TableView({data, columns, className, hasHeader}) {
+  return <table className={className}>
+    {hasHeader && TableHeader(columns)}
+    <tbody>
+      {data.map(row => <tr>
+        {row.map(col => <td>
+          {col}
+        </td>)}
+      </tr>)}
+    </tbody>
+  </table>;
+}
+
+export class Table extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
       tableData: []
     };
-    this.parseCSVToJson = this.parseCSVToJson.bind(this);
   }
 
   parseCSVToJson(content) {
@@ -41,16 +60,13 @@ class Table extends React.Component {
 
     const className = `story-element-table-${this.props.id}`;
 
-    return (
-      <ReactTable
-        data={this.state.tableData}
-        columns={columns}
-        showPageSizeOptions={false}
-        showPageJump={false}
-        className={className}
-      />
-    );
+    return React.createElement(this.props.tableComponent || TableView, {
+      hasHeader: this.props.hasHeader,
+      data: this.state.tableData,
+      columns: columns,
+      showPageSizeOptions: false,
+      showPageJump: false,
+      className: className,
+    });
   }
 }
-
-export default Table;

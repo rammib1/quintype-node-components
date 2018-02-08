@@ -1,6 +1,6 @@
 {
   "name": "@quintype/components",
-  "version": "1.10.2",
+  "version": "1.11.0",
   "description": "Components to help build Quintype Node.js apps",
   "main": "dist/index.cjs.js",
   "module": "dist/index.es.js",
@@ -31,7 +31,6 @@
     "react-dom": "^16.2.0",
     "react-redux": "^5.0.6",
     "react-soundcloud-widget": "git://github.com/gja/react-soundcloud-widget",
-    "react-table": "^6.7.6",
     "react-youtube": "^7.5.0",
     "redux": "^3.7.2",
     "url": "^0.11.0",

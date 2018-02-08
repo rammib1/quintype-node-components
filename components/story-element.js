@@ -6,7 +6,7 @@ import SoundCloudPlayer from 'react-soundcloud-widget';
 import JSEmbed from './story-elements/jsembed';
 import { ResponsiveImage } from "./responsive-image";
 import Polltype from './story-elements/polltype';
-import Table from './story-elements/table';
+import {Table} from './story-elements/table';
 
 function storyElementText(storyElement) {
   return React.createElement("div", {dangerouslySetInnerHTML: {__html: storyElement.text}});

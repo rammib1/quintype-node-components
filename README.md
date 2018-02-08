@@ -315,3 +315,7 @@ For a slider, we recomment `react-slick`. It pulls in JQuery, which will add 90k
 ### Marquee for Breaking News
 
 Our Marquee recommendation is `react-malarquee`. Just remember to mark all items as `display: inline`, and remove any floats. It supports `pauseOnHover`.
+
+### ReactTable for table story elements
+
+The story table element renders a very basic table story element. It can be enhaced by using 'react-table', which supports pagination and other fancy things.
