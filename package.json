@@ -30,7 +30,6 @@
     "react-dfp": "^0.6.0",
     "react-dom": "^16.2.0",
     "react-redux": "^5.0.6",
-    "react-soundcloud-widget": "git://github.com/gja/react-soundcloud-widget",
     "react-youtube": "^7.5.0",
     "redux": "^3.7.2",
     "url": "^0.11.0",
