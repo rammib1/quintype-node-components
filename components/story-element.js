@@ -2,7 +2,6 @@ import React from "react";
 import classNames from "classnames";
 import getYouTubeID from 'get-youtube-id';
 import YouTube from 'react-youtube';
-import SoundCloudPlayer from 'react-soundcloud-widget';
 import JSEmbed from './story-elements/jsembed';
 import { ResponsiveImage } from "./responsive-image";
 import Polltype from './story-elements/polltype';
@@ -32,7 +31,7 @@ function storyElementTitle(storyElement) {
 }
 
 function storyElementSoundCloud(storyElement) {
-  return React.createElement(SoundCloudPlayer, {url: storyElement.url });
+  return React.createElement("iframe", { 'src': storyElement['embed-url'], 'width': '100%'} );
 }
 
 function storyElementJsembed(storyElement) {
