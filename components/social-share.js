@@ -10,7 +10,8 @@ function SocialShareBase(props) {
     fbUrl: `https://www.facebook.com/sharer.php?u=${fullUrl}`,
     twitterUrl: `https://twitter.com/intent/tweet?url=${fullUrl}&text=${slicedTitle}&hashtags=${props.hashtags}`,
     gplusUrl: `https://plus.google.com/share?url=${fullUrl}`,
-    linkedinUrl: `https://www.linkedin.com/shareArticle?url=${fullUrl}&title=${props.title}`
+    linkedinUrl: `https://www.linkedin.com/shareArticle?url=${fullUrl}&title=${props.title}`,
+    whatsappUrl: `https://api.whatsapp.com/send?text=${fullUrl}`
   }, props));
 }
 
