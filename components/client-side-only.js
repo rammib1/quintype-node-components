@@ -6,7 +6,10 @@ class ClientSideOnlyBase extends React.Component {
     if (this.props.clientSideRendered) {
       return <div className="client-side-only client-side-only-client">{this.props.children}</div>;
     } else {
-      return React.createElement(this.props.serverComponent || "div", {className: "client-side-only client-side-only-server"});
+      return React.createElement(
+        this.props.serverComponent || "div",
+        Object.assign({ className: "client-side-only client-side-only-server" }, this.props)
+      );
     }
   }
 }
