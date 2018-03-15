@@ -102,8 +102,9 @@ class StoryElementBase extends React.Component {
     const subtypeClassName = `story-element-${storyElement.type}-${storyElement.subtype}`;
 
     const storyElementTemplate = this.template();
-    const renderTemplate = this.props.renderTemplates &&
-      (this.props.renderTemplates[storyElement.subtype] || this.props.renderTemplates[storyElement.type]);
+
+    const { renderTemplates = {}, ...elementProps } = this.props;
+    const renderTemplate = renderTemplates[storyElement.subtype] || renderTemplates[storyElement.type];
 
     return React.createElement("div", {
       className: classNames({
@@ -114,9 +115,9 @@ class StoryElementBase extends React.Component {
     }, (renderTemplate?
       React.createElement(
         renderTemplate,
-        this.props.storyElement,
-        React.createElement(storyElementTemplate, Object.assign({}, this.props))
-      ) : React.createElement(storyElementTemplate, Object.assign({}, this.props)))
+        Object.assign({}, {element: storyElement}),
+        React.createElement(storyElementTemplate, Object.assign({}, elementProps))
+      ) : React.createElement(storyElementTemplate, Object.assign({}, elementProps)))
     )
   }
 }
