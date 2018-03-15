@@ -8,12 +8,12 @@ import Polltype from './story-elements/polltype';
 import {Table} from './story-elements/table';
 import { Link } from './link';
 
-function storyElementText(storyElement) {
+function StoryElementText({element: storyElement}) {
   return React.createElement("div", {dangerouslySetInnerHTML: {__html: storyElement.text}});
 }
 
-function storyElementAlsoRead(storyElement, props) {
-  const storyUrl = props.story['linked-stories'] && '/' + props.story['linked-stories'][storyElement.metadata['linked-story-id']]['slug'];
+function StoryElementAlsoRead({element: storyElement, story}) {
+  const storyUrl = story['linked-stories'] && '/' + story['linked-stories'][storyElement.metadata['linked-story-id']]['slug'];
   const linkProps = { className: "story-element-text-also-read__link",
                       href: storyUrl
                     };
@@ -23,7 +23,7 @@ function storyElementAlsoRead(storyElement, props) {
   );
 }
 
-function storyElementImage(storyElement) {
+function StoryElementImage({element: storyElement}) {
   return React.createElement("figure", {},
     React.createElement(ResponsiveImage, {
       slug: storyElement["image-s3-key"],
@@ -38,19 +38,19 @@ function storyElementImage(storyElement) {
   );
 }
 
-function storyElementTitle(storyElement) {
+function StoryElementTitle({element: storyElement}) {
   return React.createElement("h2", {}, storyElement.text);
 }
 
-function storyElementSoundCloud(storyElement) {
+function StoryElementSoundCloud({element: storyElement}) {
   return React.createElement("iframe", { 'src': storyElement['embed-url'], 'width': '100%'} );
 }
 
-function storyElementJsembed(storyElement) {
+function StoryElementJsembed({element: storyElement}) {
   return React.createElement(JSEmbed, {embedJS: storyElement['embed-js'], id: storyElement['id']});
 }
 
-function storyElementYoutube(storyElement) {
+function StoryElementYoutube({element: storyElement}) {
   const opts = {
     playerVars: {
       autoplay: 0
@@ -59,52 +59,37 @@ function storyElementYoutube(storyElement) {
   return React.createElement(YouTube, {videoId: getYouTubeID(storyElement.url), opts:opts });
 }
 
-function storyElementPolltype(storyElement) {
+function StoryElementPolltype({element: storyElement}) {
   return React.createElement(
     Polltype,
     {id: storyElement['polltype-id']}
   );
 }
 
-function storyElementTable(storyElement) {
+function StoryElementTable({element: storyElement}) {
   return React.createElement(Table, { id: storyElement.id, data: storyElement.data, hasHeader: storyElement.metadata['has-header']});
 }
 
 // FIXME MISSING: composite
 // TODO: Can also support various subtypes (though not needed potentially)
+
 const DEFAULT_TEMPLATES = {
-  "text": {render: storyElementText},
-  "image": {render: storyElementImage},
-  "title": {render: storyElementTitle},
-  "youtube-video": {render: storyElementYoutube},
-  "soundcloud-audio": {render: storyElementSoundCloud},
-  "jsembed": {render: storyElementJsembed},
-  "polltype": {render: storyElementPolltype},
-  "table": {render: storyElementTable},
-  "also-read": {render: storyElementAlsoRead}
+  "text": StoryElementText,
+  "image": StoryElementImage,
+  "title": StoryElementTitle,
+  "youtube-video": StoryElementYoutube,
+  "soundcloud-audio": StoryElementSoundCloud,
+  "jsembed": StoryElementJsembed,
+  "polltype": StoryElementPolltype,
+  "table": StoryElementTable,
+  "also-read": StoryElementAlsoRead
 };
 
 class StoryElementBase extends React.Component {
   template() {
     const storyElement = this.props.element;
     const templates = Object.assign({}, DEFAULT_TEMPLATES, this.props.templates);
-    return Object.assign(
-      {render: () => [], componentDidMount: () => true, componentWillUnmount: () => true},
-      templates[storyElement.type],
-      templates[storyElement.subtype]
-    );
-  }
-
-  componentDidMount() {
-    const componentDidMount = this.template().componentDidMount;
-    if(componentDidMount)
-      componentDidMount.call(this);
-  }
-
-  componentWillUnmount() {
-    const componentWillUnmount = this.template().componentWillUnmount;
-    if(componentWillUnmount)
-      componentWillUnmount.call(this);
+    return templates[storyElement.subtype] || templates[storyElement.type] || "div";
   }
 
   storyElement() {
@@ -116,13 +101,23 @@ class StoryElementBase extends React.Component {
     const typeClassName = `story-element-${storyElement.type}`;
     const subtypeClassName = `story-element-${storyElement.type}-${storyElement.subtype}`;
 
+    const storyElementTemplate = this.template();
+    const renderTemplate = this.props.renderTemplates &&
+      (this.props.renderTemplates[storyElement.subtype] || this.props.renderTemplates[storyElement.type]);
+
     return React.createElement("div", {
       className: classNames({
         "story-element": true,
         [typeClassName]: true,
         [subtypeClassName]: !!storyElement.subtype
       })
-    }, this.template().render.call(this, this.props.element, this.props))
+    }, (renderTemplate?
+      React.createElement(
+        renderTemplate,
+        this.props.storyElement,
+        React.createElement(storyElementTemplate, Object.assign({}, this.props))
+      ) : React.createElement(storyElementTemplate, Object.assign({}, this.props)))
+    )
   }
 }
 
