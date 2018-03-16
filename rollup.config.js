@@ -9,7 +9,8 @@ export default {
   plugins: [
     babel({
       exclude: 'node_modules/**',
-      presets: ["react", "es2015-rollup"]
+      presets: ["react", "es2015-rollup"],
+      plugins: ["syntax-object-rest-spread", "transform-object-rest-spread"]
     })
   ],
   external: ["react","redux","react-redux","wretch","lodash/get","lodash/omit","url","prop-types","quintype-js","classnames","get-youtube-id","react-youtube","react-dfp","atob","papaparse","empty-web-gif"]
