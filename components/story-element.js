@@ -8,66 +8,66 @@ import Polltype from './story-elements/polltype';
 import {Table} from './story-elements/table';
 import { Link } from './link';
 
-function StoryElementText({element: storyElement}) {
-  return React.createElement("div", {dangerouslySetInnerHTML: {__html: storyElement.text}});
+function StoryElementText({element}) {
+  return React.createElement("div", {dangerouslySetInnerHTML: {__html: element.text}});
 }
 
-function StoryElementAlsoRead({element: storyElement, story}) {
-  const storyUrl = story['linked-stories'] && '/' + story['linked-stories'][storyElement.metadata['linked-story-id']]['slug'];
+function StoryElementAlsoRead({element, story}) {
+  const storyUrl = story['linked-stories'] && '/' + story['linked-stories'][element.metadata['linked-story-id']]['slug'];
   const linkProps = { className: "story-element-text-also-read__link",
                       href: storyUrl
                     };
   return React.createElement("h3", {},
     React.createElement("span", { className: "story-element-text-also-read__label" }, "Also read: "),
-    React.createElement(Link, linkProps, storyElement.text)
+    React.createElement(Link, linkProps, element.text)
   );
 }
 
-function StoryElementImage({element: storyElement}) {
+function StoryElementImage({element}) {
   return React.createElement("figure", {},
     React.createElement(ResponsiveImage, {
-      slug: storyElement["image-s3-key"],
-      metadata: storyElement["metadata"],
+      slug: element["image-s3-key"],
+      metadata: element["metadata"],
       aspectRatio: null,
       defaultWidth: 480,
       widths: [250,480,640],
       imgParams: {auto:['format', 'compress']}
     }),
-    storyElement.title ? React.createElement("figcaption", {dangerouslySetInnerHTML: {__html: storyElement.title}, className: "story-element-image-title"}) : undefined,
-    storyElement['image-attribution'] ? React.createElement("figcaption", {dangerouslySetInnerHTML: {__html: storyElement['image-attribution']}, className: "story-element-image-attribution"}) : undefined
+    element.title ? React.createElement("figcaption", {dangerouslySetInnerHTML: {__html: element.title}, className: "story-element-image-title"}) : undefined,
+    element['image-attribution'] ? React.createElement("figcaption", {dangerouslySetInnerHTML: {__html: element['image-attribution']}, className: "story-element-image-attribution"}) : undefined
   );
 }
 
-function StoryElementTitle({element: storyElement}) {
-  return React.createElement("h2", {}, storyElement.text);
+function StoryElementTitle({element}) {
+  return React.createElement("h2", {}, element.text);
 }
 
-function StoryElementSoundCloud({element: storyElement}) {
-  return React.createElement("iframe", { 'src': storyElement['embed-url'], 'width': '100%'} );
+function StoryElementSoundCloud({element}) {
+  return React.createElement("iframe", { 'src': element['embed-url'], 'width': '100%'} );
 }
 
-function StoryElementJsembed({element: storyElement}) {
-  return React.createElement(JSEmbed, {embedJS: storyElement['embed-js'], id: storyElement['id']});
+function StoryElementJsembed({element}) {
+  return React.createElement(JSEmbed, {embedJS: element['embed-js'], id: element['id']});
 }
 
-function StoryElementYoutube({element: storyElement}) {
+function StoryElementYoutube({element}) {
   const opts = {
     playerVars: {
       autoplay: 0
     }
   };
-  return React.createElement(YouTube, {videoId: getYouTubeID(storyElement.url), opts:opts });
+  return React.createElement(YouTube, {videoId: getYouTubeID(element.url), opts:opts });
 }
 
-function StoryElementPolltype({element: storyElement}) {
+function StoryElementPolltype({element}) {
   return React.createElement(
     Polltype,
-    {id: storyElement['polltype-id']}
+    {id: element['polltype-id']}
   );
 }
 
-function StoryElementTable({element: storyElement}) {
-  return React.createElement(Table, { id: storyElement.id, data: storyElement.data, hasHeader: storyElement.metadata['has-header']});
+function StoryElementTable({element}) {
+  return React.createElement(Table, { id: element.id, data: element.data, hasHeader: element.metadata['has-header']});
 }
 
 // FIXME MISSING: composite
