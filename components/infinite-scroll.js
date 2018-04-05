@@ -68,6 +68,11 @@ class InfiniteScrollBase extends React.Component {
   intersectionCallback(entries) {
     var visibleComponents = this.state.visibleComponents;
     entries.forEach(entry => {
+
+      // Stupid browsers like UC and Mi don't correctly support the spec
+      if(entry.isIntersecting === undefined)
+        return;
+
       const item = entry.target.getAttribute("data-infinite-scroll");
       if(item == 'load-more' && entry.isIntersecting) {
         this.props.loadNext();
