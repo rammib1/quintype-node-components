@@ -12,7 +12,7 @@ export class SearchBox extends NavigationComponentBase {
   onSubmit(e) {
     e.preventDefault();
     if(this.state.query != "")
-      this.navigateTo(`/search?q=${this.state.query}`)
+      this.navigateTo(`/search?q=${encodeURIComponent(this.state.query)}`)
     if(this.props.onSubmitHandler)
       this.props.onSubmitHandler(this.state.query);
   }
