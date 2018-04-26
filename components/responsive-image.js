@@ -191,3 +191,11 @@ LazyLoadImages.childContextTypes = {
   lazyLoadObserveImage: func,
   lazyLoadUnobserveImage: func
 }
+
+export function ResponsiveHeroImage(props) {
+  return React.createElement(ResponsiveImage, Object.assign({
+    slug: props.story["hero-image-s3-key"],
+    metadata: props.story["hero-image-metadata"],
+    alt: props.story["headline"]
+  }, omit(props, ['story'])));
+}

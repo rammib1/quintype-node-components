@@ -212,6 +212,19 @@ class SearchComponent extends NavigationComponentBase {
 }
 ```
 
+### ResponsiveHeroImage
+This component takes is a wrapper over [ResponsiveImages](#ResponsiveImage), which accepts a story and returns the hero image. By default, it picks the alt text from the headline. 
+
+```javascript
+import { ResponsiveHeroImage } from '@quintype/components';
+<figure className="story-grid-item-image qt-image-16x9">
+  <ResponsiveHeroImage story={props.story}
+    aspectRatio={[16,9]}
+    defaultWidth={480} widths={[250,480,640]} sizes="(max-width: 500px) 98%, (max-width: 768px) 48%, 23%"
+    imgParams={{auto:['format', 'compress']}}/>
+</figure>
+```
+
 ### ResponsiveImage
 This component takes an image, and resizes it to the correct aspect ratio using imgix or thumbor.
 
@@ -219,6 +232,7 @@ This component takes an image, and resizes it to the correct aspect ratio using 
 import { ResponsiveImage } from '@quintype/components';
 <figure className="story-grid-item-image qt-image-16x9">
   <ResponsiveImage slug={props.story["hero-image-s3-key"]} metadata={props.story["hero-image-metadata"]}
+    alt={props.story['headline']}
     aspectRatio={[16,9]}
     defaultWidth={480} widths={[250,480,640]} sizes="(max-width: 500px) 98%, (max-width: 768px) 48%, 23%"
     imgParams={{auto:['format', 'compress']}}/>
