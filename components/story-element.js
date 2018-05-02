@@ -116,7 +116,7 @@ class StoryElementBase extends React.Component {
     }, (renderTemplate?
       React.createElement(
         renderTemplate,
-        Object.assign({}, {element: storyElement}),
+        {...elementProps},
         React.createElement(storyElementTemplate, Object.assign({}, elementProps))
       ) : React.createElement(storyElementTemplate, Object.assign({}, elementProps)))
     )
