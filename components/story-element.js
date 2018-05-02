@@ -98,7 +98,6 @@ class StoryElementBase extends React.Component {
 
   render() {
     const storyElement = this.props.element;
-    const storyObj = this.props.story;
     const typeClassName = `story-element-${storyElement.type}`;
     const subtypeClassName = `story-element-${storyElement.type}-${storyElement.subtype}`;
 
@@ -116,7 +115,7 @@ class StoryElementBase extends React.Component {
     }, (renderTemplate?
       React.createElement(
         renderTemplate,
-        Object.assign({}, {element: storyElement, story: storyObj}),
+        {...elementProps},
         React.createElement(storyElementTemplate, Object.assign({}, elementProps))
       ) : React.createElement(storyElementTemplate, Object.assign({}, elementProps)))
     )
