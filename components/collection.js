@@ -1,34 +1,25 @@
 import React from 'react';
 
-import {extractCollections, getAssociatedTemplate, findTemplateMatch} from "../utils";
+import {extractCollections, getAssociatedTemplate} from "../utils";
 
-function Collection({template, collection, templatesConfig, templatesMapping}) {
+function Collection({template, collection, templatesMapping}) {
   const getTemplate = templateName => templatesMapping[templateName]? templatesMapping[templateName] : "div";
 
-  const renderTemplatesRecursively = (_collections, _templatesConfig) => _collections.map(collection => {
-    const associatedTemplate = getAssociatedTemplate(collection);
-    const templateConfig = associatedTemplate && findTemplateMatch(associatedTemplate, _templatesConfig);
-    if (templateConfig) {
-      if (templateConfig["item-type"] === "collection") {
-        return React.createElement(
-          getTemplate(associatedTemplate),
-          {collection, key: `col-${collection.id}`},
-          renderTemplatesRecursively(collection.items, _templatesConfig)
-        );
-      }
-    }
+  const renderTemplatesRecursively = (items) => {
+    const collectionTypeItems = extractCollections(items);
+    if (collectionTypeItems.length === 0) return null;
 
-    return React.createElement(
-      getTemplate(associatedTemplate),
-      {collection, key: `col-${collection.id}`}
-    );
-  });
+    return collectionTypeItems.map(_collection => React.createElement(
+      getTemplate(getAssociatedTemplate(_collection)),
+      {collection: _collection, key: `col-${_collection.id}`},
+      renderTemplatesRecursively(_collection.items || [])
+    ));
+  };
 
-  const collections = extractCollections(collection.items);
   return React.createElement(
     template,
     collection,
-    collections.length > 0? renderTemplatesRecursively(collections, templatesConfig) : null
+    renderTemplatesRecursively(collection.items || [])
   );
 };
 
