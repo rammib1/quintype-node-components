@@ -11,41 +11,26 @@ function extractCollections(items) {
   return items.filter(({type}) => type === "collection");
 }
 
-function fillInCollection(collection, story, {"item-limit": itemLimit = 10}) {
-  return Object.assign({}, collection, {"items": new Array(itemLimit).fill(story)});
-}
+function fillInCollection(collection, story) {
+    if (collection && collection.items && collection.items.length) {
+      const items = collection.items.map(item => {
+        if (item.type === "story") {
+          return {id: story.id, type: "story", story};
+        } else if (item.type === "collection") {
+          return fillInCollection(item, story);
+        }
+        return item;
+      });
 
-function fillInCollections(collections, story, templatesConfig) {
-  return collections.map(collection => {
-    const { "items": collectionItems = [], ...collectionData } = collection;
-    if (collectionItems.length) {
-      return Object.assign(
-        {},
-        collectionData,
-        {"items": fillInCollections(collectionItems, story, templatesConfig)}
-      );
+      return Object.assign({}, collection, {items});
     }
 
-    return fillInCollection(
-      collectionData,
-      story,
-      findTemplateMatch(getAssociatedTemplate(collection), templatesConfig)
-    );
-  });
-}
-
-function fillInDataForPreview(collectionStructure, story, templatesConfig) {
-    const { "items": collectionItems = [], ...collectionData} = collectionStructure;
-
-    if (collectionItems.length) {
-      return Object.assign({}, collectionData, {"items": fillInCollections(collectionItems, story, templatesConfig)});
-    }
-
-    return Object.assign({}, collectionData, {"items": []});
+    return collection;
 }
 
 export {
   removeDuplicateStories,
   extractCollections,
-  getAssociatedTemplate
+  getAssociatedTemplate,
+  fillInCollection
 };
