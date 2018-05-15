@@ -10,7 +10,7 @@ export function getAssociatedTemplate({"associated-metadata": associatedMetadata
 
 // FIXME: TEST THIS
 export function replaceAllStoriesInCollection(collection, story) {
-  const items = collection.items.map(item => {
+  const items = (collection.items || []).map(item => {
     if (item.type === "story") {
       return {id: story.id, type: "story", story};
     } else if (item.type === "collection") {
