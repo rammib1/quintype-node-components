@@ -18,8 +18,7 @@ export function Collection({className, collection, collectionTemplates = () => C
       return React.createElement(collectionTemplates(getAssociatedTemplate(collectionItem), index), {
         key: `${index}-${collectionItem.id}`,
         collection: collectionItem,
-        metadata: collectionItem["associated-metadata"] || {},
-        renderCollection: (props) => React.createElement(Collection, props)
+        metadata: collectionItem["associated-metadata"] || {}
       });
 
       case "story":
