@@ -1,26 +1,37 @@
 import React from 'react';
 
-import {extractCollections, getAssociatedTemplate} from "../utils";
+import {getAssociatedTemplate} from "../utils";
 
-function Collection({template, collection, templatesMapping}) {
-  const getTemplate = templateName => templatesMapping[templateName]? templatesMapping[templateName] : "div";
+function StoryNotImplemented() {
+  return <div data-comment="Story Template Not Implemented" />;
+}
 
-  const renderTemplatesRecursively = (items) => {
-    const collectionTypeItems = extractCollections(items);
-    if (collectionTypeItems.length === 0) return null;
+function CollectionNotImplemented() {
+  return <div data-comment="Collection Template Not Implemented" />;
+}
 
-    return collectionTypeItems.map(_collection => React.createElement(
-      getTemplate(getAssociatedTemplate(_collection)),
-      {collection: _collection, key: `col-${_collection.id}`},
-      renderTemplatesRecursively(_collection.items || [])
-    ));
-  };
+// Pass this the HomePage Collection
+export function Collection({className, collection, collectionTemplates = () => CollectionNotImplemented, storyTemplates = () => StoryNotImplemented, interstitial = () => undefined}) {
+  const children = collection.items.map((collectionItem, index) => {
+    switch(collectionItem.type) {
+      case "collection":
+      return React.createElement(collectionTemplates(getAssociatedTemplate(collectionItem), index), {
+        key: `${index}-${collectionItem.id}`,
+        collection: collectionItem,
+        metadata: collectionItem["associated-metadata"] || {},
+        renderCollection: (props) => React.createElement(Collection, props)
+      });
 
-  return React.createElement(
-    template,
-    collection,
-    renderTemplatesRecursively(collection.items || [])
-  );
-};
+      case "story":
+      return React.createElement(storyTemplates(index), {
+        key: `${index}-${collectionItem.id}`,
+        story: collectionItem.story,
+        metadata: collectionItem["associated-metadata"] || {}
+      });
 
-export {Collection};
+      default: return <div data-comment={`${collectionItem.type} not implemented`}/>
+    }
+  }).reduce((arr, v, i) => arr.concat([v, interstitial(i)]), []);
+
+  return React.createElement("div", {className}, children);
+}

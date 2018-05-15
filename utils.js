@@ -1,36 +1,23 @@
-function removeDuplicateStories(existingStories, newStories, keyFn = story => story.id) {
+// FIXME: TEST THIS
+export function removeDuplicateStories(existingStories, newStories, keyFn = story => story.id) {
   const existingStoryIds = existingStories.map(keyFn);
   return newStories.filter(story => !existingStoryIds.includes(keyFn(story)));
 }
 
-function getAssociatedTemplate({"associated-metadata": associatedMetadata}) {
-  return associatedMetadata ? associatedMetadata.layout : '';
+export function getAssociatedTemplate({"associated-metadata": associatedMetadata}) {
+  return associatedMetadata ? associatedMetadata.layout : 'default';
 }
 
-function extractCollections(items) {
-  return items.filter(({type}) => type === "collection");
-}
-
-function fillInCollection(collection, story) {
-    if (collection && collection.items && collection.items.length) {
-      const items = collection.items.map(item => {
-        if (item.type === "story") {
-          return {id: story.id, type: "story", story};
-        } else if (item.type === "collection") {
-          return fillInCollection(item, story);
-        }
-        return item;
-      });
-
-      return Object.assign({}, collection, {items});
+// FIXME: TEST THIS
+export function replaceAllStoriesInCollection(collection, story) {
+  const items = collection.items.map(item => {
+    if (item.type === "story") {
+      return {id: story.id, type: "story", story};
+    } else if (item.type === "collection") {
+      return replaceAllStoriesInCollection(item, story);
     }
+    return item;
+  });
 
-    return collection;
+  return Object.assign({}, collection, {items});
 }
-
-export {
-  removeDuplicateStories,
-  extractCollections,
-  getAssociatedTemplate,
-  fillInCollection
-};
