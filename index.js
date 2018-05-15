@@ -16,5 +16,6 @@ export * from './components/story-element';
 export * from './components/social-share';
 export * from './components/with-error';
 export * from "./components/review-rating";
+export * from "./components/collection";
 
 export * from './utils';

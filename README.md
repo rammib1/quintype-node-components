@@ -21,6 +21,46 @@ import {BreakingNewsItem} from '@quintype/components'
 <BreakingNewsItem item={item} className="breaking-news__headline"/>
 ```
 
+### Collection
+
+This component can be used to render a collection. You should typically pass this a collection that represents a page
+
+```javascript
+import {Collection} from '@quintype/components'
+
+// collection = Collection.getCollectionBySlug(client, 'home', {}, {depth: 1})
+
+function TwoColLayout({collection, associatedMetadata}) {
+  // for item in collection.item
+  //   if item.type == story
+  //     showStory
+  //   else if item.type == colection
+  //     <Collection />
+  // speed = associatedMetadata.scroll_speed
+}
+
+function collectionTemplates(layout, index) {
+  if(layout == 'twoColLayout')
+    return TwoColLayout;
+}
+
+// optional
+function storyTemplates(index) {
+  return StoryTemplate;
+}
+
+// optional
+function interstitial(index) {
+  if(index % 2 == 0)
+    return <AdComponent />
+}
+
+<Collection collection={collection}
+            collectionTemplates={collectionTemplates}
+            storyTemplates={storyTemplates}
+            interstitial={interstitial} />
+```
+
 ### ClientSideOnly
 This component will be loaded by client, and bypassed when doing server side rendering.
 
@@ -213,7 +253,7 @@ class SearchComponent extends NavigationComponentBase {
 ```
 
 ### ResponsiveHeroImage
-This component takes is a wrapper over [ResponsiveImages](#ResponsiveImage), which accepts a story and returns the hero image. By default, it picks the alt text from the headline. 
+This component takes is a wrapper over [ResponsiveImages](#ResponsiveImage), which accepts a story and returns the hero image. By default, it picks the alt text from the headline.
 
 ```javascript
 import { ResponsiveHeroImage } from '@quintype/components';
@@ -322,9 +362,9 @@ const MyStoryElement = withError(ClassThatMayCrash, optionalErrorFn)
 
 ### Review Rating
 
-This component takes in the value for rating and renders star for the value passed in. This comopent is generally used for story review type. 
+This component takes in the value for rating and renders star for the value passed in. This comopent is generally used for story review type.
 
-```javascript 
+```javascript
 import { ReviewRating } from '@quintype/components';
 
 <ReviewRating value="3" />
