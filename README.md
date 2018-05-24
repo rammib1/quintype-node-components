@@ -260,7 +260,7 @@ import { ResponsiveHeroImage } from '@quintype/components';
 <figure className="story-grid-item-image qt-image-16x9">
   <ResponsiveHeroImage story={props.story}
     aspectRatio={[16,9]}
-    defaultWidth={480} widths={[250,480,640]} sizes="(max-width: 500px) 98%, (max-width: 768px) 48%, 23%"
+    defaultWidth={480} widths={[250,480,640]} sizes="(max-width: 500px) 98vw, (max-width: 768px) 48vw, 23vw"
     imgParams={{auto:['format', 'compress']}}/>
 </figure>
 ```
@@ -277,7 +277,7 @@ import { ResponsiveImage } from '@quintype/components';
     alt={props.story['headline']}
     aspectRatio={[16,9]}
     defaultWidth={480} widths={[250,480,640]}
-    sizes="(max-width: 500px) 98%, (max-width: 768px) 48%, 23%"
+    sizes="(max-width: 500px) 98vw, (max-width: 768px) 48vw, 23vw"
     imgParams={{auto:['format', 'compress']}}/>
 </figure>
 ```

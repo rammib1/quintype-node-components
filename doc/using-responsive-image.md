@@ -27,7 +27,7 @@ The `widths` parameter tells the browser which image sizes are available. Howeve
 In order to do this, you can use the `sizes` parameter. Let us consider the following application
 
 ```javascript
-<ResponsiveImage ... sizes="(max-width: 500px) 98%, (max-width: 768px) 48%, 23%"/>
+<ResponsiveImage ... sizes="(max-width: 500px) 98vw, (max-width: 768px) 48vw, 23vw"/>
 ```
 
 This tells us that the image will be 98% of the screen width on mobile (upto 500px), 48% of the screen width on tablet, then 23% of the screen on desktop. The browser can calculate and make the call to fetch the appropriate image even before CSS is applied, based on the screen size.
