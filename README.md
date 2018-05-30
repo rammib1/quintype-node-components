@@ -199,17 +199,16 @@ This component is very similar to the LoadMoreBase component but fetches the str
 ```javascript
 import { LoadMoreCollectionStories } from '@quintype/components';
 
-function MoreCollectionStories({stories, loading, onLoadMore, noMoreStories}) {
+function MoreCollectionStories({collection, stories, loading, onLoadMore, noMoreStories}) {
   return <div/>;
 }
 
 export function HomePage(props) {
   return <LoadMoreCollectionStories template={MoreCollectionStories}
-                                    collectionSlug={props.data.collectionSLug}
-                                    {...props}
-                                    params={{"collectionSlug": props.data.collectionSlug}}/>
+                                    collectionSlug={props.data.collectionSlug}
+                                    data={{collection: collection, stories: initialStories}}
+                                    params={{}}/>
 }
-
 ```
 
 ### LoadingIndicator
