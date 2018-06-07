@@ -52,12 +52,13 @@ export class LoadMoreStoriesBase extends React.Component {
       fields: this.props.fields
     })).json(response => response.stories || []);
   }
-
+  
   render() {
     return React.createElement(LoadMoreStoriesManager, Object.assign({}, this.props.data, {
       template: this.props.template,
       storiesPerPage: this.props.storiesPerPage || 20,
-      loadStories: (pageNumber) => this.loadMoreStories(pageNumber)
+      loadStories: (pageNumber) => this.loadMoreStories(pageNumber),
+      languageDirection: this.props.languageDirection,
     }));
   }
 }
@@ -72,7 +73,8 @@ export class LoadMoreCollectionStories extends React.Component {
   render() {
     return React.createElement(LoadMoreStoriesManager, Object.assign({}, this.props.data, {
       template: this.props.template,
-      loadStories: (pageNumber) => this.loadMoreStories(pageNumber)
+      loadStories: (pageNumber) => this.loadMoreStories(pageNumber),
+      languageDirection: this.props.languageDirection,
     }));
   }
 }
