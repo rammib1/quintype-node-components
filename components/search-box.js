@@ -5,26 +5,27 @@ export class SearchBox extends NavigationComponentBase {
   constructor(props) {
     super(props);
     this.state = {
-      query: ""
+      query: ''
     };
+  }
+
+  componentDidMount() {
+    this.focus();
   }
 
   onSubmit(e) {
     e.preventDefault();
-    if(this.state.query != "")
-      this.navigateTo(`/search?q=${encodeURIComponent(this.state.query)}`)
-    if(this.props.onSubmitHandler)
-      this.props.onSubmitHandler(this.state.query);
+    this.state.query && this.navigateTo(`/search?q=${encodeURIComponent(this.state.query)}`);
+    this.props.onSubmitHandler && this.props.onSubmitHandler(this.state.query);
   }
 
   keyPress(e) {
-    if(e.keyCode == 27)
+    if(e.keyCode === 27)
       this.props.onEscape && this.props.onEscape();
   }
 
   focus() {
-    if(this.textInput)
-      this.textInput.focus();
+    this.textInput && this.textInput.focus();
   }
 
   defaultTemplate({children}) {
