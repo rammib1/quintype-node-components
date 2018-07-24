@@ -14,7 +14,7 @@ export function TableView({data, columns, className, hasHeader}) {
     {hasHeader && TableHeader(columns)}
     <tbody>
       {data.map(row => <tr>
-        {row.map(col => <td>
+        {Object.values(row).map(col => <td>
           {col}
         </td>)}
       </tr>)}
