@@ -1,5 +1,6 @@
 import React from 'react';
 
+import get from 'lodash/get';
 import { removeDuplicateStories } from '../utils';
 import { getRequest } from './api-client';
 
@@ -10,7 +11,7 @@ export class LoadMoreStoriesManager extends React.Component {
       loading: false,
       pageNumber: 1,
       moreStories: [],
-      noMoreStories: this.props.stories.length < this.props.storiesPerPage
+      noMoreStories: false
     };
   }
 
@@ -29,7 +30,7 @@ export class LoadMoreStoriesManager extends React.Component {
           this.setState({
             loading: false,
             moreStories: this.state.moreStories.concat(removeDuplicateStories(this.stories(), stories)),
-            noMoreStories: stories.length == 0
+            noMoreStories: stories.length < this.props.numStoriesToLoad
           })
       })
     })
@@ -47,32 +48,39 @@ export class LoadMoreStoriesManager extends React.Component {
 
 export class LoadMoreStoriesBase extends React.Component {
   loadMoreStories(pageNumber) {
+    const stories = get(this.props, ['data', 'stories'], []);
     return getRequest("/api/v1/stories", Object.assign({}, this.props.params, {
-      offset: (this.props.storiesPerPage || 20) * pageNumber,
+      offset: this.props.numStoriesToLoad * (pageNumber - 1) + stories.length,
+      limit: this.props.numStoriesToLoad,
       fields: this.props.fields
     })).json(response => response.stories || []);
   }
-
+  
   render() {
     return React.createElement(LoadMoreStoriesManager, Object.assign({}, this.props.data, {
       template: this.props.template,
-      storiesPerPage: this.props.storiesPerPage || 20,
-      loadStories: (pageNumber) => this.loadMoreStories(pageNumber)
+      loadStories: (pageNumber) => this.loadMoreStories(pageNumber),
+      languageDirection: this.props.languageDirection,
+      numStoriesToLoad: this.props.numStoriesToLoad || 10,
     }));
   }
 }
 
 export class LoadMoreCollectionStories extends React.Component {
   loadMoreStories(pageNumber) {
+    const stories = get(this.props, ['data', 'stories'], []);
     return getRequest(`/api/v1/collections/${this.props.collectionSlug}`, Object.assign({}, this.props.params, {
-      offset: (this.props.storiesPerPage || 20) * pageNumber
+      offset: this.props.numStoriesToLoad * (pageNumber - 1) + stories.length,
+      limit: this.props.numStoriesToLoad,
     })).json(response => (response.items || []).map(item => item.story));
   }
 
   render() {
     return React.createElement(LoadMoreStoriesManager, Object.assign({}, this.props.data, {
       template: this.props.template,
-      loadStories: (pageNumber) => this.loadMoreStories(pageNumber)
+      loadStories: (pageNumber) => this.loadMoreStories(pageNumber),
+      languageDirection: this.props.languageDirection,
+      numStoriesToLoad: this.props.numStoriesToLoad || 10
     }));
   }
 }
