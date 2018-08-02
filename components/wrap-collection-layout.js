@@ -51,7 +51,7 @@ function WrapCollectionComponent(Component) {
 
     const component = loadMoreWrapper(Component, data, associatedMetadata.enable_load_more_button, props.collection.slug, associatedMetadata.subsequent_stories_load_count);
 
-    return [clientSideLoadWrapper, lazyLoadWrapper].reduce((c, f) => f(c, associatedMetadata), component);
+    return [clientSideLoadWrapper, lazyLoadWrapper].reduce((accumulator, currentElement) => currentElement(accumulator, associatedMetadata), component);
   }
 }
 
