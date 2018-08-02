@@ -6,14 +6,16 @@ import { LoadMoreCollectionStories } from './load-more-stories-base';
 import { LazyLoadImages } from './responsive-image';
 import { ClientSideOnly } from './client-side-only';
 
-function addLoadMore(Component, data, slug, numStoriesToLoad) {
-  return React.createElement(LoadMoreCollectionStories, {
-    template: Component,
-    collectionSlug: slug,
-    params: { 'item-type': 'story' },
-    data: data,
-    numStoriesToLoad,       
-  });
+function maybeWrapLoadMore(Component, data, enable_load_more_button, slug, numStoriesToLoad) {
+  return !enable_load_more_button ?
+    React.createElement(Component, data) :
+    React.createElement(LoadMoreCollectionStories, {
+      template: Component,
+      collectionSlug: slug,
+      params: { 'item-type': 'story' },
+      data: data,
+      numStoriesToLoad,
+    });
 }
 
 function maybeWrapLazyLoad(component, {lazy_load_images = false}) {
@@ -47,13 +49,9 @@ function WrapCollectionComponent(Component) {
       associatedMetadata: associatedMetadata,
     });
 
-    const maybeWrapLoadMore = (component, {enable_load_more_button = false}) => {
-      return !enable_load_more_button ?
-        component :
-        addLoadMore(component, data, props.collection.slug, associatedMetadata.subsequent_stories_load_count);
-    }
-    
-    return [maybeWrapLoadMore, maybeWrapClientSide, maybeWrapLazyLoad].reduce((c, f) => f(c, associatedMetadata), Component);
+    const component = maybeWrapLoadMore(Component, data, associatedMetadata.enable_load_more_button, props.collection.slug, associatedMetadata.subsequent_stories_load_count);
+
+    return [maybeWrapClientSide, maybeWrapLazyLoad].reduce((c, f) => f(c, associatedMetadata), component);
   }
 }
 
