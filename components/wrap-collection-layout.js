@@ -6,24 +6,26 @@ import { LoadMoreCollectionStories } from './load-more-stories-base';
 import { LazyLoadImages } from './responsive-image';
 import { ClientSideOnly } from './client-side-only';
 
-function addLoadMore(Component, data, slug, numStoriesToLoad) {
-  return React.createElement(LoadMoreCollectionStories, {
-    template: Component,
-    collectionSlug: slug,
-    params: { 'item-type': 'story' },
-    data: data,
-    numStoriesToLoad,       
-  });
+function loadMoreWrapper(Component, data, enableLoadMoreButton, slug, numStoriesToLoad) {
+  return !enableLoadMoreButton ?
+    React.createElement(Component, data) :
+    React.createElement(LoadMoreCollectionStories, {
+      template: Component,
+      collectionSlug: slug,
+      params: { 'item-type': 'story' },
+      data: data,
+      numStoriesToLoad,
+    });
 }
 
-function maybeWrapLazyLoad(component, {lazy_load_images = false}) {
-  return !lazy_load_images ?
+function lazyLoadWrapper(component, {lazy_load_images: lazyLoadImages = false}) {
+  return !lazyLoadImages ?
     component :
     React.createElement(LazyLoadImages, {}, component);
 }
 
-function maybeWrapClientSide(component, {client_side_only = false}) {
-  return !client_side_only ?
+function clientSideLoadWrapper(component, {client_side_only: clientSideOnly = false}) {
+  return !clientSideOnly ?
     component :
     React.createElement(ClientSideOnly, {}, component);
 }
@@ -47,13 +49,9 @@ function WrapCollectionComponent(Component) {
       associatedMetadata: associatedMetadata,
     });
 
-    const maybeWrapLoadMore = (component, {enable_load_more_button = false}) => {
-      return !enable_load_more_button ?
-        component :
-        addLoadMore(component, data, props.collection.slug, associatedMetadata.subsequent_stories_load_count);
-    }
-    
-    return [maybeWrapLoadMore, maybeWrapClientSide, maybeWrapLazyLoad].reduce((c, f) => f(c, associatedMetadata), Component);
+    const component = loadMoreWrapper(Component, data, associatedMetadata.enable_load_more_button, props.collection.slug, associatedMetadata.subsequent_stories_load_count);
+
+    return [clientSideLoadWrapper, lazyLoadWrapper].reduce((accumulator, currentElement) => currentElement(accumulator, associatedMetadata), component);
   }
 }
 
