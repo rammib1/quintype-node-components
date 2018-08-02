@@ -6,8 +6,8 @@ import { LoadMoreCollectionStories } from './load-more-stories-base';
 import { LazyLoadImages } from './responsive-image';
 import { ClientSideOnly } from './client-side-only';
 
-function maybeWrapLoadMore(Component, data, enable_load_more_button, slug, numStoriesToLoad) {
-  return !enable_load_more_button ?
+function loadMoreWrapper(Component, data, enableLoadMoreButton, slug, numStoriesToLoad) {
+  return !enableLoadMoreButton ?
     React.createElement(Component, data) :
     React.createElement(LoadMoreCollectionStories, {
       template: Component,
@@ -18,14 +18,14 @@ function maybeWrapLoadMore(Component, data, enable_load_more_button, slug, numSt
     });
 }
 
-function maybeWrapLazyLoad(component, {lazy_load_images = false}) {
-  return !lazy_load_images ?
+function lazyLoadWrapper(component, {lazyLoadImages = false}) {
+  return !lazyLoadImages ?
     component :
     React.createElement(LazyLoadImages, {}, component);
 }
 
-function maybeWrapClientSide(component, {client_side_only = false}) {
-  return !client_side_only ?
+function clientSideLoadWrapper(component, {clientSideOnly = false}) {
+  return !clientSideOnly ?
     component :
     React.createElement(ClientSideOnly, {}, component);
 }
@@ -49,9 +49,9 @@ function WrapCollectionComponent(Component) {
       associatedMetadata: associatedMetadata,
     });
 
-    const component = maybeWrapLoadMore(Component, data, associatedMetadata.enable_load_more_button, props.collection.slug, associatedMetadata.subsequent_stories_load_count);
+    const component = loadMoreWrapper(Component, data, associatedMetadata.enable_load_more_button, props.collection.slug, associatedMetadata.subsequent_stories_load_count);
 
-    return [maybeWrapClientSide, maybeWrapLazyLoad].reduce((c, f) => f(c, associatedMetadata), component);
+    return [clientSideLoadWrapper, lazyLoadWrapper].reduce((c, f) => f(c, associatedMetadata), component);
   }
 }
 
