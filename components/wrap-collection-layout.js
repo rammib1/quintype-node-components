@@ -18,13 +18,13 @@ function loadMoreWrapper(Component, data, enableLoadMoreButton, slug, numStories
     });
 }
 
-function lazyLoadWrapper(component, {lazyLoadImages = false}) {
+function lazyLoadWrapper(component, {lazy_load_images: lazyLoadImages = false}) {
   return !lazyLoadImages ?
     component :
     React.createElement(LazyLoadImages, {}, component);
 }
 
-function clientSideLoadWrapper(component, {clientSideOnly = false}) {
+function clientSideLoadWrapper(component, {client_side_only: clientSideOnly = false}) {
   return !clientSideOnly ?
     component :
     React.createElement(ClientSideOnly, {}, component);
