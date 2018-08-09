@@ -138,7 +138,7 @@ This component can be used for adding image gallery on the story page. You can p
 ``` javascript
 import { ImageGalleryElement } from "@quintype/components";
 
-<ImageGalleryElement element={element} key={element.id} imageAspectRatio={[4,3]} />   
+<ImageGalleryElement element={element} key={element.id} imageAspectRatio={[4,3]} />
 ```
 
 ### InfiniteScroll
@@ -305,13 +305,45 @@ Also see [Using Responsive Image](doc/using-responsive-image.md)
 
 ```javascript
 import { ResponsiveImage } from '@quintype/components';
+
 <figure className="story-grid-item-image qt-image-16x9">
-  <ResponsiveImage slug={props.story["hero-image-s3-key"]} metadata={props.story["hero-image-metadata"]}
+  <ResponsiveImage slug={props.story["hero-image-s3-key"]}
+    metadata={props.story["hero-image-metadata"]}
     alt={props.story['headline']}
     aspectRatio={[16,9]}
     defaultWidth={480} widths={[250,480,640]}
     sizes="(max-width: 500px) 98vw, (max-width: 768px) 48vw, 23vw"
     imgParams={{auto:['format', 'compress']}}/>
+</figure>
+```
+
+### Responsive Source
+This component is used in more advanced usages if the aspect ratio is expected to change between screens
+
+```javascript
+import { ResponsiveSource } from '@quintype/components';
+
+<figure className="story-grid-item-image">
+  <picture>
+    // Desktop Version
+    <ResponsiveSource media="(min-width: 1024px)"
+      slug={props.story["hero-image-s3-key"]}
+      metadata={props.story["hero-image-metadata"]}
+      aspectRatio={[4,3]}
+      defaultWidth={480} widths={[250,480,640]}
+      sizes="(max-width: 500px) 98vw, (max-width: 768px) 48vw, 23vw"
+      imgParams={{auto:['format', 'compress']}}/>
+
+    // Mobile Version
+    <ResponsiveImage
+      slug={props.story["hero-image-s3-key"]}
+      metadata={props.story["hero-image-metadata"]}
+      alt={props.story['headline']}
+      aspectRatio={[16,9]}
+      defaultWidth={480} widths={[250,480,640]}
+      sizes="(max-width: 500px) 98vw, (max-width: 768px) 48vw, 23vw"
+      imgParams={{auto:['format', 'compress']}}/>
+  </picture>
 </figure>
 ```
 

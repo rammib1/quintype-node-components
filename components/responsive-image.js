@@ -5,7 +5,7 @@ import {func} from 'prop-types';
 import omit from 'lodash/omit';
 import emptyWebGif from 'empty-web-gif';
 
-const USED_PARAMS = ["imageCDN","defaultWidth","widths","imgParams","slug","metadata","aspectRatio"];
+const USED_PARAMS = ["imageCDN","defaultWidth","widths","imgParams","slug","metadata","aspectRatio", "reactTag"];
 
 // Add the following CSS somewhere: img.qt-image { width: 100%; object-fit: cover; }
 
@@ -37,7 +37,7 @@ function responsiveProps(props) {
 
 export class ResponsiveImageBase extends React.Component {
   constructor(props, context) {
-    if(process.env.NODE_ENV == 'development' && !props.alt) {
+    if(process.env.NODE_ENV == 'development' && !props.alt && !props.reactTag) {
       global.console && global.console.warn(`Image Found without an alt attribute: ${responsiveProps(props).src}`);
     }
 
@@ -49,7 +49,7 @@ export class ResponsiveImageBase extends React.Component {
 
   render() {
     const imageProps = this.state.showImage ? responsiveProps(this.props) : {src: emptyWebGif};
-    return React.createElement("img", Object.assign(imageProps, omit(this.props, USED_PARAMS), {
+    return React.createElement(this.props.reactTag || "img", Object.assign(imageProps, omit(this.props, USED_PARAMS), {
       ref: dom => this.dom = dom,
       className: this.props.className ? `qt-image ${this.props.className}` : 'qt-image'
     }));
@@ -80,6 +80,12 @@ ResponsiveImageBase.contextTypes = {
 }
 
 export const ResponsiveImage = connect(mapStateToProps, {})(ResponsiveImageBase);
+
+export const ResponsiveSource = function(props) {
+  return React.createElement(ResponsiveImage, Object.assign({
+    reactTag: 'source'
+  }, props));
+}
 
 export function ResponsiveHeroImage(props) {
   return React.createElement(ResponsiveImage, Object.assign({
