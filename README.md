@@ -330,7 +330,7 @@ import { ResponsiveSource } from '@quintype/components';
       slug={props.story["hero-image-s3-key"]}
       metadata={props.story["hero-image-metadata"]}
       aspectRatio={[4,3]}
-      defaultWidth={480} widths={[250,480,640]}
+      widths={[250,480,640]}
       sizes="(max-width: 500px) 98vw, (max-width: 768px) 48vw, 23vw"
       imgParams={{auto:['format', 'compress']}}/>
 

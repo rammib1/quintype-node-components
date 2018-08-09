@@ -83,7 +83,9 @@ export const ResponsiveImage = connect(mapStateToProps, {})(ResponsiveImageBase)
 
 export const ResponsiveSource = function(props) {
   return React.createElement(ResponsiveImage, Object.assign({
-    reactTag: 'source'
+    reactTag: 'source',
+    src: false,
+    defaultWidth: 1024
   }, props));
 }
 
