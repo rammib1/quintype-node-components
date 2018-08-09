@@ -4,6 +4,7 @@ export * from './components/dfp-ad';
 export * from './components/hamburger-button';
 export * from './components/infinite-scroll';
 export * from './components/infinite-story-base';
+export * from './components/lazy-load-images';
 export * from './components/link';
 export * from './components/load-more-stories-base';
 export * from './components/loading-indicator';

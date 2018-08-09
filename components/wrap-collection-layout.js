@@ -3,7 +3,7 @@ import {connect} from 'react-redux';
 import get from 'lodash/get';
 
 import { LoadMoreCollectionStories } from './load-more-stories-base';
-import { LazyLoadImages } from './responsive-image';
+import { LazyLoadImages } from './lazy-load-images';
 import { ClientSideOnly } from './client-side-only';
 
 function loadMoreWrapper(Component, data, enableLoadMoreButton, slug, numStoriesToLoad) {
