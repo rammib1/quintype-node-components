@@ -51,7 +51,7 @@ export class LoadMoreStoriesBase extends React.Component {
     const stories = get(this.props, ['data', 'stories'], []);
     return getRequest("/api/v1/stories", Object.assign({}, this.props.params, {
       offset: this.props.numStoriesToLoad * (pageNumber - 1) + stories.length,
-      limit: this.props.numStoriesToLoad,
+      limit: this.props.numStoriesToLoad || 10,
       fields: this.props.fields
     })).json(response => response.stories || []);
   }
@@ -71,7 +71,7 @@ export class LoadMoreCollectionStories extends React.Component {
     const stories = get(this.props, ['data', 'stories'], []);
     return getRequest(`/api/v1/collections/${this.props.collectionSlug}`, Object.assign({}, this.props.params, {
       offset: this.props.numStoriesToLoad * (pageNumber - 1) + stories.length,
-      limit: this.props.numStoriesToLoad,
+      limit: this.props.numStoriesToLoad || 10,
     })).json(response => (response.items || []).map(item => item.story));
   }
 

@@ -38,7 +38,8 @@ function WrapCollectionComponent(Component) {
 
     const associatedMetadata = props.collection["associated-metadata"] || {};
     let stories = collectionToStories(props.collection);
-    stories = associatedMetadata.initial_stories_load_count ? stories.slice(0, associatedMetadata.initial_stories_load_count) : stories;
+    const initialStoriesLoadCount = associatedMetadata.initial_stories_load_count ? associatedMetadata.initial_stories_load_count : 6;
+    stories = stories.slice(0, initialStoriesLoadCount);
 
     if(stories.length == 0) {
       return <div></div>
@@ -49,7 +50,7 @@ function WrapCollectionComponent(Component) {
       associatedMetadata: associatedMetadata,
     });
 
-    const component = loadMoreWrapper(Component, data, associatedMetadata.enable_load_more_button, props.collection.slug, associatedMetadata.subsequent_stories_load_count);
+    const component = loadMoreWrapper(Component, data, associatedMetadata.enable_load_more_button, props.collection.slug, associatedMetadata.subsequent_stories_load_count || 10);
 
     return [clientSideLoadWrapper, lazyLoadWrapper].reduce((accumulator, currentElement) => currentElement(accumulator, associatedMetadata), component);
   }
