@@ -27,6 +27,7 @@ class BreakingNewsBase extends React.Component {
 
 function mapStateToProps(state) {
   return {
+    config: state.qt.config || {},
     breakingNews: state.breakingNews || [],
   }
 }
