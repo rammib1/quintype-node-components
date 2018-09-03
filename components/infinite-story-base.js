@@ -1,5 +1,5 @@
 import React from "react";
-
+import get from 'lodash/get';
 import { InfiniteScroll } from "./infinite-scroll.js";
 import { removeDuplicateStories } from '../utils';
 
@@ -20,7 +20,7 @@ export class InfiniteStoryBase extends React.Component {
 
   onFocus(index) {
     const item = this.allItems()[index];
-    global.app.maybeSetUrl("/" + item.story.slug, item.story.headline);
+    global.app.maybeSetUrl("/" + item.story.slug, get(item, ['story', 'seo', 'meta-title'], item.story.headline));
 
     this.props.onItemFocus && this.props.onItemFocus(item, index);
 
