@@ -1,9 +1,10 @@
 {
   "name": "@quintype/components",
-  "version": "1.31.2",
+  "version": "1.31.3-pre",
   "description": "Components to help build Quintype Node.js apps",
   "main": "dist/index.cjs.js",
   "module": "dist/index.es.js",
+  "sideEffects": false,
   "repository": {
     "type": "git",
     "url": "git+https://github.com/quintype/quintype-node-components.git"
