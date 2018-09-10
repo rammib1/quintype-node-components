@@ -1,17 +1,16 @@
 import babel from 'rollup-plugin-babel'
+import packageJson from "./package.json";
+const dependencies = packageJson.dependencies || {};
 
 export default {
-  input: 'index.js',
+  input: 'src/index.js',
   output: [
-    {format: "cjs", file: "dist/index.cjs.js"},
-    {format: "es", file: "dist/index.es.js"}
+    {format: "cjs", file: "dist/cjs/index.js"},
   ],
   plugins: [
     babel({
-      exclude: 'node_modules/**',
-      presets: ["react", "es2015-rollup"],
-      plugins: ["syntax-object-rest-spread", "transform-object-rest-spread"]
+      exclude: 'node_modules/**'
     })
   ],
-  external: ["react","redux","react-redux","wretch","lodash/get","lodash/omit","url","prop-types","quintype-js","classnames","get-youtube-id","react-youtube","react-dfp","atob","papaparse","empty-web-gif"]
+  external: Object.keys(dependencies).concat(["lodash/get", "lodash/omit"])
 };
