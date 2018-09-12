@@ -10,7 +10,8 @@
   plugins: [
     "annotate-pure-calls",
     "@babel/plugin-syntax-object-rest-spread",
-    "transform-react-remove-prop-types"
+    "transform-react-remove-prop-types",
+    "@babel/plugin-syntax-dynamic-import"
   ]
 }
 

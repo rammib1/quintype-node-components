@@ -1,5 +1,4 @@
 import React from "react";
-import papa from "papaparse";
 
 function TableHeader(columns) {
   return <thead>
@@ -31,10 +30,12 @@ export class Table extends React.Component {
   }
 
   parseCSVToJson(content) {
-    papa.parse(content, {
-      header: this.props.hasHeader,
-      complete: results => this.setState({ tableData: results.data })
-    });
+    import(/* webpackChunkName: "qtc-parsecsv" */ "papaparse").then(({parse}) => {
+      parse(content, {
+        header: this.props.hasHeader,
+        complete: results => this.setState({ tableData: results.data })
+      });
+    })
   }
 
   componentDidMount() {
