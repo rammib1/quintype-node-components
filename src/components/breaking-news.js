@@ -2,7 +2,7 @@ import React from "react";
 import {connect} from "react-redux";
 import {BREAKING_NEWS_UPDATED} from '../store/actions';
 import {Link} from "./link";
-import { get } from 'dot-prop-immutable';
+import get from 'lodash/get';
 import {getRequest} from './api-client';
 
 class BreakingNewsBase extends React.Component {

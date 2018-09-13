@@ -24,10 +24,9 @@
   "dependencies": {
     "atob": "^2.0.3",
     "classnames": "^2.2.5",
-    "dot-prop-immutable": "^1.4.0",
     "empty-web-gif": "^1.0.0",
     "get-youtube-id": "^1.0.0",
-    "object.omit": "^3.0.0",
+    "lodash": "^4.17.4",
     "papaparse": "^4.3.6",
     "prop-types": "^15.6.0",
     "quintype-js": "^1.1.0",

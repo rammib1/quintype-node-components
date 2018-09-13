@@ -1,5 +1,5 @@
 import React from "react";
-import { get } from 'dot-prop-immutable';
+import get from 'lodash/get';
 import { InfiniteScroll } from "./infinite-scroll.js";
 import { removeDuplicateStories } from '../utils';
 
