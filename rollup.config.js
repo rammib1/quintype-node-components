@@ -12,5 +12,5 @@ export default {
       exclude: 'node_modules/**'
     })
   ],
-  external: Object.keys(dependencies).concat(["lodash/get", "lodash/omit"])
+  external: Object.keys(dependencies)
 };

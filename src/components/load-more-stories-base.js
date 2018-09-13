@@ -1,6 +1,6 @@
 import React from 'react';
 
-import get from 'lodash/get';
+import { get } from 'dot-prop-immutable';
 import { removeDuplicateStories } from '../utils';
 import { getRequest } from './api-client';
 

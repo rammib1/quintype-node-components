@@ -1,6 +1,6 @@
 import React from "react";
 import {connect} from "react-redux";
-import omit from "lodash/omit";
+import omit from "object.omit";
 
 function LinkBase(props) {
   return React.createElement("a", Object.assign(omit(props, "navigateTo"), {
