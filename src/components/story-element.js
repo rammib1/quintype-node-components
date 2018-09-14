@@ -1,8 +1,7 @@
 import React from "react";
 import classNames from "classnames";
-import getYouTubeID from 'get-youtube-id';
-import YouTube from 'react-youtube';
 import JSEmbed from './story-elements/jsembed';
+import StoryElementYoutube from './story-elements/youtube';
 import { ResponsiveImage } from "./responsive-image";
 import Polltype from './story-elements/polltype';
 import {Table} from './story-elements/table';
@@ -49,15 +48,6 @@ function StoryElementSoundCloud({element}) {
 
 function StoryElementJsembed({element}) {
   return React.createElement(JSEmbed, {embedJS: element['embed-js'], id: element['id']});
-}
-
-function StoryElementYoutube({element}) {
-  const opts = {
-    playerVars: {
-      autoplay: 0
-    }
-  };
-  return React.createElement(YouTube, {videoId: getYouTubeID(element.url), opts:opts });
 }
 
 function StoryElementPolltype({element}) {
