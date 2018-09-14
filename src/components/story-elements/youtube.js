@@ -2,12 +2,19 @@ import React from "react";
 import getYouTubeID from 'get-youtube-id';
 
 let YouTube = null;
+let loaderPromise = null;
 
 function loadLibrary(){
-  return import(/* webpackChunkName: "qtc-react-youtube" */ "react-youtube")
-    .then(YT => {
+  if (loaderPromise === null) {
+    loaderPromise = import(/* webpackChunkName: "qtc-react-youtube" */ "react-youtube").then(YT => {
       YouTube = YT.default;
+    }).catch(err => {
+      console.log('Failed to load react-youtube', err);
+      return Promise.reject();
     });
+  }
+
+  return loaderPromise;
 }
 
 function isLibraryLoaded(){
