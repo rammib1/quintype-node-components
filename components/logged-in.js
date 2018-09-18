@@ -1,37 +1,39 @@
 import React from "react";
-import {connect} from "react-redux";
-import {getRequest} from './api-client';
-import {MEMBER_UPDATED} from '../store/actions';
+import { connect } from "react-redux";
+import { getRequest } from './api-client';
+import { MEMBER_UPDATED } from '../store/actions';
 
 let loadedMember = false;
 
 class LoggedInBase extends React.Component {
   componentDidMount() {
-    if(!loadedMember) {
+    if (!loadedMember) {
       loadedMember = true;
       getRequest('/api/v1/members/me')
-        .json(({member}) => this.props.memberUpdated(member))
+        .json(({ member }) => this.props.memberUpdated(member))
+        .catch(error => console.error(error))
     }
   }
 
   render() {
-    const {member, loggedInView, loggedOutView, ...props} = this.props;
-    if(member) 
-      return React.createElement(loggedInView, {member: member, ...props})
-    else
-      return React.createElement(loggedOutView, props);
+    const { member, renderLoggedIn, renderLoggedOut, ...props } = this.props;
+    if (member) {
+      return React.createElement(renderLoggedIn, { member, ...props})
+    } else {
+      return React.createElement(renderLoggedOut, props);
+    }
   }
 }
 
 function mapStateToProps(state) {
   return {
-    member: state.member || null,
+    member: state.member || null
   }
 }
 
 function mapDispatchToProps(dispatch) {
   return {
-    memberUpdated: (member) => dispatch({type: MEMBER_UPDATED, member: member})
+    memberUpdated: member => dispatch({ type: MEMBER_UPDATED, member })
   };
 }
 
