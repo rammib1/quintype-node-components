@@ -16,6 +16,7 @@ This is a set of components that is to be used to build a Quintype Node App. Thi
 - [LoadMoreBase](#loadmorebase)
 - [LoadMoreCollectionStories](#loadmorecollectionstories)
 - [LoadingIndicator](#loadingindicator)
+- [LoggedIn](#loggedin)
 - [Menu](#menu)
 - [NavigationComponentBase](#navigationcomponentbase)
 - [ResponsiveHeroImage](#responsiveheroimage)
@@ -254,6 +255,26 @@ import { LoadingIndicator } from '@quintype/components';
 <LoadingIndicator>
   <div className="spinner">Please Wait</div>
 </LoadingIndicator>
+```
+
+### LoggedIn
+This component renders one thing for logged out users, and a different thing for logged in users. It will automatically call `/api/v1/members/me` to figure out if you are logged in, and replace the contents in the store and the dom. In future, this may use LocalStorage to cache the member for some time.
+
+```javascript
+import {LoggedIn} from '@quintype/components';
+
+function LoggedInView({member}) {
+  return <div>{member.name}</div>
+}
+
+function LoginBar({someProp}) {
+  return <div>Please Login!</div>
+}
+
+<LoggedIn
+  loggedInView={LoggedInView}
+  loggedOutView={LoginBar}
+  someProp="here"/>
 ```
 
 ### Menu
