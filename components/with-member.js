@@ -7,19 +7,28 @@ import { MEMBER_UPDATED } from '../store/actions';
 let loadedMember = false;
 
 class WithMemberBase extends React.Component {
+  constructor(props) {
+    super(props);
+    this.checkForMemberUpdated = this.checkForMemberUpdated.bind(this);
+  }
+
+  checkForMemberUpdated() {
+    return getRequest('/api/v1/members/me')
+      .forbidden(() => this.props.memberUpdated(null))
+      .unauthorized(() => this.props.memberUpdated(null))
+      .json(({ member }) => this.props.memberUpdated(member))
+  }
+
   componentDidMount() {
     if (!loadedMember) {
       loadedMember = true;
-      getRequest('/api/v1/members/me')
-        .forbidden(() => this.props.memberUpdated(null))
-        .unauthorized(() => this.props.memberUpdated(null))
-        .json(({ member }) => this.props.memberUpdated(member))
+      this.checkForMemberUpdated();
     }
   }
 
   render() {
     const { member, logout, children } = this.props;
-    return children({ member, logout });    
+    return children({ member, logout, checkForMemberUpdated: this.checkForMemberUpdated });
   }
 }
 

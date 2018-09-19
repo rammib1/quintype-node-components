@@ -432,12 +432,12 @@ const MyStoryElement = withError(ClassThatMayCrash, optionalErrorFn)
 ### WithMember
 This is a render props component which will call your callback with the current logged in member. It will automatically call `/api/v1/members/me` to figure out if you are logged in, and replace the contents in the store and callback. In future, this may use LocalStorage to cache the member for some time.
 
-The render will also be passed a function to call for logging out.
+The render will also be passed a function to call for logging out, and another to force the library to check if the member is now logged in.
 
 ```javascript
 import { WithMember } from '@quintype/components';
 
-function MyView({ member, logout }) {
+function MyView({ member, logout, checkForMemberUpdated }) {
   return member ? <div>{member.name} <a onClick={logout}>Logout</a></div> : <div>Please Login!</div>;
 }
 
