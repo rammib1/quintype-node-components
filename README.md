@@ -430,7 +430,7 @@ const MyStoryElement = withError(ClassThatMayCrash, optionalErrorFn)
 ```
 
 ### WithMember
-This returns a higher order component which will read the current member and add it as a property. It will automatically call `/api/v1/members/me` to figure out if you are logged in, and replace the contents in the store and the dom. In future, this may use LocalStorage to cache the member for some time.
+This is a render props component which will call your callback with the current logged in member. It will automatically call `/api/v1/members/me` to figure out if you are logged in, and replace the contents in the store and callback. In future, this may use LocalStorage to cache the member for some time.
 
 The render will also be passed a function to call for logging out.
 
