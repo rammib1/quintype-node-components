@@ -1,30 +1,33 @@
 import React from "react";
 import { connect } from "react-redux";
+import PropTypes from "prop-types";
 import { getRequest } from './api-client';
 import { MEMBER_UPDATED } from '../store/actions';
 
 let loadedMember = false;
 
-export function withMember(Component) {
-  class WithMember extends React.Component {
-    componentDidMount() {
-      if (!loadedMember) {
-        loadedMember = true;
-        getRequest('/api/v1/members/me')
-          .forbidden(() => this.props.memberUpdated(null))
-          .unauthorized(() => this.props.memberUpdated(null))
-          .json(({ member }) => this.props.memberUpdated(member))
-      }
-    }
-
-    render() {
-      const { memberUpdated, ...props } = this.props;
-      return <Component {...props} />;
+class WithMemberBase extends React.Component {
+  componentDidMount() {
+    if (!loadedMember) {
+      loadedMember = true;
+      getRequest('/api/v1/members/me')
+        .forbidden(() => this.props.memberUpdated(null))
+        .unauthorized(() => this.props.memberUpdated(null))
+        .json(({ member }) => this.props.memberUpdated(member))
     }
   }
 
-  return connect(mapStateToProps, mapDispatchToProps)(WithMember);
+  render() {
+    const { member, logout, children } = this.props;
+    return children({ member, logout });    
+  }
 }
+
+WithMemberBase.propTypes = {
+  children: PropTypes.func.isRequired
+}
+
+export const WithMember = connect(mapStateToProps, mapDispatchToProps)(WithMemberBase);
 
 function mapStateToProps(state) {
   return {

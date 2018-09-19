@@ -435,14 +435,17 @@ This returns a higher order component which will read the current member and add
 The render will also be passed a function to call for logging out.
 
 ```javascript
-import { withMember } from '@quintype/components';
+import { WithMember } from '@quintype/components';
 
-function MyViewBase({ member, someProp, logout }) {
+function MyView({ member, logout }) {
   return member ? <div>{member.name} <a onClick={logout}>Logout</a></div> : <div>Please Login!</div>;
 }
 
-const MyView = withMember(MyViewBase);
-<MyView someProp="things">
+<WithMember>
+  {({ member, logout }) => (
+    <MyView member={member} logout={logout} />
+  )}
+</WithMember>
 ```
 
 ### Review Rating
