@@ -25,6 +25,7 @@ This is a set of components that is to be used to build a Quintype Node App. Thi
 - [SocialShare](#socialshare)
 - [StoryElement](#storyelement)
 - [WithError](#witherror)
+- [WithMember](#withmember)
 - [Review Rating](#review-rating)
 
 ### BreakingNews
@@ -426,6 +427,25 @@ function optionalErrorFn(props) {
 }
 
 const MyStoryElement = withError(ClassThatMayCrash, optionalErrorFn)
+```
+
+### WithMember
+This returns a higher order component which will read the current member and add it as a property. It will automatically call `/api/v1/members/me` to figure out if you are logged in, and replace the contents in the store and the dom. In future, this may use LocalStorage to cache the member for some time.
+
+The render will also be passed a function to call for logging out.
+
+```javascript
+import { WithMember } from '@quintype/components';
+
+function MyView({ member, logout }) {
+  return member ? <div>{member.name} <a onClick={logout}>Logout</a></div> : <div>Please Login!</div>;
+}
+
+<WithMember>
+  {({ member, logout }) => (
+    <MyView member={member} logout={logout} />
+  )}
+</WithMember>
 ```
 
 ### Review Rating
