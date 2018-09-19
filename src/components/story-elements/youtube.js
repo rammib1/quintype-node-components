@@ -32,7 +32,12 @@ export default class StoryElementYoutube extends React.Component {
   }
 
   componentDidMount(){
-    loadLibrary().then(() => this.forceUpdate());
+    this._isMounted = true;
+    loadLibrary().then(() => this._isMounted && this.forceUpdate());
+  }
+
+  componentWillUnmount() {
+    this._isMounted = false;
   }
 
   render() {

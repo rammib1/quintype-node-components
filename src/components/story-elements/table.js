@@ -33,13 +33,18 @@ export class Table extends React.Component {
     import(/* webpackChunkName: "qtc-parsecsv" */ "papaparse").then(({parse}) => {
       parse(content, {
         header: this.props.hasHeader,
-        complete: results => this.setState({ tableData: results.data })
+        complete: results => this._isMounted && this.setState({ tableData: results.data })
       });
     })
   }
 
   componentDidMount() {
+    this._isMounted = true;
     this.parseCSVToJson(this.props.data.content);
+  }
+
+  componentWillUnmount() {
+    this._isMounted = false;
   }
 
   componentWillReceiveProps(nextProps) {
