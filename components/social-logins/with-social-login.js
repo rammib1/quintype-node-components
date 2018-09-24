@@ -38,7 +38,7 @@ WithSocialLogin.defaultProps = {
   initialize: () => {},
   // function is rebound in WithSocialLogin
   socialLogin: function() {
-    window.location = this.state.serverSideLoginPath;
+    window.location = this.serverSideLoginPath;
     return Promise.reject('EXPECT_REDIRECT');
   }
 }
