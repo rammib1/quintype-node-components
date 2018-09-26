@@ -13,7 +13,13 @@ function LinkBase(props) {
 
       e.preventDefault();
       e.stopPropagation();
-      props.navigateTo(props.href)
+
+      if(props.externalLink) {
+        global.open(props.externalLink, "_blank");
+      }
+      else {
+        props.navigateTo(props.href);
+      }
     }
   }));
 }
