@@ -1,5 +1,4 @@
 import React from "react";
-import URL from "url";
 import { Link } from "./link";
 import {connect} from "react-redux";
 
@@ -26,7 +25,7 @@ function mapStateToProps(state) {
 export const Menu = connect(mapStateToProps, () => ({}))(MenuBase);
 
 function getRelativeUrl(url) {
-  const {pathname, search, hash} = new URL.parse(url);
+  const {pathname, search, hash} = new URL(url);
   return `${pathname}${search || ""}${hash || ""}`;
 }
 

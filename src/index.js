@@ -24,4 +24,6 @@ export * from './components/load-more-button';
 export * from './components/with-member';
 export * from './components/social-logins/index';
 
+export * from './store/actions';
+export * from './store/reducers';
 export * from './utils';

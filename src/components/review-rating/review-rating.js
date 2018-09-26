@@ -47,7 +47,7 @@ const ReviewRating = ({
 
 export { ReviewRating };
 
-ReviewRating.PropTypes = {
+ReviewRating.propTypes = {
   // Rating value to be displayed
   value: PropTypes.number.isRequired,
   // Size of the icon (star)
