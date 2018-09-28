@@ -22,14 +22,14 @@ function StoryElementAlsoRead({element, story}) {
   );
 }
 
-function StoryElementImage({element, story = {}, widths, defaultWidth}) {
+function StoryElementImage({element, story = {}, imageWidths, imageDefaultWidth}) {
   return React.createElement("figure", {},
     React.createElement(ResponsiveImage, {
       slug: element["image-s3-key"],
       metadata: element["metadata"],
       aspectRatio: null,
-      defaultWidth: defaultWidth || 480,
-      widths: widths || [320,480,640],
+      defaultWidth: imageDefaultWidth || 640,
+      widths: imageWidths || [360,640,1200],
       imgParams: {auto:['format', 'compress']},
       alt: element.title || story.headline
     }),
