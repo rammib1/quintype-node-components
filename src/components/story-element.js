@@ -28,8 +28,8 @@ function StoryElementImage({element, story = {}}) {
       slug: element["image-s3-key"],
       metadata: element["metadata"],
       aspectRatio: null,
-      defaultWidth: 480,
-      widths: [250,480,640],
+      defaultWidth: 940,
+      widths: [360,940,1200],
       imgParams: {auto:['format', 'compress']},
       alt: element.title || story.headline
     }),
