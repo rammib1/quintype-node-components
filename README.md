@@ -414,7 +414,10 @@ function StoryCard(props){
   </div>
 }
 ```
-
+For different quality images in Image Story Element, pass `imageWidths` and `imageDefaultWidth` as props. like
+```
+<StoryElement story={story} element={element} imageWidths={[420,1040,1600]} imageDefaultWidth={1040}/>
+```
 ### WithError
 This function can be used to generate a wrapper component that implements `componentDidCatch()`.
 
