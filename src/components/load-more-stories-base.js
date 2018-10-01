@@ -49,7 +49,7 @@ export class LoadMoreStoriesManager extends React.Component {
 export class LoadMoreStoriesBase extends React.Component {
   loadMoreStories(pageNumber) {
     const stories = get(this.props, ['data', 'stories'], []);
-    return getRequest("/api/v1/stories", Object.assign({}, this.props.params, {
+    return getRequest(this.props.api || '/api/v1/stories', Object.assign({}, this.props.params, {
       offset: this.props.numStoriesToLoad * (pageNumber - 1) + stories.length,
       limit: this.props.numStoriesToLoad || 10,
       fields: this.props.fields
