@@ -11,6 +11,7 @@ This is a set of components that is to be used to build a Quintype Node App. Thi
 - [ImageGalleryElement](#imagegalleryelement)
 - [InfiniteScroll](#infinitescroll)
 - [InfiniteStoryBase](#infinitestorybase)
+- [LazyCollection](#lazycollection)
 - [LazyLoadImages](#lazyloadimages)
 - [Link](#link)
 - [LoadMoreBase](#loadmorebase)
@@ -49,7 +50,7 @@ import {BreakingNewsItem} from '@quintype/components'
 
 ### Collection
 
-This component can be used to render a collection. You should typically pass this a collection that represents a page
+This component can be used to render a collection. You should typically pass this a collection that represents a page. Also see [LazyCollection](#lazycollection).
 
 ```javascript
 import {Collection} from '@quintype/components'
@@ -177,6 +178,23 @@ function StoryPage(props) {
 }
 
 exports.StoryPage = StoryPage;
+```
+
+### LazyCollection
+
+This component can be used to render a collection, but with the components being lazy. This takes all the same options as Collection, but with a `lazyAfter` prop.
+
+Note: This does not accept `interstitial` items (yet). And home page items are not hidden after being rendered
+
+```javascript
+import { LazyCollection } from '@quintype/components'
+
+// collection = Collection.getCollectionBySlug(client, 'home', {}, {depth: 1})
+
+<LazyCollection collection={collection}
+                collectionTemplates={collectionTemplates}
+                storyTemplates={storyTemplates}
+                lazyAfter={3} />
 ```
 
 ### LazyLoadImages

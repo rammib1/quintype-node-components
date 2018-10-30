@@ -53,8 +53,9 @@ class ScrollLoadMore extends React.Component {
 class InfiniteScrollBase extends React.Component {
   constructor(props) {
     super(props);
+    const initiallyShow = props.initiallyShow || 1;
     this.state = {
-      visibleComponents: {0: true}
+      visibleComponents: [...Array(initiallyShow).keys()].reduce((arr, i) => { arr[i] = true; return arr }, {})
     }
     if(global.IntersectionObserver) {
       this.loadObserver = new IntersectionObserver((x) => this.intersectionCallback(x), {
@@ -72,14 +73,20 @@ class InfiniteScrollBase extends React.Component {
     entries.forEach(entry => {
 
       // Stupid browsers like UC and Mi don't correctly support the spec
-      if(entry.isIntersecting === undefined)
-        return;
+      if(entry.isIntersecting === undefined) {
+        if(this.props.showAllOnLegacyBrowser) {
+          entry.isIntersecting = true;
+        } else {
+          return;
+        }
+      }
 
       const item = entry.target.getAttribute("data-infinite-scroll");
       if(item == 'load-more' && entry.isIntersecting) {
         this.props.loadNext();
       } else {
-        visibleComponents = Object.assign({}, visibleComponents, {[item]: entry.isIntersecting});
+        const showItem = this.props.neverHideItem ? visibleComponents[item] || entry.isIntersecting : entry.isIntersecting;
+        visibleComponents = Object.assign({}, visibleComponents, {[item]: showItem});
       }
     })
     this.setState({visibleComponents: visibleComponents});
