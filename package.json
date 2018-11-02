@@ -69,6 +69,7 @@
     "clean:dist": "rimraf dist",
     "prepack": "npm run build",
     "prepublishOnly": "npm install && git diff --quiet && git tag -m '' -a v$(cat package.json | grep version | head -n1  | cut -d \\\" -f 4) && git push --follow-tags origin",
-    "sync-files-to": "npx onchange --verbose --wait --await-write-finish 'src/**/*' -- ./bin-dev-scripts/sync-to.sh "
+    "sync-files-to": "npx onchange --verbose --wait --await-write-finish 'src/**/*' -- ./bin-dev-scripts/sync-to.sh ",
+    "lint:js:ci": "npx eslint $(git diff --pretty='' --name-only origin/master..HEAD -- '*.js') ./index.js"
   }
 }
