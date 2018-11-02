@@ -1,10 +1,16 @@
 import React from "react";
-import {connect} from "react-redux";
+import { connect } from "react-redux";
 
 function LoadingIndicatorBase(props) {
-  return <div className={`loading-indicator ${props.loading ? 'loading-indicator-loading' : ''}`}>
-    {props.loading && props.children}
-  </div>
+  return (
+    <div
+      className={`loading-indicator ${
+        props.loading ? "loading-indicator-loading" : ""
+      }`}
+    >
+      {props.loading && props.children}
+    </div>
+  );
 }
 
 function mapStateToProps(state) {
@@ -17,4 +23,7 @@ function mapDispatchToProps() {
   return {};
 }
 
-export const LoadingIndicator = connect(mapStateToProps, mapDispatchToProps)(LoadingIndicatorBase);
+export const LoadingIndicator = connect(
+  mapStateToProps,
+  mapDispatchToProps
+)(LoadingIndicatorBase);

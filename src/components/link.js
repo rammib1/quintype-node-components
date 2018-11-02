@@ -1,27 +1,27 @@
 import React from "react";
-import {connect} from "react-redux";
+import { connect } from "react-redux";
 import omit from "lodash/omit";
 
 function LinkBase(props) {
-  return React.createElement("a", Object.assign(omit(props, "navigateTo"), {
-    onClick(e) {
-      if(global.disableAjaxLinks)
-        return;
+  return React.createElement(
+    "a",
+    Object.assign(omit(props, "navigateTo"), {
+      onClick(e) {
+        if (global.disableAjaxLinks) return;
 
-      if(e.ctrlKey || e.metaKey || e.shiftKey)
-        return;
+        if (e.ctrlKey || e.metaKey || e.shiftKey) return;
 
-      e.preventDefault();
-      e.stopPropagation();
+        e.preventDefault();
+        e.stopPropagation();
 
-      if(props.externalLink) {
-        global.open(props.externalLink, "_blank");
+        if (props.externalLink) {
+          global.open(props.externalLink, "_blank");
+        } else {
+          props.navigateTo(props.href);
+        }
       }
-      else {
-        props.navigateTo(props.href);
-      }
-    }
-  }));
+    })
+  );
 }
 
 function mapStateToProps(state) {
@@ -36,4 +36,7 @@ function mapDispatchToProps(dispatch) {
   };
 }
 
-export const Link = connect(mapStateToProps, mapDispatchToProps)(LinkBase);
+export const Link = connect(
+  mapStateToProps,
+  mapDispatchToProps
+)(LinkBase);

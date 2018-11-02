@@ -1,16 +1,27 @@
 import React from "react";
 import { Link } from "./link";
-import {connect} from "react-redux";
+import { connect } from "react-redux";
 
-function MenuBase({children, className, itemClassName, items, currentUrl, slice}) {
+function MenuBase({
+  children,
+  className,
+  itemClassName,
+  items,
+  currentUrl,
+  slice
+}) {
   items = items.slice.apply(items, slice);
   return (
     <ul className={className}>
       {children}
-      {items.map((item, ix) => <MenuItem key={ix}
-                                         item={item}
-                                         className={itemClassName}
-                                         currentUrl={currentUrl}/>)}
+      {items.map((item, ix) => (
+        <MenuItem
+          key={ix}
+          item={item}
+          className={itemClassName}
+          currentUrl={currentUrl}
+        />
+      ))}
     </ul>
   );
 }
@@ -18,25 +29,46 @@ function MenuBase({children, className, itemClassName, items, currentUrl, slice}
 function mapStateToProps(state) {
   return {
     items: state.qt.config.layout.menu,
-    currentUrl: state.qt.currentPath,
-  }
+    currentUrl: state.qt.currentPath
+  };
 }
 
-export const Menu = connect(mapStateToProps, () => ({}))(MenuBase);
+export const Menu = connect(
+  mapStateToProps,
+  () => ({})
+)(MenuBase);
 
 function getRelativeUrl(url) {
-  const {pathname, search, hash} = new URL(url);
+  const { pathname, search, hash } = new URL(url);
   return `${pathname}${search || ""}${hash || ""}`;
 }
 
 function getMenuItemBody(item, className, url, currentUrl) {
-  switch(item['item-type']) {
-    case 'section': return <Link href={url} className={className}>{item.title}</Link>
-    default: return <a href={item.url} className={className}>{item.title}</a>;
+  switch (item["item-type"]) {
+    case "section":
+      return (
+        <Link href={url} className={className}>
+          {item.title}
+        </Link>
+      );
+    default:
+      return (
+        <a href={item.url} className={className}>
+          {item.title}
+        </a>
+      );
   }
 }
 
-export function MenuItem({item, className, currentUrl}) {
+export function MenuItem({ item, className, currentUrl }) {
   const url = getRelativeUrl(item.url);
-  return <li>{getMenuItemBody(item, `${className}${currentUrl == url ? " active": ""}`, url)}</li>;
+  return (
+    <li>
+      {getMenuItemBody(
+        item,
+        `${className}${currentUrl == url ? " active" : ""}`,
+        url
+      )}
+    </li>
+  );
 }

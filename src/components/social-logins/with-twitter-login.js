@@ -1,9 +1,14 @@
-import React from 'react';
-import { WithSocialLogin } from './with-social-login';
+import React from "react";
+import { WithSocialLogin } from "./with-social-login";
 
-export function WithTwitterLogin({ clientId, children, scope, emailMandatory }) {
+export function WithTwitterLogin({
+  clientId,
+  children,
+  scope,
+  emailMandatory
+}) {
   return React.createElement(WithSocialLogin, {
-    provider: 'twitter',
+    provider: "twitter",
     children: children
   });
 }

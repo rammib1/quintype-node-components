@@ -1,22 +1,22 @@
 import React from "react";
-import {func} from 'prop-types';
+import { func } from "prop-types";
 
 // A non lazy intersection observer (just load all the images)
 class FakeIntersectionObserver {
   constructor(callback) {
     this.callback = callback;
-    console && console.warn && console.warn("IntersectionObserver was not found");
+    console &&
+      console.warn &&
+      console.warn("IntersectionObserver was not found");
   }
 
   observe(dom) {
-    this.callback([{isIntersecting: true, target: dom}])
+    this.callback([{ isIntersecting: true, target: dom }]);
   }
 
-  unobserve() {
-  }
+  unobserve() {}
 
-  disconnect() {
-  }
+  disconnect() {}
 }
 
 class IntersectionObserverWrapper {
@@ -26,11 +26,16 @@ class IntersectionObserverWrapper {
   }
 
   start(margin) {
-    this.observer = new global.IntersectionObserver((entries) => this.onObservation(entries), {
-      rootMargin: margin,
-      threshold: 0,
-    })
-    this.observedItems.forEach(([dom, component]) => this.observer.observe(dom));
+    this.observer = new global.IntersectionObserver(
+      entries => this.onObservation(entries),
+      {
+        rootMargin: margin,
+        threshold: 0
+      }
+    );
+    this.observedItems.forEach(([dom, component]) =>
+      this.observer.observe(dom)
+    );
   }
 
   onObservation(entries) {
@@ -39,7 +44,7 @@ class IntersectionObserverWrapper {
       .map(entry => entry.target)
       .forEach(dom => {
         const index = this.observedItems.findIndex(x => x[0] == dom);
-        if(index > -1) {
+        if (index > -1) {
           const component = this.observedItems[index][1];
           this.callback(component);
           this.unregister(dom, component);
@@ -83,12 +88,14 @@ class StubObserverWrapper {
 export class LazyLoadImages extends React.Component {
   constructor(props) {
     super(props);
-    const callback = component => component.showImage()
-    this.observerWrapper = global.IntersectionObserver ? new IntersectionObserverWrapper(callback) : new StubObserverWrapper(callback);
+    const callback = component => component.showImage();
+    this.observerWrapper = global.IntersectionObserver
+      ? new IntersectionObserverWrapper(callback)
+      : new StubObserverWrapper(callback);
   }
 
   componentDidMount() {
-    this.observerWrapper.start(this.props.margin || "500px")
+    this.observerWrapper.start(this.props.margin || "500px");
   }
 
   componentWillUnmount() {
@@ -97,9 +104,11 @@ export class LazyLoadImages extends React.Component {
 
   getChildContext() {
     return {
-      lazyLoadObserveImage: (dom, component) => dom && this.observerWrapper.register(dom, component),
-      lazyLoadUnobserveImage: (dom, component) => dom && this.observerWrapper.unregister(dom, component)
-    }
+      lazyLoadObserveImage: (dom, component) =>
+        dom && this.observerWrapper.register(dom, component),
+      lazyLoadUnobserveImage: (dom, component) =>
+        dom && this.observerWrapper.unregister(dom, component)
+    };
   }
 
   render() {
@@ -110,4 +119,4 @@ export class LazyLoadImages extends React.Component {
 LazyLoadImages.childContextTypes = {
   lazyLoadObserveImage: func,
   lazyLoadUnobserveImage: func
-}
+};
