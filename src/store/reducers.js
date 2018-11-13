@@ -41,7 +41,7 @@ function hamburgerOpenedReducer(state = false, action) {
   }
 }
 
-function memberReducer(state = null, action) {
+function memberReducer(state = undefined, action) {
   switch(action.type) {
     case MEMBER_UPDATED: return action.member;
     default: return state;
