@@ -455,6 +455,8 @@ This is a render props component which will call your callback with the current 
 
 The render will also be passed a function to call for logging out, and another to force the library to check if the member is now logged in.
 
+On initial load, the `isLoading` prop will be set, which will become false when the user is loaded. Use this field to avoid showing a Login Button while fetch is happening.
+
 ```javascript
 import { WithMember } from '@quintype/components';
 
@@ -463,8 +465,8 @@ function MyView({ member, logout, checkForMemberUpdated }) {
 }
 
 <WithMember>
-  {({ member, logout }) => (
-    <MyView member={member} logout={logout} />
+  {({ member, logout, isLoading }) => (
+    <MyView member={member} logout={logout} isLoading={isLoading} />
   )}
 </WithMember>
 ```
