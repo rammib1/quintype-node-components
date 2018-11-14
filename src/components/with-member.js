@@ -27,7 +27,7 @@ class WithMemberBase extends React.Component {
   }
 
   render() {
-    const { member, logout, children } = this.props;
+    const { member, logout, children, isLoading } = this.props;
     return children({ member, logout, isLoading, checkForMemberUpdated: this.checkForMemberUpdated});
   }
 }
