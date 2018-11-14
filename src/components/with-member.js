@@ -28,7 +28,7 @@ class WithMemberBase extends React.Component {
 
   render() {
     const { member, logout, children } = this.props;
-    return children({ member, logout, checkForMemberUpdated: this.checkForMemberUpdated, isLoading: typeof(member) == 'undefined' });
+    return children({ member, logout, isLoading, checkForMemberUpdated: this.checkForMemberUpdated});
   }
 }
 
@@ -40,7 +40,8 @@ export const WithMember = connect(mapStateToProps, mapDispatchToProps)(WithMembe
 
 function mapStateToProps(state) {
   return {
-    member: state.member || null
+    member: state.member || null,
+    isLoading: state.member === false,
   }
 }
 

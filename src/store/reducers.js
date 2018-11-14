@@ -41,7 +41,9 @@ function hamburgerOpenedReducer(state = false, action) {
   }
 }
 
-function memberReducer(state = undefined, action) {
+// member is set to false when loading, then it is either
+// null or a member object
+function memberReducer(state = false, action) {
   switch(action.type) {
     case MEMBER_UPDATED: return action.member;
     default: return state;
