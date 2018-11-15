@@ -20,6 +20,8 @@ function LinkBase(props) {
       else {
         props.navigateTo(props.href);
       }
+
+      typeof props.callback === 'function' && props.callback(e);
     }
   }));
 }
