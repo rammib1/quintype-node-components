@@ -35,10 +35,10 @@ class IntersectionObserverWrapper {
 
   onObservation(entries) {
     entries
-      .filter(entry => entry.isIntersecting)
+      .filter(entry => entry.isIntersecting === undefined || entry.isIntersecting)
       .map(entry => entry.target)
       .forEach(dom => {
-        const index = this.observedItems.findIndex(x => x[0] == dom);
+        const index = this.observedItems.findIndex(x => x[0] === dom);
         if(index > -1) {
           const component = this.observedItems[index][1];
           this.callback(component);
