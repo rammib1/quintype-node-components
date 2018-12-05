@@ -7,6 +7,7 @@ import {
   HAMBURGER_CLICKED,
   HAMBURGER_CLOSED,
   MEMBER_UPDATED,
+  MEMBER_LOADING,
 } from './actions';
 
 function breakingNewsReducer(state = [], action) {
@@ -50,10 +51,19 @@ function memberReducer(state = false, action) {
   }
 }
 
+// TODO: Refactor to use one reducer for loading and update.
+function memberLoadingReducer(state = true, action) {
+  switch(action.type) {
+    case MEMBER_LOADING: return action.loading;
+    default: return state;
+  }
+}
+
 export const ComponentReducers = {
   breakingNews: breakingNewsReducer,
   clientSideRendered: clientSideRenderedReducer,
   pageLoading: pageLoadingReducer,
   hamburgerOpened: hamburgerOpenedReducer,
   member: memberReducer,
+  memberLoading: memberLoadingReducer
 };

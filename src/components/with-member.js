@@ -2,7 +2,7 @@ import React from "react";
 import { connect } from "react-redux";
 import PropTypes from "prop-types";
 import { getRequest } from './api-client';
-import { MEMBER_UPDATED } from '../store/actions';
+import { MEMBER_UPDATED, MEMBER_LOADING } from '../store/actions';
 
 let loadedMember = false;
 
@@ -13,10 +13,21 @@ class WithMemberBase extends React.Component {
   }
 
   checkForMemberUpdated() {
+    this.props.memberLoading(true);
+
     return getRequest('/api/v1/members/me')
-      .forbidden(() => this.props.memberUpdated(null))
-      .unauthorized(() => this.props.memberUpdated(null))
-      .json(({ member }) => this.props.memberUpdated(member))
+      .forbidden(() => {
+        this.props.memberLoading(false);
+        this.props.memberUpdated(null)
+      })
+      .unauthorized(() => {
+        this.props.memberLoading(false);
+        this.props.memberUpdated(null)
+      })
+      .json(({ member }) => {
+        this.props.memberLoading(false);
+        this.props.memberUpdated(member)
+      })
   }
 
   componentDidMount() {
@@ -41,13 +52,14 @@ export const WithMember = connect(mapStateToProps, mapDispatchToProps)(WithMembe
 function mapStateToProps(state) {
   return {
     member: state.member || null,
-    isLoading: state.member === false,
+    isLoading: state.memberLoading,
   }
 }
 
 function mapDispatchToProps(dispatch) {
   return {
     memberUpdated: member => dispatch({ type: MEMBER_UPDATED, member }),
+    memberLoading: loading => dispatch({type: MEMBER_LOADING, loading}),
     logout: () => getRequest('/api/logout').res(() => dispatch({ type: MEMBER_UPDATED, member: null }))
   };
 }
