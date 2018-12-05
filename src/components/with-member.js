@@ -10,6 +10,7 @@ class WithMemberBase extends React.Component {
   constructor(props) {
     super(props);
     this.checkForMemberUpdated = this.checkForMemberUpdated.bind(this);
+    this.resetMemberAndCheckForMemberUpdated = this.resetMemberAndCheckForMemberUpdated.bind(this);
   }
 
   checkForMemberUpdated() {
@@ -17,6 +18,11 @@ class WithMemberBase extends React.Component {
       .forbidden(() => this.props.memberUpdated(null))
       .unauthorized(() => this.props.memberUpdated(null))
       .json(({ member }) => this.props.memberUpdated(member))
+  }
+
+  resetMemberAndCheckForMemberUpdated() {
+    this.props.memberUpdated(false);
+    this.checkForMemberUpdated();
   }
 
   componentDidMount() {
@@ -28,7 +34,13 @@ class WithMemberBase extends React.Component {
 
   render() {
     const { member, logout, children, isLoading } = this.props;
-    return children({ member, logout, isLoading, checkForMemberUpdated: this.checkForMemberUpdated});
+    return children({
+      member,
+      logout,
+      isLoading,
+      checkForMemberUpdated: this.checkForMemberUpdated,
+      resetMemberAndCheckForMemberUpdated: this.resetMemberAndCheckForMemberUpdated
+    });
   }
 }
 

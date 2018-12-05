@@ -457,10 +457,12 @@ The render will also be passed a function to call for logging out, and another t
 
 On initial load, the `isLoading` prop will be set, which will become false when the user is loaded. Use this field to avoid showing a Login Button while fetch is happening.
 
+Use `checkForMemberUpdated` and `resetMemberAndCheckForMemberUpdated` to hit the API to reload the member. The latter of these two will set `isLoading` (and clear the existing member) while the API is in progress.
+
 ```javascript
 import { WithMember } from '@quintype/components';
 
-function MyView({ member, logout, checkForMemberUpdated }) {
+function MyView({ member, logout, checkForMemberUpdated, resetMemberAndCheckForMemberUpdated }) {
   return member ? <div>{member.name} <a onClick={logout}>Logout</a></div> : <div>Please Login!</div>;
 }
 
