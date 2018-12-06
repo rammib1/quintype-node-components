@@ -39,10 +39,11 @@ WithMemberBase.propTypes = {
 
 export const WithMember = connect(mapStateToProps, mapDispatchToProps)(WithMemberBase);
 
-function mapStateToProps(state) {
+function mapStateToProps({member, memberLoading}) {
   return {
-    member: state.member || null,
-    isLoading: state.memberLoading,
+    member: member || null,
+    // undefined on server side
+    isLoading: memberLoading === true || memberLoading === undefined,
   }
 }
 
