@@ -2,6 +2,16 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+<a name="1.45.1"></a>
+## [1.45.1](https://github.com/quintype/quintype-node-components/compare/v1.45.0...v1.45.1) (2018-12-06)
+
+
+### Bug Fixes
+
+* **With Member:** IsLoading is set to true on server side ([49636d7](https://github.com/quintype/quintype-node-components/commit/49636d7))
+
+
+
 <a name="1.45.0"></a>
 # [1.45.0](https://github.com/quintype/quintype-node-components/compare/v1.44.0...v1.45.0) (2018-12-05)
 
