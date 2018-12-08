@@ -393,7 +393,7 @@ import { SearchBox } from '@quintype/components';
 ```
 
 ### SocialShare
-This component renders social share component to front end app.
+This component renders social share component to front end app. Component is dependent on the `sketches-host` from config. Make sure it is available in the store in the path `state.qt.config["sketches-host"]`
 
 ```javascript
 import { SocialShare } from '@quintype/components';
