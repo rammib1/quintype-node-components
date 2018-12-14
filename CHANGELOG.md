@@ -2,6 +2,16 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+<a name="1.46.0"></a>
+# [1.46.0](https://github.com/quintype/quintype-node-components/compare/v1.45.1...v1.46.0) (2018-12-14)
+
+
+### Features
+
+* **Preview:** Adding WithPreview component ([#56](https://github.com/quintype/quintype-node-components/issues/56)) ([adcebd0](https://github.com/quintype/quintype-node-components/commit/adcebd0))
+
+
+
 <a name="1.45.1"></a>
 ## [1.45.1](https://github.com/quintype/quintype-node-components/compare/v1.45.0...v1.45.1) (2018-12-06)
 
