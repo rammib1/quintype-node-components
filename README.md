@@ -478,9 +478,9 @@ function MyView({ member, logout, checkForMemberUpdated }) {
 This higher order component can be used for the home or story page preview
 
 ```javascript
-import { WithPreview } from '@quintype/components';
+import { WithPreview, replaceAllStoriesInCollection } from '@quintype/components';
 import { StoryPage } from '../pages/story';
-import { HomePage, replaceAllStoriesInCollection } from '../pages/home';
+import { HomePage } from '../pages/home';
 
 function storyPageData(data, story) {
   return {...data, story, relatedStories: Array(5).fill(story)};
