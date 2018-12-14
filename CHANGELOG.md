@@ -2,6 +2,16 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+<a name="1.49.0"></a>
+# [1.49.0](https://github.com/quintype/quintype-node-components/compare/v1.48.0...v1.49.0) (2018-12-14)
+
+
+### Features
+
+* **LazyLoadImages:** EagerLoadImages now takes a predicate ([785a68d](https://github.com/quintype/quintype-node-components/commit/785a68d))
+
+
+
 <a name="1.48.0"></a>
 # [1.48.0](https://github.com/quintype/quintype-node-components/compare/v1.47.0...v1.48.0) (2018-12-14)
 
