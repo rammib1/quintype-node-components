@@ -65,7 +65,7 @@ import {Collection} from '@quintype/components'
 
 // collection = Collection.getCollectionBySlug(client, 'home', {}, {depth: 1})
 
-function TwoColLayout({collection, associatedMetadata}) {
+function TwoColLayout({collection, associatedMetadata, index}) {
   // for item in collection.item
   //   if item.type == story
   //     showStory
