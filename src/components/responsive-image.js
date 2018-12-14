@@ -48,7 +48,10 @@ export class ResponsiveImageBase extends React.Component {
   }
 
   shouldLazyLoad() {
-    if (this.props.eager) {
+    if (this.props.eager === true) {
+      return false;
+    }
+    if (this.context.lazyLoadEagerPredicate && this.context.lazyLoadEagerPredicate(this.props.eager)) {
       return false;
     }
     if (this.context.lazyLoadObserveImage && this.context.lazyLoadUnobserveImage) {
@@ -86,7 +89,8 @@ function mapStateToProps(state) {
 
 ResponsiveImageBase.contextTypes = {
   lazyLoadObserveImage: func,
-  lazyLoadUnobserveImage: func
+  lazyLoadUnobserveImage: func,
+  lazyLoadEagerPredicate: func
 }
 
 export const ResponsiveImage = connect(mapStateToProps, {})(ResponsiveImageBase);

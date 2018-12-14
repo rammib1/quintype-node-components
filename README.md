@@ -209,7 +209,7 @@ import { LazyCollection } from '@quintype/components'
 
 This component will ensure all [ResponsiveImages](#ResponsiveImage) that are in its descendent path will be loaded async. By default, the image is loaded with an empty gif, and the image becomes visible when the image scrolls 250 from the edge of the screen.
 
-You can use `EagerLoadImages` or `eager={true}` to force the image to be eager.
+You can use `EagerLoadImages` or `eager={true}` to force the image to be eager. If `EagerLoadImages` is passed a predicate, then images that pass a matching value to `eager` will be rendered eagerly.
 
 ```javascript
 import { LazyLoadImages, EagerLoadImages } from '@quintype/components';
@@ -221,10 +221,14 @@ function LazyLoadSecondImage() {
       <div>
         <UnrelatedContent/>
         <ResponsiveImage slug={props["lazy-image-1"]} />
-        <ResponsiveImage slug={props["lazy-image-forced-to-be-eager"]} eager={true}/>
+        <ResponsiveImage slug={props["lazy-image-forced-to-be-eager"]} eager/>
         <ResponsiveImage slug={props["lazy-image-2"]} />
         <EagerLoadImages>
           <ResponsiveImage slug={props["lazy-image-forced-to-be-eager"]} />
+        </EagerLoadImages>
+        <EagerLoadImages predicate={(token) => token % 2 === 0}>
+          <ResponsiveImage slug={props["lazy-image"]} eager={1} />
+          <ResponsiveImage slug={props["eager-image"]} eager={2} />
         </EagerLoadImages>
       </div>
     </LazyLoadImages>
