@@ -2,6 +2,17 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+<a name="1.47.0"></a>
+# [1.47.0](https://github.com/quintype/quintype-node-components/compare/v1.46.0...v1.47.0) (2018-12-14)
+
+
+### Features
+
+* **Collection:** Passing the index to collection template ([8dcec03](https://github.com/quintype/quintype-node-components/commit/8dcec03))
+* **LazyLoadImages:** Responsive image takes `eager=true` ([b4a14cb](https://github.com/quintype/quintype-node-components/commit/b4a14cb))
+
+
+
 <a name="1.46.0"></a>
 # [1.46.0](https://github.com/quintype/quintype-node-components/compare/v1.45.1...v1.46.0) (2018-12-14)
 
