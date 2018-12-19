@@ -38,7 +38,7 @@ export class UpdateOnInterval extends Component {
 
     decorateData() {
         if(this.props.dataKey){
-            return {[this.props.dataKey] : this.state.data};
+            return ({[this.props.dataKey] : this.state.data});
         }
         return this.state.data;
     }
