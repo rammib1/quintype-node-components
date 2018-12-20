@@ -23,6 +23,7 @@ export * from "./components/wrap-collection-layout";
 export * from './components/load-more-button';
 export * from './components/with-member';
 export * from './components/social-logins/index';
+export * from './components/update-on-interval';
 
 export * from './store/actions';
 export * from './store/reducers';
