@@ -36,16 +36,17 @@ export class UpdateOnInterval extends Component {
         return await (typeof dataLoader === 'function') ? dataLoader() : null;
     }
 
-    decorateData() {
+    decorateData(data) {
         if(this.props.dataKey){
-            return ({[this.props.dataKey] : this.state.data});
+            return ({[this.props.dataKey] : data});
         }
-        return this.state.data;
+        return data;
     }
 
 
     render() {
-        const cloneProps = Object.assign({}, this.props, this.decorateData());
+        const {dataDecorator} = this.props;
+        const cloneProps = Object.assign({}, this.props, (typeof dataDecorator === 'function') ? dataDecorator(this.state.data) : this.decorateData(this.state.data));
         const childrenWithProps = React.Children.map(this.props.children, child => React.cloneElement(child, cloneProps));
         return <Fragment>
             { childrenWithProps }
@@ -61,5 +62,6 @@ UpdateOnInterval.defaultProps = {
 UpdateOnInterval.propTypes = {
     interval : PropTypes.number,
     dataLoader : PropTypes.func.isRequired,
-    dataKey: PropTypes.string
+    dataKey: PropTypes.string,
+    dataDecorator: PropTypes.func
 };
