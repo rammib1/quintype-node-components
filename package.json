@@ -31,7 +31,7 @@
     "papaparse": "^4.6.2",
     "prop-types": "^15.6.2",
     "quintype-js": "^1.1.0",
-    "react": "^16.7.0",
+    "react": "^16.2.0",
     "react-dfp": "^0.7.6",
     "react-redux": "^6.0.0",
     "react-youtube": "^7.8.0",
