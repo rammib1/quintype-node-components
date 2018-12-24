@@ -7,7 +7,13 @@ module.exports = function(api) {
     "annotate-pure-calls",
     "@babel/plugin-syntax-object-rest-spread",
     "transform-react-remove-prop-types",
-    "@babel/plugin-syntax-dynamic-import"
+    "@babel/plugin-syntax-dynamic-import",
+    ["@babel/plugin-transform-runtime", {
+      "corejs": false,
+      "helpers": false,
+      "regenerator": true,
+      "useESModules": false
+    }]
   ];
 
   if (env === 'esmodules') {
