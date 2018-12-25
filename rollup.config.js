@@ -9,8 +9,7 @@ export default {
   ],
   plugins: [
     babel({
-      exclude: 'node_modules/**',
-      runtimeHelpers: true
+      exclude: 'node_modules/**'
     })
   ],
   external: Object.keys(dependencies).concat(["lodash/get", "lodash/omit"])

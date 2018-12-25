@@ -2,46 +2,6 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
-<a name="1.51.1"></a>
-## [1.51.1](https://github.com/quintype/quintype-node-components/compare/v1.51.0...v1.51.1) (2018-12-24)
-
-
-### Bug Fixes
-
-* **dependency:** revert to react 16.2.0 ([4a3a8b4](https://github.com/quintype/quintype-node-components/commit/4a3a8b4))
-
-
-
-<a name="1.51.0"></a>
-# [1.51.0](https://github.com/quintype/quintype-node-components/compare/v1.50.1...v1.51.0) (2018-12-24)
-
-
-### Features
-
-* **interval-update:** Component to update children components at intervals ([#58](https://github.com/quintype/quintype-node-components/issues/58)) ([1602b3c](https://github.com/quintype/quintype-node-components/commit/1602b3c))
-
-
-
-<a name="1.50.1"></a>
-## [1.50.1](https://github.com/quintype/quintype-node-components/compare/v1.50.0...v1.50.1) (2018-12-21)
-
-
-
-<a name="1.50.0"></a>
-# [1.50.0](https://github.com/quintype/quintype-node-components/compare/v1.49.0...v1.50.0) (2018-12-21)
-
-
-### Bug Fixes
-
-* **package-lock:** package lock update ([d8b7b08](https://github.com/quintype/quintype-node-components/commit/d8b7b08))
-
-
-### Features
-
-* **build:** upgrade to Babel 7 ([#55](https://github.com/quintype/quintype-node-components/issues/55)) ([799514f](https://github.com/quintype/quintype-node-components/commit/799514f))
-
-
-
 <a name="1.49.0"></a>
 # [1.49.0](https://github.com/quintype/quintype-node-components/compare/v1.48.0...v1.49.0) (2018-12-14)
 
