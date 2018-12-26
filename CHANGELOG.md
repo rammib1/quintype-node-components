@@ -2,6 +2,16 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+<a name="1.53.0"></a>
+# [1.53.0](https://github.com/quintype/quintype-node-components/compare/v1.52.2...v1.53.0) (2018-12-26)
+
+
+### Features
+
+* **Breaking News:** Implemented breakingNewsLoaded ([#59](https://github.com/quintype/quintype-node-components/issues/59)) ([54c0846](https://github.com/quintype/quintype-node-components/commit/54c0846))
+
+
+
 <a name="1.52.2"></a>
 ## [1.52.2](https://github.com/quintype/quintype-node-components/compare/v1.52.1...v1.52.2) (2018-12-25)
 
