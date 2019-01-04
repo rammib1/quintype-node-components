@@ -2,6 +2,16 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+<a name="1.53.2"></a>
+## [1.53.2](https://github.com/quintype/quintype-node-components/compare/v1.53.1...v1.53.2) (2019-01-04)
+
+
+### Bug Fixes
+
+* **Story Element:** Replaced all Anchor tags to open in new tab ([#65](https://github.com/quintype/quintype-node-components/issues/65)) ([dbe7cb1](https://github.com/quintype/quintype-node-components/commit/dbe7cb1))
+
+
+
 <a name="1.53.1"></a>
 ## [1.53.1](https://github.com/quintype/quintype-node-components/compare/v1.53.0...v1.53.1) (2019-01-04)
 
