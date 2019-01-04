@@ -36,6 +36,7 @@ This is a set of components that is to be used to build a Quintype Node App. Thi
          * [Sliders](#sliders)
          * [Marquee for Breaking News](#marquee-for-breaking-news)
          * [ReactTable for table story elements](#reacttable-for-table-story-elements)
+         * [UpdateOnInterval](#UpdateOnInterval)
 
 ### BreakingNews
 This component will automatically fetch breaking news every 30 seconds, and render the provided view.
@@ -576,3 +577,36 @@ Our Marquee recommendation is `react-malarquee`. Just remember to mark all items
 ### ReactTable for table story elements
 
 The story table element renders a very basic table story element. It can be enhaced by using 'react-table', which supports pagination and other fancy things.
+
+### UpdateOnInterval
+ 
+  Serves as a wrapper (using render props) used to update it's children via props while executing data loaders sent as props to the component.
+ 
+  Note : Dataloaders are made to be at an app level to keep the component generic, the return of Dataloaders are sent as props to its children.
+ 
+  Props | Type | Description | Optional
+ --- | --- | --- | ---
+ `interval`| `number`(ms) | Sets the time, defaults to 30s | True
+ `dataLoader`| `func` | Executes the dataloader, the return of which will be the data to the components children.| False
+ 
+  Example :
+ ```javascript
+ import {UpdateOnInterval} from '@quintype/components';
+
+ const story = {
+    'example' : 'data'
+ };
+
+ function getData() {
+     return fetch('/url/something')//...
+ }
+
+ ```
+
+```javascript
+      <UpdateOnInterval dataLoader={getData} interval={3000} initData={story}>
+        {
+          ({data}) => <Component data={data}></Component>
+        }
+      </UpdateOnInterval>
+ ```
