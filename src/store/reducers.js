@@ -8,6 +8,8 @@ import {
   HAMBURGER_CLOSED,
   MEMBER_UPDATED,
   MEMBER_BEING_LOADED,
+  SUBSCRIPTION_GROUP_UPDATED,
+  SUBSCRIPTION_PLAN_UPDATED
 } from './actions';
 
 function setToTrueOnEvent() {
@@ -60,6 +62,16 @@ function memberLoadingReducer(state = true, action) {
   }
 }
 
+function subscriptionReducer(state = {}, action) {
+  switch(action.type) {
+    case SUBSCRIPTION_GROUP_UPDATED: return state;
+    case SUBSCRIPTION_PLAN_UPDATED: return state;
+    default: return state;
+  }
+
+}
+
+
 export const ComponentReducers = {
   breakingNews: breakingNewsReducer,
   breakingNewsLoaded: breakingNewsLoadedReducer,
@@ -68,4 +80,5 @@ export const ComponentReducers = {
   hamburgerOpened: hamburgerOpenedReducer,
   member: memberReducer,
   memberLoading: memberLoadingReducer,
+  subscription: subscriptionReducer
 };
