@@ -20,45 +20,77 @@ class AccessTypeBase extends Component {
             document.body.appendChild(accessTypeScript);
             return true;
         }
-
-        return false;
+        global.AccessType && callback();
+        return true;
     }
 
     async setUser(emailAddress, mobileNumber) {
         const { error, data: user }  = await awaitHelper(AccessType.setUser({ 'emailAddress': emailAddress, 'mobileNumber':  mobileNumber}));
+        if(error) {
+            console.warn(`User set failed`);
+            return false
+        }
+        return true;
     }
 
     async getSubscription() {
         const { error, data: subscriptions }  = await awaitHelper(AccessType.getPaymentOptions());
+        console.log(`sub --> `, subscriptions);
+        if(error) {
+            return {
+                error: 'subscriptions fetch failed'
+            };
+        }
+        this.props.subscriptionGroupLoaded(subscriptions);
+        return subscriptions;
     }
 
     async getPlans() {
         const { error, data: plans }  = await awaitHelper(AccessType.getPaymentOptions());
-
+        console.log(`PLANS -->`, plans);
+        if(error) {
+            return {
+                error: 'plans fetch failed'
+            };
+        }
+        this.props.subscriptionPlansLoaded(plans);
+        return plans;
     }
 
-    handleRazorPayPayment() {
-
+    async runSequentialCalls() {
+        const user = await this.setUser(this.props.email, this.props.phone);
+        if(user) {
+            this.getSubscription();
+            this.getPlans();
+        }
     }
 
-    hasAccess() {
+    initAccessType() {
+        try {
+            this.loadScript(this.runSequentialCalls());
+        }
+        catch (e) {
+            console.warn(`Accesstype load fail`, e);
+        }
+    }
+
+    initRazorPayPayment() {
 
     }
 
     render() {
-        const { member, logout, children, isLoading } = this.props;
-        return children({});
+        return children({initAccessType: this.initAccessType});
     }
 
 }
 
 AccessTypeBase.propTypes = {
-    children: PropTypes.func.isRequired
+    children: PropTypes.func.isRequired,
+    email: PropTypes.string.isRequired,
+    phone: PropTypes.number
 };
 
-const mapStateToProps = state => ({
-
-});
+const mapStateToProps = state => ({});
 
 const mapDispatchToProps = dispatch  => ({
     subscriptionGroupLoaded: groups => dispatch({type: SUBSCRIPTION_GROUP_UPDATED}, groups),
