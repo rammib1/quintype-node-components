@@ -1,5 +1,6 @@
 import React, {Component} from 'react';
 import {connect} from 'react-redux';
+import get from 'lodash/get';
 import {SUBSCRIPTION_PLAN_UPDATED, SUBSCRIPTION_GROUP_UPDATED} from "../store/actions";
 import PropTypes from "prop-types";
 import {awaitHelper} from "../utils";
@@ -9,15 +10,17 @@ class AccessTypeBase extends Component {
         super(props);
     }
 
+
     loadScript(callback) {
         const accessTypeKey = get(this.props, ['accessTypeKey']);
-        if(accessTypeKey && !global.AccessType) {
+        if(accessTypeKey && !global.AccessType && document) {
             const accessTypeScript = document.createElement('script');
             accessTypeScript.setAttribute("src", `https://staging.accesstype.com/frontend/accesstype.js?key=${accessTypeKey}&env=sandbox`); //`https://accesstype.com/frontend/accesstype.js?key=${accessTypeKey}`
             accessTypeScript.setAttribute("data-accessType-script", "1");
             accessTypeScript.async = 1;
             accessTypeScript.onload = () => callback();
             document.body.appendChild(accessTypeScript);
+            console.log(`LOADED`);
             return true;
         }
         global.AccessType && callback();
@@ -25,7 +28,7 @@ class AccessTypeBase extends Component {
     }
 
     async setUser(emailAddress, mobileNumber) {
-        const { error, data: user }  = await awaitHelper(AccessType.setUser({ 'emailAddress': emailAddress, 'mobileNumber':  mobileNumber}));
+        const { error, data: user }  = await awaitHelper(global.AccessType.setUser({ 'emailAddress': emailAddress, 'mobileNumber':  mobileNumber}));
         if(error) {
             console.warn(`User set failed`);
             return false
@@ -34,8 +37,7 @@ class AccessTypeBase extends Component {
     }
 
     async getSubscription() {
-        const { error, data: subscriptions }  = await awaitHelper(AccessType.getPaymentOptions());
-        console.log(`sub --> `, subscriptions);
+        const { error, data: subscriptions }  = await awaitHelper(global.AccessType.getPaymentOptions());
         if(error) {
             return {
                 error: 'subscriptions fetch failed'
@@ -46,8 +48,7 @@ class AccessTypeBase extends Component {
     }
 
     async getPlans() {
-        const { error, data: plans }  = await awaitHelper(AccessType.getPaymentOptions());
-        console.log(`PLANS -->`, plans);
+        const { error, data: plans }  = await awaitHelper(global.AccessType.getPaymentOptions());
         if(error) {
             return {
                 error: 'plans fetch failed'
@@ -67,7 +68,7 @@ class AccessTypeBase extends Component {
 
     initAccessType() {
         try {
-            this.loadScript(this.runSequentialCalls());
+            this.loadScript(() => this.runSequentialCalls());
         }
         catch (e) {
             console.warn(`Accesstype load fail`, e);
@@ -79,7 +80,8 @@ class AccessTypeBase extends Component {
     }
 
     render() {
-        return children({initAccessType: this.initAccessType});
+        const {children} = this.props;
+        return children({initAccessType: () => this.initAccessType()});
     }
 
 }
