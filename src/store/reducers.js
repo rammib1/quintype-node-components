@@ -64,11 +64,16 @@ function memberLoadingReducer(state = true, action) {
 
 function subscriptionReducer(state = {}, action) {
   switch(action.type) {
-    case SUBSCRIPTION_GROUP_UPDATED: return state;
-    case SUBSCRIPTION_PLAN_UPDATED: return state;
+    case SUBSCRIPTION_GROUP_UPDATED: return action.groups;
     default: return state;
   }
+}
 
+function plansReducer(state = {}, action) {
+  switch (action.type) {
+    case SUBSCRIPTION_PLAN_UPDATED: return action.plans;
+    default: return state;
+  }
 }
 
 
@@ -80,5 +85,6 @@ export const ComponentReducers = {
   hamburgerOpened: hamburgerOpenedReducer,
   member: memberReducer,
   memberLoading: memberLoadingReducer,
-  subscription: subscriptionReducer
+  subscription: subscriptionReducer,
+  plans: plansReducer
 };

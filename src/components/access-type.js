@@ -10,10 +10,13 @@ class AccessTypeBase extends Component {
         super(props);
     }
 
+    componentDidMount() {
+        this.initAccessType();
+    }
 
     loadScript(callback) {
         const accessTypeKey = get(this.props, ['accessTypeKey']);
-        if(accessTypeKey && !global.AccessType && document) {
+        if(accessTypeKey && !global.AccessType && global.document) {
             const accessTypeScript = document.createElement('script');
             accessTypeScript.setAttribute("src", `https://staging.accesstype.com/frontend/accesstype.js?key=${accessTypeKey}&env=sandbox`); //`https://accesstype.com/frontend/accesstype.js?key=${accessTypeKey}`
             accessTypeScript.setAttribute("data-accessType-script", "1");
@@ -37,7 +40,7 @@ class AccessTypeBase extends Component {
     }
 
     async getSubscription() {
-        const { error, data: subscriptions }  = await awaitHelper(global.AccessType.getPaymentOptions());
+        const { error, data: subscriptions }  = await awaitHelper(global.AccessType.getSubscriptionPlans());
         if(error) {
             return {
                 error: 'subscriptions fetch failed'
@@ -67,8 +70,11 @@ class AccessTypeBase extends Component {
     }
 
     initAccessType() {
+        if(!this.props.email || !this.props.phone) return false;
+
         try {
             this.loadScript(() => this.runSequentialCalls());
+            console.log(`Accesstype loaded`);
         }
         catch (e) {
             console.warn(`Accesstype load fail`, e);
@@ -78,6 +84,12 @@ class AccessTypeBase extends Component {
     initRazorPayPayment() {
 
     }
+
+    initMeteredStories() {
+
+    }
+
+
 
     render() {
         const {children} = this.props;
@@ -92,11 +104,15 @@ AccessTypeBase.propTypes = {
     phone: PropTypes.number
 };
 
-const mapStateToProps = state => ({});
+const mapStateToProps = state => ({
+    subscription : state.subscription || null,
+    plans: state.plans || null
+});
+
 
 const mapDispatchToProps = dispatch  => ({
-    subscriptionGroupLoaded: groups => dispatch({type: SUBSCRIPTION_GROUP_UPDATED}, groups),
-    subscriptionPlansLoaded: plans => dispatch({type: SUBSCRIPTION_PLAN_UPDATED, plans})
+    subscriptionGroupLoaded: (groups) => dispatch({type: SUBSCRIPTION_GROUP_UPDATED, groups}),
+    subscriptionPlansLoaded: (plans) => dispatch({type: SUBSCRIPTION_PLAN_UPDATED, plans})
 });
 
 export const AccessType = connect(mapStateToProps, mapDispatchToProps)(AccessTypeBase);
