@@ -9,7 +9,7 @@ import {
   MEMBER_UPDATED,
   MEMBER_BEING_LOADED,
   SUBSCRIPTION_GROUP_UPDATED,
-  SUBSCRIPTION_PLAN_UPDATED
+  PAYMENT_OPTIONS_UPDATED
 } from './actions';
 
 function setToTrueOnEvent() {
@@ -64,14 +64,14 @@ function memberLoadingReducer(state = true, action) {
 
 function subscriptionReducer(state = {}, action) {
   switch(action.type) {
-    case SUBSCRIPTION_GROUP_UPDATED: return action.groups;
+    case SUBSCRIPTION_GROUP_UPDATED: return action.subscriptions;
     default: return state;
   }
 }
 
-function plansReducer(state = {}, action) {
+function paymentOptionsReducer(state = {}, action) {
   switch (action.type) {
-    case SUBSCRIPTION_PLAN_UPDATED: return action.plans;
+    case PAYMENT_OPTIONS_UPDATED: return action.paymentOptions;
     default: return state;
   }
 }
@@ -85,6 +85,6 @@ export const ComponentReducers = {
   hamburgerOpened: hamburgerOpenedReducer,
   member: memberReducer,
   memberLoading: memberLoadingReducer,
-  subscription: subscriptionReducer,
-  plans: plansReducer
+  subscriptions: subscriptionReducer,
+  paymentOptions: paymentOptionsReducer
 };

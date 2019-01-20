@@ -1,7 +1,7 @@
 import React, {Component} from 'react';
 import {connect} from 'react-redux';
 import get from 'lodash/get';
-import {SUBSCRIPTION_PLAN_UPDATED, SUBSCRIPTION_GROUP_UPDATED} from "../store/actions";
+import {PAYMENT_OPTIONS_UPDATED, SUBSCRIPTION_GROUP_UPDATED} from "../store/actions";
 import PropTypes from "prop-types";
 import {awaitHelper} from "../utils";
 
@@ -23,7 +23,6 @@ class AccessTypeBase extends Component {
             accessTypeScript.async = 1;
             accessTypeScript.onload = () => callback();
             document.body.appendChild(accessTypeScript);
-            console.log(`LOADED`);
             return true;
         }
         global.AccessType && callback();
@@ -33,7 +32,7 @@ class AccessTypeBase extends Component {
     async setUser(emailAddress, mobileNumber) {
         const { error, data: user }  = await awaitHelper(global.AccessType.setUser({ 'emailAddress': emailAddress, 'mobileNumber':  mobileNumber}));
         if(error) {
-            console.warn(`User set failed`);
+            console.warn(`User context setting failed --> `, error);
             return false
         }
         return true;
@@ -50,22 +49,22 @@ class AccessTypeBase extends Component {
         return subscriptions;
     }
 
-    async getPlans() {
-        const { error, data: plans }  = await awaitHelper(global.AccessType.getPaymentOptions());
+    async getPaymentOptions() {
+        const { error, data: paymentOptions }  = await awaitHelper(global.AccessType.getPaymentOptions());
         if(error) {
             return {
-                error: 'plans fetch failed'
+                error: 'payment options fetch failed'
             };
         }
-        this.props.subscriptionPlansLoaded(plans);
-        return plans;
+        this.props.paymentOptionsLoaded(paymentOptions);
+        return paymentOptions   ;
     }
 
     async runSequentialCalls() {
         const user = await this.setUser(this.props.email, this.props.phone);
         if(user) {
             this.getSubscription();
-            this.getPlans();
+            this.getPaymentOptions();
         }
     }
 
@@ -82,7 +81,16 @@ class AccessTypeBase extends Component {
     }
 
     initRazorPayPayment() {
+        const {subscriptions, paymentOptions} = this.props;
+        const {id, title, description, 'price_cents': priceCents, 'price_currency': priceCurrency, 'duration_length': durationLength, 'duration_unit': durationUnit } = subscriptions[0];
+        const paymentObject = {
+            type: 'standard',
+            plan: {id, title, description, price_cents: priceCents, price_currency: priceCurrency, duration_length: durationLength, duration_unit: durationUnit},
+            payment: {payment_type: 'razorpay', amount_cents: priceCents, amount_currency: priceCurrency},
+        };
 
+        paymentOptions.razorpay.proceed(paymentObject);
+        console.log(`Call proceed on razor pay`);
     }
 
     initMeteredStories() {
@@ -93,7 +101,7 @@ class AccessTypeBase extends Component {
 
     render() {
         const {children} = this.props;
-        return children({initAccessType: () => this.initAccessType()});
+        return children({initAccessType: () => this.initAccessType(), initRazorPayPayment: () => this.initRazorPayPayment()});
     }
 
 }
@@ -105,14 +113,14 @@ AccessTypeBase.propTypes = {
 };
 
 const mapStateToProps = state => ({
-    subscription : state.subscription || null,
-    plans: state.plans || null
+    subscriptions : state.subscriptions || null,
+    paymentOptions: state.paymentOptions || null
 });
 
 
 const mapDispatchToProps = dispatch  => ({
-    subscriptionGroupLoaded: (groups) => dispatch({type: SUBSCRIPTION_GROUP_UPDATED, groups}),
-    subscriptionPlansLoaded: (plans) => dispatch({type: SUBSCRIPTION_PLAN_UPDATED, plans})
+    subscriptionGroupLoaded: subscriptions => dispatch({type: SUBSCRIPTION_GROUP_UPDATED, subscriptions}),
+    paymentOptionsLoaded: paymentOptions => dispatch({type: PAYMENT_OPTIONS_UPDATED, paymentOptions})
 });
 
 export const AccessType = connect(mapStateToProps, mapDispatchToProps)(AccessTypeBase);
