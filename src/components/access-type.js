@@ -38,6 +38,16 @@ class AccessTypeBase extends Component {
         return true;
     }
 
+    async hasAccess() {
+      const storyId = get(this.props, ['story', 'id'], '');
+      const { error, data: hasAccess }  = await awaitHelper(global.AccessType.hasAccess(storyId));
+      if(error) {
+        console.warn(`Access check failed --> `, error);
+        return false;
+      }
+      return hasAccess;
+    }
+
     async getSubscription() {
         const { error, data: subscriptions }  = await awaitHelper(global.AccessType.getSubscriptionPlans());
         if(error) {
@@ -57,7 +67,7 @@ class AccessTypeBase extends Component {
             };
         }
         this.props.paymentOptionsLoaded(paymentOptions);
-        return paymentOptions   ;
+        return paymentOptions;
     }
 
     async runSequentialCalls() {
