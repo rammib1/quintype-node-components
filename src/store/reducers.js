@@ -62,7 +62,7 @@ function memberLoadingReducer(state = true, action) {
   }
 }
 
-function subscriptionReducer(state = {}, action) {
+function subscriptionReducer(state = [], action) {
   switch(action.type) {
     case SUBSCRIPTION_GROUP_UPDATED: return action.subscriptions;
     default: return state;

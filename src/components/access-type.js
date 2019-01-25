@@ -15,8 +15,8 @@ class AccessTypeBase extends Component {
     }
 
     loadScript(callback) {
-        if(!callback || !this.props.accessTypeHost) {
-            console.warn(`Callback or host missing`);
+        if(!this.props.accessTypeHost) {
+            console.warn(`Host missing`);
             return false;
         }
         const accessTypeKey = get(this.props, ['accessTypeKey']);
