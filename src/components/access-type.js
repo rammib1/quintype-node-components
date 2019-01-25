@@ -15,10 +15,14 @@ class AccessTypeBase extends Component {
     }
 
     loadScript(callback) {
+        if(!callback || !this.props.accessTypeHost) {
+            console.warn(`Callback or host missing`);
+            return false;
+        }
         const accessTypeKey = get(this.props, ['accessTypeKey']);
         if(accessTypeKey && !global.AccessType && global.document) {
             const accessTypeScript = document.createElement('script');
-            accessTypeScript.setAttribute("src", `https://staging.accesstype.com/frontend/accesstype.js?key=${accessTypeKey}&env=sandbox`); //`https://accesstype.com/frontend/accesstype.js?key=${accessTypeKey}`
+            accessTypeScript.setAttribute("src", this.props.accessTypeHost); //`https://accesstype.com/frontend/accesstype.js?key=${accessTypeKey}`
             accessTypeScript.setAttribute("data-accessType-script", "1");
             accessTypeScript.async = 1;
             accessTypeScript.onload = () => callback();
@@ -57,7 +61,7 @@ class AccessTypeBase extends Component {
             };
         }
         this.props.paymentOptionsLoaded(paymentOptions);
-        return paymentOptions   ;
+        return paymentOptions;
     }
 
     async runSequentialCalls() {
@@ -80,28 +84,46 @@ class AccessTypeBase extends Component {
         }
     }
 
-    initRazorPayPayment() {
+    initRazorPayPayment(subscriptionId) {
+        if(!subscriptionId){
+            console.warn('Razor pay needs subscription id');
+            return false;
+        }
         const {subscriptions, paymentOptions} = this.props;
-        const {id, title, description, 'price_cents': priceCents, 'price_currency': priceCurrency, 'duration_length': durationLength, 'duration_unit': durationUnit } = subscriptions[0];
+        const {id, title, description, 'price_cents': priceCents, 'price_currency': priceCurrency, 'duration_length': durationLength, 'duration_unit': durationUnit } = subscriptions.find(sub => sub.id = subscriptionId);
         const paymentObject = {
             type: 'standard',
             plan: {id, title, description, price_cents: priceCents, price_currency: priceCurrency, duration_length: durationLength, duration_unit: durationUnit},
             payment: {payment_type: 'razorpay', amount_cents: priceCents, amount_currency: priceCurrency},
         };
-
         paymentOptions.razorpay.proceed(paymentObject);
-        console.log(`Call proceed on razor pay`);
-    }
-
-    initMeteredStories() {
-
     }
 
 
+    async checkAccess(assetId) {
+        if(!assetId){
+            console.warn('AssetId is required');
+            return false;
+        }
+        const accessObject = {
+            id: assetId,
+            type: 'story',
+            attributes: {}
+        };
+        const { error, data: access }  = await awaitHelper(global.AccessType.checkAccess(accessObject));
+        if(error){
+            return error;
+        }
+        return access;
+    }
 
     render() {
         const {children} = this.props;
-        return children({initAccessType: () => this.initAccessType(), initRazorPayPayment: () => this.initRazorPayPayment()});
+        return children({
+            initAccessType: () => this.initAccessType(),
+            initRazorPayPayment: initRazorPayPayment => this.initRazorPayPayment(initRazorPayPayment),
+            checkAccess: assetId => this.checkAccess(assetId)
+        });
     }
 
 }
