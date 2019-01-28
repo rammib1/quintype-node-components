@@ -94,6 +94,7 @@ class AccessTypeBase extends Component {
         }
     }
 
+
     initRazorPayPayment(subscriptionId) {
         if(!subscriptionId){
             console.warn('Razor pay needs subscription id');
@@ -120,7 +121,8 @@ class AccessTypeBase extends Component {
             type: 'story',
             attributes: {}
         };
-        const { error, data: access }  = await awaitHelper(global.AccessType.checkAccess(accessObject));
+        const meteringParam = this.props.disableMetering === true ? `?disable-meter=true` : '';
+        const { error, data: access }  = await awaitHelper((await fetch(`/api/access/v1/stories/${assetId}/amp-access${meteringParam}`)).json());
         if(error){
             return error;
         }
