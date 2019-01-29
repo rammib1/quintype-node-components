@@ -1,7 +1,12 @@
 import React, {Component} from 'react';
 import {connect} from 'react-redux';
 import get from 'lodash/get';
-import {PAYMENT_OPTIONS_UPDATED, SUBSCRIPTION_GROUP_UPDATED} from "../store/actions";
+import {
+    ACCESS_BEING_LOADED,
+    ACCESS_UPDATED,
+    PAYMENT_OPTIONS_UPDATED,
+    SUBSCRIPTION_GROUP_UPDATED
+} from "../store/actions";
 import PropTypes from "prop-types";
 import {awaitHelper} from "../utils";
 
@@ -40,16 +45,6 @@ class AccessTypeBase extends Component {
             return false
         }
         return true;
-    }
-
-    async hasAccess() {
-      const storyId = get(this.props, ['story', 'id'], '');
-      const { error, data: hasAccess }  = await awaitHelper(global.AccessType.hasAccess(storyId));
-      if(error) {
-        console.warn(`Access check failed --> `, error);
-        return false;
-      }
-      return hasAccess;
     }
 
     async getSubscription() {
@@ -116,13 +111,15 @@ class AccessTypeBase extends Component {
             console.warn('AssetId is required');
             return false;
         }
+        this.props.accessIsLoading();
         const accessObject = {
             id: assetId,
             type: 'story',
             attributes: {}
         };
-        const meteringParam = this.props.disableMetering === true ? `?disable-meter=true` : '';
+        const meteringParam = this.props.disableMetering === true ? '?disable-meter=true' : '';
         const { error, data: access }  = await awaitHelper((await global.fetch(`/api/access/v1/stories/${assetId}/amp-access${meteringParam}`)).json());
+        this.props.accessUpdated(access);
         if(error){
             return error;
         }
@@ -154,7 +151,9 @@ const mapStateToProps = state => ({
 
 const mapDispatchToProps = dispatch  => ({
     subscriptionGroupLoaded: subscriptions => dispatch({type: SUBSCRIPTION_GROUP_UPDATED, subscriptions}),
-    paymentOptionsLoaded: paymentOptions => dispatch({type: PAYMENT_OPTIONS_UPDATED, paymentOptions})
+    paymentOptionsLoaded: paymentOptions => dispatch({type: PAYMENT_OPTIONS_UPDATED, paymentOptions}),
+    accessIsLoading : () => dispatch({type: ACCESS_BEING_LOADED}),
+    accessUpdated : access => dispatch({type: ACCESS_UPDATED, access}),
 });
 
 export const AccessType = connect(mapStateToProps, mapDispatchToProps)(AccessTypeBase);

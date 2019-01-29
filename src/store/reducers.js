@@ -9,7 +9,7 @@ import {
   MEMBER_UPDATED,
   MEMBER_BEING_LOADED,
   SUBSCRIPTION_GROUP_UPDATED,
-  PAYMENT_OPTIONS_UPDATED
+  PAYMENT_OPTIONS_UPDATED, ACCESS_BEING_LOADED, ACCESS_UPDATED
 } from './actions';
 
 function setToTrueOnEvent() {
@@ -77,6 +77,23 @@ function paymentOptionsReducer(state = {}, action) {
 }
 
 
+function accessLoadingReducer(state = true, action) {
+  switch (action.type) {
+    case ACCESS_BEING_LOADED: return true;
+    case ACCESS_UPDATED: return null;
+    default: return state;
+  }
+}
+
+function accessReducer(state = false, action) {
+  switch (action.type) {
+    case ACCESS_BEING_LOADED: return false;
+    case ACCESS_UPDATED: return action.access;
+    default: return state;
+  }
+}
+
+
 export const ComponentReducers = {
   breakingNews: breakingNewsReducer,
   breakingNewsLoaded: breakingNewsLoadedReducer,
@@ -86,5 +103,7 @@ export const ComponentReducers = {
   member: memberReducer,
   memberLoading: memberLoadingReducer,
   subscriptions: subscriptionReducer,
-  paymentOptions: paymentOptionsReducer
+  paymentOptions: paymentOptionsReducer,
+  access: accessReducer,
+  accessLoading: accessLoadingReducer
 };
