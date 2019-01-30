@@ -1,6 +1,6 @@
 import React from 'react';
 import {connect} from 'react-redux';
-import get from 'lodash/get';
+import { get } from '@quintype/lodash';
 
 import { LoadMoreCollectionStories } from './load-more-stories-base';
 import { LazyLoadImages } from './lazy-load-images';

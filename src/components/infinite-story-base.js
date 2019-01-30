@@ -1,5 +1,5 @@
 import React from "react";
-import get from 'lodash/get';
+import { get } from '@quintype/lodash';
 import { InfiniteScroll } from "./infinite-scroll.js";
 import { removeDuplicateStories } from '../utils';
 

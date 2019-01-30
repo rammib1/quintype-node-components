@@ -1,5 +1,5 @@
 import React from 'react';
-import get from 'lodash/get';
+import { get } from '@quintype/lodash';
 import { getRequest } from './api-client';
 
 import { LoadMoreStoriesManager } from './load-more-stories-base'
