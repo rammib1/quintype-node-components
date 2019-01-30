@@ -42,9 +42,9 @@ class AccessTypeBase extends Component {
         const { error, data: user }  = await awaitHelper(global.AccessType.setUser({ 'emailAddress': emailAddress, 'mobileNumber':  mobileNumber}));
         if(error) {
             console.warn(`User context setting failed --> `, error);
-            return false
+            return error;
         }
-        return true;
+        return user;
     }
 
     async getSubscription() {
@@ -78,8 +78,6 @@ class AccessTypeBase extends Component {
     }
 
     initAccessType() {
-        if(!this.props.email || !this.props.phone) return false;
-
         try {
             this.loadScript(() => this.runSequentialCalls());
             console.log(`Accesstype loaded`);
