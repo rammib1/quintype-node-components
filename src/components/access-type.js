@@ -90,13 +90,14 @@ class AccessTypeBase extends Component {
     }
 
 
-    initRazorPayPayment(subscriptionId) {
-        if(!subscriptionId){
-            console.warn('Razor pay needs subscription id');
+    initRazorPayPayment(selectedPlan) {
+        if(!selectedPlan){
+            console.warn('Razor pay needs a plan');
             return false;
         }
-        const {subscriptions, paymentOptions} = this.props;
-        const {id, title, description, 'price_cents': priceCents, 'price_currency': priceCurrency, 'duration_length': durationLength, 'duration_unit': durationUnit } = subscriptions.find(sub => sub.id === subscriptionId);
+
+        const {paymentOptions} = this.props;
+        const {id, title, description, 'price_cents': priceCents, 'price_currency': priceCurrency, 'duration_length': durationLength, 'duration_unit': durationUnit } = selectedPlan;
         const paymentObject = {
             type: 'standard',
             plan: {id, title, description, price_cents: priceCents, price_currency: priceCurrency, duration_length: durationLength, duration_unit: durationUnit},
