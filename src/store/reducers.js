@@ -79,15 +79,13 @@ function paymentOptionsReducer(state = {}, action) {
 
 function accessLoadingReducer(state = true, action) {
   switch (action.type) {
-    case ACCESS_BEING_LOADED: return state;
-    case ACCESS_UPDATED: return state;
+    case ACCESS_BEING_LOADED: return action.loading;
     default: return state;
   }
 }
 
 function accessReducer(state = {}, action) {
   switch (action.type) {
-    case ACCESS_BEING_LOADED: return false;
     case ACCESS_UPDATED: return Object.assign({}, state, action.access);
     default: return state;
   }
@@ -103,6 +101,6 @@ export const ComponentReducers = {
   memberLoading: memberLoadingReducer,
   subscriptions: subscriptionReducer,
   paymentOptions: paymentOptionsReducer,
+  accessLoading: accessLoadingReducer,
   access: accessReducer,
-  accessLoading: accessLoadingReducer
 };

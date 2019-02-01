@@ -109,7 +109,7 @@ class AccessTypeBase extends Component {
             console.warn('AssetId is required');
             return false;
         }
-        this.props.accessIsLoading();
+        this.props.accessIsLoading(true);
         const accessObject = {
             id: assetId,
             type: 'story',
@@ -119,6 +119,8 @@ class AccessTypeBase extends Component {
         const { error, data: access }  = await awaitHelper((await global.fetch(`/api/access/v1/stories/${assetId}/amp-access${meteringParam}`)).json());
         const accessById =  {[assetId] : access};
         this.props.accessUpdated(accessById);
+        this.props.accessIsLoading(false);
+
         if(error){
             return error;
         }
@@ -151,7 +153,7 @@ const mapStateToProps = state => ({
 const mapDispatchToProps = dispatch  => ({
     subscriptionGroupLoaded: subscriptions => dispatch({type: SUBSCRIPTION_GROUP_UPDATED, subscriptions}),
     paymentOptionsLoaded: paymentOptions => dispatch({type: PAYMENT_OPTIONS_UPDATED, paymentOptions}),
-    accessIsLoading : () => dispatch({type: ACCESS_BEING_LOADED}),
+    accessIsLoading : loading => dispatch({type: ACCESS_BEING_LOADED, loading}),
     accessUpdated : access => dispatch({type: ACCESS_UPDATED, access}),
 });
 
