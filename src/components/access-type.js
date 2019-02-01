@@ -117,11 +117,12 @@ class AccessTypeBase extends Component {
         };
         const meteringParam = this.props.disableMetering === true ? '?disable-meter=true' : '';
         const { error, data: access }  = await awaitHelper((await global.fetch(`/api/access/v1/stories/${assetId}/amp-access${meteringParam}`)).json());
-        this.props.accessUpdated(access);
+        const accessById =  {[assetId] : access};
+        this.props.accessUpdated(accessById);
         if(error){
             return error;
         }
-        return access;
+        return accessById;
     }
 
     render() {
