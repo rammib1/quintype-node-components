@@ -48,14 +48,16 @@ class AccessTypeBase extends Component {
     }
 
     async getSubscription() {
-        const { error, data: subscriptions }  = await awaitHelper(global.AccessType.getSubscriptionPlans());
+        const accessTypeKey = get(this.props, ['accessTypeKey']);
+        const { error, data: subscriptions }  = await awaitHelper((await global.fetch(`https://staging.accesstype.com/api/v1/subscription_groups.json?key=${accessTypeKey}`)).json());
         if(error) {
             return {
                 error: 'subscriptions fetch failed'
             };
         }
-        this.props.subscriptionGroupLoaded(subscriptions);
-        return subscriptions;
+        const {'subscription_groups': subscriptionGroups = []} = subscriptions;
+        this.props.subscriptionGroupLoaded(subscriptionGroups);
+        return subscriptionGroups;
     }
 
     async getPaymentOptions() {
