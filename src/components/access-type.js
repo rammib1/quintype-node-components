@@ -94,7 +94,7 @@ class AccessTypeBase extends Component {
             return false;
         }
         const {subscriptions, paymentOptions} = this.props;
-        const {id, title, description, 'price_cents': priceCents, 'price_currency': priceCurrency, 'duration_length': durationLength, 'duration_unit': durationUnit } = subscriptions.find(sub => sub.id = subscriptionId);
+        const {id, title, description, 'price_cents': priceCents, 'price_currency': priceCurrency, 'duration_length': durationLength, 'duration_unit': durationUnit } = subscriptions.find(sub => sub.id === subscriptionId);
         const paymentObject = {
             type: 'standard',
             plan: {id, title, description, price_cents: priceCents, price_currency: priceCurrency, duration_length: durationLength, duration_unit: durationUnit},
