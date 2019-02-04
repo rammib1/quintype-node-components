@@ -106,23 +106,50 @@ class AccessTypeBase extends Component {
         paymentOptions.razorpay.proceed(paymentObject);
     }
 
+    async pingBackMeteredStory(assetId, accessData) {
+        const stringData = JSON.stringify(accessData);
+        console.log(`stringData --> `, typeof stringData);
+        const meteredBody = {
+            method: "POST",
+            cache: "no-cache",
+            "Cache-Control": "private,no-cache,no-store",
+            headers: {
+                "Content-Type": "text/plain"
+            },
+            body: stringData
+        };
+
+        const {data, error} = await awaitHelper((await global.fetch(`/api/access/v1/stories/${assetId}/amp-pingback`, meteredBody)).json());
+        console.log(`ping metered`, data);
+    }
 
     async checkAccess(assetId) {
         if(!assetId){
             console.warn('AssetId is required');
             return false;
         }
+
         this.props.accessIsLoading(true);
+
         const accessObject = {
             id: assetId,
             type: 'story',
             attributes: {}
         };
+
         const meteringParam = this.props.disableMetering === true ? '?disable-meter=true' : '';
-        const { error, data: access }  = await awaitHelper((await global.fetch(`/api/access/v1/stories/${assetId}/amp-access${meteringParam}`)).json());
-        const accessById =  {[assetId] : access};
+        const { error, data: accessData }  = await awaitHelper((await global.fetch(`/api/access/v1/stories/${assetId}/amp-access${meteringParam}`)).json());
+
+        const accessById =  {[assetId] : accessData};
+
         this.props.accessUpdated(accessById);
         this.props.accessIsLoading(false);
+
+        const {granted, grantReason} = accessData;
+
+        if(!meteringParam && granted && grantReason === "METERING"){
+            this.pingBackMeteredStory(assetId, {granted, grantReason});
+        }
 
         if(error){
             return error;
