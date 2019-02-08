@@ -79,6 +79,14 @@ class AccessTypeBase extends Component {
         }
     }
 
+    async getSubscriptionForUser() {
+        const { error, data: subscriptions = []}  = await awaitHelper(global.AccessType.getSubscriptions());
+        if(error){
+            return error;
+        }
+        return subscriptions;
+    }
+
     initAccessType() {
         try {
             this.loadScript(() => this.runSequentialCalls());
@@ -121,6 +129,7 @@ class AccessTypeBase extends Component {
 
         const {data, error} = await awaitHelper((await global.fetch(`/api/access/v1/stories/${assetId}/amp-pingback`, meteredBody)).json());
         console.log(`ping metered`, data);
+        return data;
     }
 
     async checkAccess(assetId) {
@@ -130,6 +139,7 @@ class AccessTypeBase extends Component {
         }
 
         this.props.accessIsLoading(true);
+
 
         const accessObject = {
             id: assetId,
@@ -162,15 +172,15 @@ class AccessTypeBase extends Component {
         return children({
             initAccessType: () => this.initAccessType(),
             initRazorPayPayment: initRazorPayPayment => this.initRazorPayPayment(initRazorPayPayment),
-            checkAccess: assetId => this.checkAccess(assetId)
+            checkAccess: assetId => this.checkAccess(assetId),
+            getSubscriptionForUser: () => this.getSubscriptionForUser()
         });
     }
-
 }
 
 AccessTypeBase.propTypes = {
     children: PropTypes.func.isRequired,
-    email: PropTypes.string.isRequired,
+    email: PropTypes.string,
     phone: PropTypes.number
 };
 
