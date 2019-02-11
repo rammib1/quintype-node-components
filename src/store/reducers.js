@@ -91,7 +91,8 @@ function accessReducer(state = {}, action) {
   }
 }
 
-function meteringReducer(state = 7, action) {
+
+function meteringReducer(state = -1, action) {
   switch (action.type) {
     case METER_UPDATED: return action.meterCount;
     default: return state;
