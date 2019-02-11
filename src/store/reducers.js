@@ -9,7 +9,7 @@ import {
   MEMBER_UPDATED,
   MEMBER_BEING_LOADED,
   SUBSCRIPTION_GROUP_UPDATED,
-  PAYMENT_OPTIONS_UPDATED, ACCESS_BEING_LOADED, ACCESS_UPDATED
+  PAYMENT_OPTIONS_UPDATED, ACCESS_BEING_LOADED, ACCESS_UPDATED, METER_UPDATED
 } from './actions';
 
 function setToTrueOnEvent() {
@@ -91,6 +91,13 @@ function accessReducer(state = {}, action) {
   }
 }
 
+function meteringReducer(state = 7, action) {
+  switch (action.type) {
+    case METER_UPDATED: return action.meterCount;
+    default: return state;
+  }
+}
+
 export const ComponentReducers = {
   breakingNews: breakingNewsReducer,
   breakingNewsLoaded: breakingNewsLoadedReducer,
@@ -103,4 +110,5 @@ export const ComponentReducers = {
   paymentOptions: paymentOptionsReducer,
   accessLoading: accessLoadingReducer,
   access: accessReducer,
+  meteringCount: meteringReducer
 };
