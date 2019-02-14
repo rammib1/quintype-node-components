@@ -173,7 +173,9 @@ class AccessTypeBase extends Component {
             initAccessType: () => this.initAccessType(),
             initRazorPayPayment: initRazorPayPayment => this.initRazorPayPayment(initRazorPayPayment),
             checkAccess: assetId => this.checkAccess(assetId),
-            getSubscriptionForUser: () => this.getSubscriptionForUser()
+            getSubscriptionForUser: () => this.getSubscriptionForUser(),
+            accessUpdated: access => this.props.accessUpdated(access),
+            accessIsLoading: loading => this.props.accessIsLoading(loading)
         });
     }
 }
