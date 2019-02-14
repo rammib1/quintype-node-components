@@ -117,6 +117,12 @@ class AccessTypeBase extends Component {
 
     async pingBackMeteredStory(assetId, accessData) {
         const stringData = JSON.stringify(accessData);
+
+        if(global.navigator && global.navigator.sendBeacon){
+            global.navigator.sendBeacon(`/api/access/v1/stories/${assetId}/pingback`, stringData);
+            return true;
+        }
+
         const meteredBody = {
             method: "POST",
             cache: "no-cache",
@@ -126,10 +132,8 @@ class AccessTypeBase extends Component {
             },
             body: stringData
         };
-
         const {data, error} = await awaitHelper((await global.fetch(`/api/access/v1/stories/${assetId}/pingback`, meteredBody)).json());
-        console.log(`ping metered`, data);
-        return data;
+        return true;
     }
 
     async checkAccess(assetId) {
