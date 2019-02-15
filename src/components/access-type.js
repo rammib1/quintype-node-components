@@ -21,20 +21,19 @@ class AccessTypeBase extends Component {
     }
 
     loadScript(callback) {
-        if(!this.props.accessTypeHost) {
-            console.warn(`Host missing`);
-            return false;
-        }
         const accessTypeKey = get(this.props, ['accessTypeKey']);
+        const isStaging = get(this.props, ['isStaging']);
+
         if(accessTypeKey && !global.AccessType && global.document) {
             const accessTypeScript = document.createElement('script');
-            accessTypeScript.setAttribute("src", this.props.accessTypeHost); //`https://accesstype.com/frontend/accesstype.js?key=${accessTypeKey}`
+            accessTypeScript.setAttribute("src", `https://${isStaging ? 'staging.' : ''}accesstype.com/frontend/accesstype.js?key=${accessTypeKey}${isStaging ? '&env=sandbox' : ''}`); //`https://accesstype.com/frontend/accesstype.js?key=${accessTypeKey}`
             accessTypeScript.setAttribute("data-accessType-script", "1");
             accessTypeScript.async = 1;
             accessTypeScript.onload = () => callback();
             document.body.appendChild(accessTypeScript);
             return true;
         }
+
         global.AccessType && callback();
         return true;
     }
@@ -50,7 +49,8 @@ class AccessTypeBase extends Component {
 
     async getSubscription() {
         const accessTypeKey = get(this.props, ['accessTypeKey']);
-        const { error, data: subscriptions }  = await awaitHelper((await global.fetch(`https://staging.accesstype.com/api/v1/subscription_groups.json?key=${accessTypeKey}`)).json());
+        const isStaging = get(this.props, ['isStaging']);
+        const { error, data: subscriptions }  = await awaitHelper((await global.fetch(`https://${isStaging ? 'staging.' : ''}accesstype.com/api/v1/subscription_groups.json?key=${accessTypeKey}`)).json());
         if(error) {
             return {
                 error: 'subscriptions fetch failed'
@@ -187,7 +187,8 @@ class AccessTypeBase extends Component {
 AccessTypeBase.propTypes = {
     children: PropTypes.func.isRequired,
     email: PropTypes.string,
-    phone: PropTypes.number
+    phone: PropTypes.number,
+    isStaging: PropTypes.bool
 };
 
 const mapStateToProps = state => ({
