@@ -23,6 +23,11 @@ class AccessTypeBase extends Component {
     loadScript(callback) {
         const accessTypeKey = get(this.props, ['accessTypeKey']);
         const isStaging = get(this.props, ['isStaging']);
+        const enableAccesstype = get(this.props, ['enableAccesstype']);
+
+        if(!enableAccesstype){
+            return false;
+        }
 
         if(accessTypeKey && !global.AccessType && global.document) {
             const accessTypeScript = document.createElement('script');
