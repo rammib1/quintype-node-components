@@ -112,7 +112,7 @@ class AccessTypeBase extends Component {
             plan: {id, title, description, price_cents: priceCents, price_currency: priceCurrency, duration_length: durationLength, duration_unit: durationUnit},
             payment: {payment_type: 'razorpay', amount_cents: priceCents, amount_currency: priceCurrency},
         };
-        paymentOptions.razorpay.proceed(paymentObject);
+        return paymentOptions.razorpay.proceed(paymentObject);
     }
 
     async pingBackMeteredStory(assetId, accessData) {
