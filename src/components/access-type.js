@@ -31,7 +31,11 @@ class AccessTypeBase extends Component {
 
         if(accessTypeKey && !global.AccessType && global.document) {
             const accessTypeScript = document.createElement('script');
-            accessTypeScript.setAttribute("src", `https://${isStaging ? 'staging.' : ''}accesstype.com/frontend/accesstype.js?key=${accessTypeKey}${isStaging ? '&env=sandbox' : ''}`); //`https://accesstype.com/frontend/accesstype.js?key=${accessTypeKey}`
+            let accessTypeHost = `https://www.accesstype.com/frontend/accesstype.js?key=${accessTypeKey}`;
+            if(isStaging){
+                accessTypeHost = `https://staging.accesstype.com/frontend/accesstype.js?key=${accessTypeKey}&env=sandbox`;
+            }
+            accessTypeScript.setAttribute("src", accessTypeHost);
             accessTypeScript.setAttribute("data-accessType-script", "1");
             accessTypeScript.async = 1;
             accessTypeScript.onload = () => callback();
@@ -44,6 +48,10 @@ class AccessTypeBase extends Component {
     }
 
     async setUser(emailAddress, mobileNumber) {
+        if(!global.AccessType){
+            return {};
+        }
+
         const { error, data: user }  = await awaitHelper(global.AccessType.setUser({ 'emailAddress': emailAddress, 'mobileNumber':  mobileNumber}));
         if(error) {
             console.warn(`User context setting failed --> `, error);
@@ -55,7 +63,11 @@ class AccessTypeBase extends Component {
     async getSubscription() {
         const accessTypeKey = get(this.props, ['accessTypeKey']);
         const isStaging = get(this.props, ['isStaging']);
-        const { error, data: subscriptions }  = await awaitHelper((await global.fetch(`https://${isStaging ? 'staging.' : ''}accesstype.com/api/v1/subscription_groups.json?key=${accessTypeKey}`)).json());
+        let accessTypeHost = `https://www.accesstype.com/api/v1/subscription_groups.json?key=${accessTypeKey}`;
+        if(isStaging){
+            accessTypeHost = `https://staging.accesstype.com/api/v1/subscription_groups.json?key=${accessTypeKey}`;
+        }
+        const { error, data: subscriptions }  = await awaitHelper((await global.fetch(accessTypeHost)).json());
         if(error) {
             return {
                 error: 'subscriptions fetch failed'
@@ -67,6 +79,9 @@ class AccessTypeBase extends Component {
     }
 
     async getPaymentOptions() {
+        if(!global.AccessType){
+            return [];
+        }
         const { error, data: paymentOptions }  = await awaitHelper(global.AccessType.getPaymentOptions());
         if(error) {
             return {
@@ -86,6 +101,10 @@ class AccessTypeBase extends Component {
     }
 
     async getSubscriptionForUser() {
+        if(!global.AccessType){
+            return {};
+        }
+
         const { error, data: subscriptions = []}  = await awaitHelper(global.AccessType.getSubscriptions());
         if(error){
             return error;
@@ -105,6 +124,7 @@ class AccessTypeBase extends Component {
 
 
     initRazorPayPayment(selectedPlan) {
+
         if(!selectedPlan){
             console.warn('Razor pay needs a plan');
             return false;
