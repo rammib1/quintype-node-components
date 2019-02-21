@@ -8,6 +8,8 @@ import {
   HAMBURGER_CLOSED,
   MEMBER_UPDATED,
   MEMBER_BEING_LOADED,
+  SUBSCRIPTION_GROUP_UPDATED,
+  PAYMENT_OPTIONS_UPDATED, ACCESS_BEING_LOADED, ACCESS_UPDATED, METER_UPDATED
 } from './actions';
 
 function setToTrueOnEvent() {
@@ -60,6 +62,43 @@ function memberLoadingReducer(state = true, action) {
   }
 }
 
+function subscriptionReducer(state = [], action) {
+  switch(action.type) {
+    case SUBSCRIPTION_GROUP_UPDATED: return action.subscriptions;
+    default: return state;
+  }
+}
+
+function paymentOptionsReducer(state = {}, action) {
+  switch (action.type) {
+    case PAYMENT_OPTIONS_UPDATED: return action.paymentOptions;
+    default: return state;
+  }
+}
+
+
+function accessLoadingReducer(state = true, action) {
+  switch (action.type) {
+    case ACCESS_BEING_LOADED: return action.loading;
+    default: return state;
+  }
+}
+
+function accessReducer(state = {}, action) {
+  switch (action.type) {
+    case ACCESS_UPDATED: return Object.assign({}, state, action.access);
+    default: return state;
+  }
+}
+
+
+function meteringReducer(state = -1, action) {
+  switch (action.type) {
+    case METER_UPDATED: return action.meterCount;
+    default: return state;
+  }
+}
+
 export const ComponentReducers = {
   breakingNews: breakingNewsReducer,
   breakingNewsLoaded: breakingNewsLoadedReducer,
@@ -68,4 +107,9 @@ export const ComponentReducers = {
   hamburgerOpened: hamburgerOpenedReducer,
   member: memberReducer,
   memberLoading: memberLoadingReducer,
+  subscriptions: subscriptionReducer,
+  paymentOptions: paymentOptionsReducer,
+  accessLoading: accessLoadingReducer,
+  access: accessReducer,
+  meteringCount: meteringReducer
 };
