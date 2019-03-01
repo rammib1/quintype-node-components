@@ -2,6 +2,16 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+<a name="1.53.5"></a>
+## [1.53.5](https://github.com/quintype/quintype-node-components/compare/v1.53.4...v1.53.5) (2019-03-01)
+
+
+### Bug Fixes
+
+* **review-rating:** canShowEmptyRating option added ([#71](https://github.com/quintype/quintype-node-components/issues/71)) ([5a57144](https://github.com/quintype/quintype-node-components/commit/5a57144))
+
+
+
 <a name="1.53.4"></a>
 ## [1.53.4](https://github.com/quintype/quintype-node-components/compare/v1.53.3...v1.53.4) (2019-02-27)
 
