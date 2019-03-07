@@ -35,7 +35,7 @@ class WithMemberBase extends React.Component {
 
 WithMemberBase.propTypes = {
   children: PropTypes.func.isRequired
-}
+};
 
 export const WithMember = connect(mapStateToProps, mapDispatchToProps)(WithMemberBase);
 

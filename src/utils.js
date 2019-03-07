@@ -21,3 +21,11 @@ export function replaceAllStoriesInCollection(collection, story) {
 
   return Object.assign({}, collection, {items});
 }
+
+//Helps handle errors with async await pattern
+
+export const awaitHelper = promise => (
+    promise
+        .then(data => ({ data, error: null }))
+        .catch(error => ({ error, data: null }))
+);

@@ -2,6 +2,32 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+<a name="1.53.5"></a>
+## [1.53.5](https://github.com/quintype/quintype-node-components/compare/v1.53.4...v1.53.5) (2019-03-01)
+
+
+### Bug Fixes
+
+* **review-rating:** canShowEmptyRating option added ([#71](https://github.com/quintype/quintype-node-components/issues/71)) ([5a57144](https://github.com/quintype/quintype-node-components/commit/5a57144))
+
+
+
+<a name="1.53.4"></a>
+## [1.53.4](https://github.com/quintype/quintype-node-components/compare/v1.53.3...v1.53.4) (2019-02-27)
+
+
+### Bug Fixes
+
+* **package-lock:** Update package-lock, audit fix ([c4ce647](https://github.com/quintype/quintype-node-components/commit/c4ce647))
+* **search-box:** Implement initialValue - searchbox ([#70](https://github.com/quintype/quintype-node-components/issues/70)) ([257020a](https://github.com/quintype/quintype-node-components/commit/257020a))
+
+
+
+<a name="1.53.3"></a>
+## [1.53.3](https://github.com/quintype/quintype-node-components/compare/v1.53.2...v1.53.3) (2019-02-21)
+
+
+
 <a name="1.53.2"></a>
 ## [1.53.2](https://github.com/quintype/quintype-node-components/compare/v1.53.1...v1.53.2) (2019-01-04)
 
