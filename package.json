@@ -33,7 +33,7 @@
     "quintype-js": "^1.1.0",
     "react": "^16.8.4",
     "react-dfp": "^0.10.3",
-    "react-redux": "^6.0.1",
+    "react-redux": "^5.0.7",
     "react-youtube": "^7.9.0",
     "redux": "^4.0.1",
     "wretch": "^1.5.0"
