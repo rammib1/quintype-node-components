@@ -28,7 +28,6 @@
     "classnames": "^2.2.6",
     "empty-web-gif": "^1.0.0",
     "get-youtube-id": "^1.0.1",
-    "papaparse": "^4.6.3",
     "prop-types": "^15.7.2",
     "quintype-js": "^1.1.0",
     "react": "^16.8.4",
