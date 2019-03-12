@@ -1,5 +1,5 @@
 import React from "react";
-import { get } from '@quintype/lodash';
+import get from "lodash/get";
 
 
 function renderTableBody(hasHeader, { headerFields, headerData }){

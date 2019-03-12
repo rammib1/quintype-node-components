@@ -1,6 +1,6 @@
 import React from 'react';
 
-import { get } from '@quintype/lodash';
+import get from "lodash/get";
 import { removeDuplicateStories } from '../utils';
 import { getRequest } from './api-client';
 

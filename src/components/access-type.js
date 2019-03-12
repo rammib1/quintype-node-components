@@ -1,6 +1,6 @@
 import React, {Component} from 'react';
 import {connect} from 'react-redux';
-import { get } from '@quintype/lodash';
+import get from "lodash/get";
 import {
     ACCESS_BEING_LOADED,
     ACCESS_UPDATED,
