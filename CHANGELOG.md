@@ -2,6 +2,15 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+## [1.54.1](https://github.com/quintype/quintype-node-components/compare/v1.54.0...v1.54.1) (2019-03-19)
+
+
+### Bug Fixes
+
+* **package.json:** Add lodash as peer depencency ([ba2697e](https://github.com/quintype/quintype-node-components/commit/ba2697e))
+
+
+
 # [1.54.0](https://github.com/quintype/quintype-node-components/compare/v1.53.6...v1.54.0) (2019-03-19)
 
 
