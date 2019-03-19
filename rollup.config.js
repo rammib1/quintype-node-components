@@ -13,5 +13,5 @@ export default {
       runtimeHelpers: true
     })
   ],
-  external: Object.keys(dependencies).concat(["lodash/get", "lodash/omit"])
+  external: file => Object.keys(dependencies).includes(file) || file.startsWith("@babel/runtime")
 };

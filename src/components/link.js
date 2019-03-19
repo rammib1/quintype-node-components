@@ -1,9 +1,10 @@
 import React from "react";
 import {connect} from "react-redux";
-import omit from "lodash/omit";
 
 function LinkBase(props) {
-  return React.createElement("a", Object.assign(omit(props, "navigateTo"), {
+  const {navigateTo, externalLink, callback, ...otherProps} = props;
+
+  return React.createElement("a", Object.assign(otherProps, {
     onClick(e) {
       if(global.disableAjaxLinks)
         return;
@@ -14,14 +15,14 @@ function LinkBase(props) {
       e.preventDefault();
       e.stopPropagation();
 
-      if(props.externalLink) {
-        global.open(props.externalLink, "_blank");
+      if(externalLink) {
+        global.open(externalLink, "_blank");
       }
       else {
-        props.navigateTo(props.href);
+        navigateTo(props.href);
       }
 
-      typeof props.callback === 'function' && props.callback(e);
+      typeof callback === 'function' && callback(e);
     }
   }));
 }

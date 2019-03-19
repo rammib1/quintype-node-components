@@ -2,8 +2,8 @@ import React from "react";
 import {connect} from "react-redux";
 import {FocusedImage} from "quintype-js";
 import {func} from 'prop-types';
-import omit from 'lodash/omit';
 import emptyWebGif from 'empty-web-gif';
+import omit from '@babel/runtime/helpers/objectWithoutProperties';
 
 const USED_PARAMS = ["imageCDN","defaultWidth","widths","imgParams","slug","metadata","aspectRatio", "reactTag", "eager"];
 
