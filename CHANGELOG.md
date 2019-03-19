@@ -2,6 +2,16 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+# [1.54.0](https://github.com/quintype/quintype-node-components/compare/v1.53.6...v1.54.0) (2019-03-19)
+
+
+### Features
+
+* **package-lock:** Bump all dependencies to latest, optimize lodash ([c5523c4](https://github.com/quintype/quintype-node-components/commit/c5523c4))
+* **Performance:** Remove Lodash ([#67](https://github.com/quintype/quintype-node-components/issues/67)) ([240b444](https://github.com/quintype/quintype-node-components/commit/240b444))
+
+
+
 <a name="1.53.6"></a>
 ## [1.53.6](https://github.com/quintype/quintype-node-components/compare/v1.53.5...v1.53.6) (2019-03-19)
 
