@@ -1,6 +1,6 @@
 import React from 'react';
 
-import get from 'lodash/get';
+import get from "lodash/get";
 import { removeDuplicateStories } from '../utils';
 import { getRequest } from './api-client';
 
@@ -55,7 +55,7 @@ export class LoadMoreStoriesBase extends React.Component {
       fields: this.props.fields
     })).json(response => response.stories || get(response, ['results', 'stories'], []));
   }
-  
+
   render() {
     return React.createElement(LoadMoreStoriesManager, Object.assign({}, this.props.data, {
       template: this.props.template,
