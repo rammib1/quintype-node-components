@@ -2,8 +2,8 @@ import React from "react";
 import { DfpAdWrapper } from "./dfp-ad-wrapper";
 import { AdbutlerAd } from "./adbutler-ad";
 
-export function AdService(props) {
-  const { adService = '' } = props;
+export function AdServices(props) {
+  const { adService = 'dfp' } = props;
 
   switch(adService) {
     case "dfp":

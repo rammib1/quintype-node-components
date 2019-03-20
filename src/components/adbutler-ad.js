@@ -1,6 +1,6 @@
 import React, { Component } from "react";
 import { awaitHelper } from "../utils";
-import connect from "redux";
+import { connect } from "react-redux";
 import { LOADED, UPDATE_ZONES } from "../store/actions";
 
 const zoneTypes = {
@@ -15,6 +15,7 @@ function getZone(zonesList, name = '') {
 }
 
 class AdbutlerAdBase extends Component {
+
   constructor(props) {
     super(props);
     this.zoneTag = '';

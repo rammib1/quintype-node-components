@@ -10,7 +10,7 @@ import {
   MEMBER_BEING_LOADED,
   SUBSCRIPTION_GROUP_UPDATED,
   PAYMENT_OPTIONS_UPDATED, ACCESS_BEING_LOADED, ACCESS_UPDATED, METER_UPDATED,
-  UPDATE_ZONES, LOADING
+  UPDATE_ZONES, LOADED
 } from './actions';
 
 function setToTrueOnEvent() {
@@ -111,6 +111,7 @@ function loadingReducer(state = true, action) {
   switch(action.type){
     case LOADED: return false;
     default: return state;
+
   }
 }
 

@@ -1,5 +1,5 @@
 import React from "react";
-import createDfpAdComponent from "./dfp-ad";
+import {createDfpAdComponent} from "./dfp-ad";
 
 export function DfpAdWrapper(props) {
   const { networkId, AD_CONFIG, targetingFunc } = props;
