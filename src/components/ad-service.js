@@ -3,7 +3,11 @@ import { DfpAdWrapper } from "./dfp-ad-wrapper";
 import { AdbutlerAd } from "./adbutler-ad";
 
 export function AdServices(props) {
-  const { adService = '' } = props;
+  const { adService = '', networkId = '' } = props;
+
+  if(!adService || !networkId) {
+    return null;
+  }
 
   switch(adService) {
     case "dfp":

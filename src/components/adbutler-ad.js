@@ -1,6 +1,7 @@
 import React, { Component } from "react";
 import { awaitHelper } from "../utils";
 import { connect } from "react-redux";
+import get from "lodash/get";
 import { ZONES_LOADED, UPDATE_ZONES } from "../store/actions";
 
 const zoneTypes = {
@@ -15,7 +16,6 @@ function getZone(zonesList, name = '') {
 }
 
 class AdbutlerAdBase extends Component {
-
   constructor(props) {
     super(props);
     this.zoneTag = '';
@@ -29,18 +29,27 @@ class AdbutlerAdBase extends Component {
   }
 
   async getZones() {
+    const networkId = get(this.props, ["networkId"], "");
     const getZoneApi = `https://api.adbutler.com/v1/zones`;
-    const { data: { data: zonesList }, error } = await awaitHelper((await global.fetch(getZoneApi)))
+    const { data: { data: zonesList }, error } = await awaitHelper((await global.fetch(getZoneApi, {
+      headers: {
+        "Authorization": `Basic ${networkId}`
+      }
+    })))
     this.props.updateZones(zonesList);
     this.props.updateLoadingStatus();
   }
 
   async getZoneTag() {
-    const {zonesList, name} = this.props;
+    const {zonesList, name = "", networkId = ""} = this.props;
     const { id: zoneId, object: zoneType } = getZone(zonesList, name);
     const zoneTypeStr = zoneTypes[zoneType];
     const zoneTagApi = `https://api.adbutler.com/v1/zones/${zoneTypeStr}/${zoneId}/tags?type=iframe-no-js`;
-    const { data: { data: { iframe: zoneTag } }, error }  = await awaitHelper((await global.fetch(zoneTagApi)).json())
+    const { data: { data: { iframe: zoneTag } }, error }  = await awaitHelper((await global.fetch(zoneTagApi, {
+      headers: {
+        "Authorization": `Basic ${networkId}`
+      }
+    })).json())
     this.zoneTag = zoneTag;
   }
 
@@ -48,6 +57,8 @@ class AdbutlerAdBase extends Component {
     return <div dangerouslySetInnerHTML={{__html: this.zoneTag}}></div>;
   }
 }
+
+
 
 const mapStateToProps = state => ({
     zonesList: state.adbutlerZones,
