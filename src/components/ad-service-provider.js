@@ -3,7 +3,11 @@ import PropTypes from "prop-types";
 import { DfpAdWrapper } from "./dfp-ad-wrapper";
 
 export function AdServiceProvider(props) {
-  const { adService = '' } = props;
+  const { adService = "", networkId = "" } = props;
+
+  if(!adService || !networkId) {
+    return null;
+  }
 
   switch(adService) {
     case "dfp":
@@ -14,5 +18,6 @@ export function AdServiceProvider(props) {
 }
 
 AdServiceProvider.propTypes = {
-  adService: PropTypes.string
+  adService: PropTypes.string,
+  networkId: PropTypes.string
 };
