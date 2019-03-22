@@ -10,7 +10,7 @@ import {
   MEMBER_BEING_LOADED,
   SUBSCRIPTION_GROUP_UPDATED,
   PAYMENT_OPTIONS_UPDATED, ACCESS_BEING_LOADED, ACCESS_UPDATED, METER_UPDATED,
-  UPDATE_ZONES, LOADED
+  UPDATE_ZONES, ZONES_LOADED
 } from './actions';
 
 function setToTrueOnEvent() {
@@ -107,9 +107,9 @@ function adbutlerZonesReducer(state = [], action) {
   }
 }
 
-function loadingReducer(state = true, action) {
+function zonesLoadingReducer(state = true, action) {
   switch(action.type){
-    case LOADED: return false;
+    case ZONES_LOADED: return false;
     default: return state;
 
   }
@@ -129,5 +129,5 @@ export const ComponentReducers = {
   access: accessReducer,
   meteringCount: meteringReducer,
   adbutlerZones: adbutlerZonesReducer,
-  loading: loadingReducer
+  zonesLoading: zonesLoadingReducer
 };

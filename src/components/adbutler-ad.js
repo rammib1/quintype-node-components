@@ -1,7 +1,7 @@
 import React, { Component } from "react";
 import { awaitHelper } from "../utils";
 import { connect } from "react-redux";
-import { LOADED, UPDATE_ZONES } from "../store/actions";
+import { ZONES_LOADED, UPDATE_ZONES } from "../store/actions";
 
 const zoneTypes = {
   "banner_zone": "banner",
@@ -51,7 +51,7 @@ class AdbutlerAdBase extends Component {
 
 const mapStateToProps = state => ({
     zonesList: state.adbutlerZones,
-    isLoading: state.loading
+    isLoading: state.zonesLoading
 });
 
 const mapDispatchToProps = dispatch => ({
@@ -63,7 +63,7 @@ const mapDispatchToProps = dispatch => ({
    },
   updateLoadingStatus() {
     return dispatch({
-      type: LOADED
+      type: ZONES_LOADED
     })
   }
 });

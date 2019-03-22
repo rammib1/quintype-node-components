@@ -21,4 +21,4 @@ export const ACCESS_UPDATED = 'QT-ACCESS_UPDATED';
 export const METER_UPDATED = 'QT-METER_UPDATED';
 
 export const UPDATE_ZONES = 'QT-UPDATE_ZONES';
-export const LOADED = 'QT-LOADED';
+export const ZONES_LOADED = 'QT-ZONES_LOADED';
