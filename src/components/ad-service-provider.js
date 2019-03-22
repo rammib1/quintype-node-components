@@ -1,4 +1,5 @@
 import React from "react";
+import PropTypes from "prop-types";
 import { DfpAdWrapper } from "./dfp-ad-wrapper";
 
 export function AdServiceProvider(props) {
@@ -11,3 +12,7 @@ export function AdServiceProvider(props) {
       return null;
   };
 }
+
+AdServiceProvider.propTypes = {
+  adService: PropTypes.string
+};
