@@ -5,7 +5,7 @@ import { DfpAdWrapper } from "./dfp-ad-wrapper";
 export function AdServiceProvider(props) {
   const { adService = "", networkId = "" } = props;
 
-  if(!adService || !networkId) {
+  if(!networkId) {
     return null;
   }
 
@@ -13,7 +13,7 @@ export function AdServiceProvider(props) {
     case "dfp":
       return <DfpAdWrapper {...props} />;
     default:
-      return null;
+      return <DfpAdWrapper {...props} />;
   };
 }
 
