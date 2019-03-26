@@ -120,7 +120,7 @@ The component returns ```null``` in case ```defaultNetworkId``` is not specified
 ```javascript
 import { AdServiceProvider } from '@quintype/components';
 
-<AdServiceProvider adService="dfp" networkId="abcdefghijklmnop" ...{ dfpAdProps } />
+<AdServiceProvider adService="dfp" defaultNetworkId="abcdefghijklmnop" ...{ dfpAdProps } />
 ```
 
 ### DfpAds
