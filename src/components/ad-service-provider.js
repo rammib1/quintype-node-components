@@ -3,9 +3,9 @@ import PropTypes from "prop-types";
 import { DfpAdWrapper } from "./dfp-ad-wrapper";
 
 export function AdServiceProvider(props) {
-  const { adService = "", networkId = "" } = props;
+  const { adService = "", defaultNetworkID = "" } = props;
 
-  if(!networkId) {
+  if(!defaultNetworkID) {
     return null;
   }
 
@@ -19,5 +19,5 @@ export function AdServiceProvider(props) {
 
 AdServiceProvider.propTypes = {
   adService: PropTypes.string,
-  networkId: PropTypes.string
+  defaultNetworkID: PropTypes.string
 };
