@@ -111,16 +111,16 @@ import { ClientSideOnly } from '@quintype/components';
 ```
 
 ### AdServiceProvider
-This component will return the ad servicer provider that you want to integrate. It accepts ```adService```, it's ```networkId``` and the rest of the configurations required for your ad service to render and renders the respective ad service provider based on passed ```adService```.
+This component will return the ad servicer provider that you want to integrate. It accepts ```adService```, it's network-id as ```defaultNetworkId``` and the rest of the configurations required for your ad service to render and renders the respective ad service provider based on passed ```adService```.
 
 ```adService``` defaults to ```dfp```
 
-The component returns ```null``` in case ```networkId``` is not specified
+The component returns ```null``` in case ```defaultNetworkId``` is not specified
 
 ```javascript
 import { AdServiceProvider } from '@quintype/components';
 
-<AdServiceProvider adService="dfp" networkId="abcdefghijklmnop" ...{ dfpAdProps } />
+<AdServiceProvider adService="dfp" defaultNetworkId="abcdefghijklmnop" ...{ dfpAdProps } />
 ```
 
 ### DfpAds
