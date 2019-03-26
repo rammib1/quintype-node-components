@@ -7,6 +7,7 @@ This is a set of components that is to be used to build a Quintype Node App. Thi
          * [BreakingNewsItem](#breakingnewsitem)
          * [Collection](#collection)
          * [ClientSideOnly](#clientsideonly)
+         * [AdServiceProvider](#adserviceprovider)
          * [DfpAds](#dfpads)
          * [HamburgerButton](#hamburgerbutton)
          * [ImageGalleryElement](#imagegalleryelement)
@@ -107,6 +108,19 @@ import { ClientSideOnly } from '@quintype/components';
 <ClientSideOnly>
   This will be shown only on the client side
 </ClientSideOnly>
+```
+
+### AdServiceProvider
+This component will return the ad servicer provider that you want to integrate. It accepts ```adService```, it's ```networkId``` and the rest of the configurations required for your ad service to render and renders the respective ad service provider based on passed ```adService```.
+
+```adService``` defaults to ```dfp```
+
+The component returns ```null``` in case ```networkId``` is not specified
+
+```javascript
+import { AdServiceProvider } from '@quintype/components';
+
+<AdServiceProvider adService="dfp" networkId="abcdefghijklmnop" ...{ dfpAdProps } />
 ```
 
 ### DfpAds
