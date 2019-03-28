@@ -2,6 +2,15 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+## [1.55.1](https://github.com/quintype/quintype-node-components/compare/v1.55.0...v1.55.1) (2019-03-28)
+
+
+### Bug Fixes
+
+* **table story element:** fix breaking table story element ([#76](https://github.com/quintype/quintype-node-components/issues/76)) ([47d7aeb](https://github.com/quintype/quintype-node-components/commit/47d7aeb))
+
+
+
 # [1.55.0](https://github.com/quintype/quintype-node-components/compare/v1.54.1...v1.55.0) (2019-03-28)
 
 
