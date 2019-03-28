@@ -2,6 +2,20 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+# [1.55.0](https://github.com/quintype/quintype-node-components/compare/v1.54.1...v1.55.0) (2019-03-28)
+
+
+### Bug Fixes
+
+* **readme:** Init accesstype documentation ([#73](https://github.com/quintype/quintype-node-components/issues/73)) ([dc8cd9a](https://github.com/quintype/quintype-node-components/commit/dc8cd9a))
+
+
+### Features
+
+* **native share:** Add support for native share using navigator.share ([#75](https://github.com/quintype/quintype-node-components/issues/75)) ([da29891](https://github.com/quintype/quintype-node-components/commit/da29891))
+
+
+
 ## [1.54.1](https://github.com/quintype/quintype-node-components/compare/v1.54.0...v1.54.1) (2019-03-19)
 
 
