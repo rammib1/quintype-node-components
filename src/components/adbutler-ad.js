@@ -43,7 +43,8 @@ class AdbutlerAdBase extends Component {
 
   async getZoneTag() {
     const {zonesList, adtype = "", networkId = ""} = this.props;
-    const { id: zoneId, object: zoneType } = getZone(zonesList, adtype);
+    // Hardcoding adtype to "Default Zone" now for testing purpose
+    const { id: zoneId, object: zoneType } = getZone(zonesList, "Default Zone");
     const zoneTypeStr = zoneTypes[zoneType];
     const zoneTagApi = `https://api.adbutler.com/v1/zones/${zoneTypeStr}/${zoneId}/tags?type=iframe-no-js`;
     const { data: { data: { "iframe_no_js": zoneTag } }, error }  = await awaitHelper((await global.fetch(zoneTagApi, {
