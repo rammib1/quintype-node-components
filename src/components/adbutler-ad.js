@@ -2,7 +2,7 @@ import React, { Component } from "react";
 import { awaitHelper } from "../utils";
 import { connect } from "react-redux";
 import get from "lodash/get";
-import { ZONES_LOADED, UPDATE_ZONES } from "../store/actions";
+import { ZONES_BEING_LOADED, ZONES_LOADED, UPDATE_ZONES } from "../store/actions";
 
 const zoneTypes = {
   "banner_zone": "banner",
@@ -12,7 +12,7 @@ const zoneTypes = {
 }
 
 function getZone(zonesList, name = '') {
-  return zoneList.filter(zone => zone.name === name)[0];
+  return zonesList.filter(zone => zone.name === name)[0];
 }
 
 class AdbutlerAdBase extends Component {
@@ -23,7 +23,8 @@ class AdbutlerAdBase extends Component {
 
   componentDidMount() {
     if (!this.props.isLoading) {
-      this.props.zonesList.length && this.getZones();
+      this.props.updateLoadingStatus(ZONES_BEING_LOADED);
+      !this.props.zonesList.length && this.getZones();
       this.getZoneTag();
     }
   }
@@ -35,21 +36,21 @@ class AdbutlerAdBase extends Component {
       headers: {
         "Authorization": `Basic ${networkId}`
       }
-    })))
+    })));
     this.props.updateZones(zonesList);
-    this.props.updateLoadingStatus();
+    this.props.updateLoadingStatus(ZONES_LOADED);
   }
 
   async getZoneTag() {
-    const {zonesList, name = "", networkId = ""} = this.props;
-    const { id: zoneId, object: zoneType } = getZone(zonesList, name);
+    const {zonesList, adtype = "", networkId = ""} = this.props;
+    const { id: zoneId, object: zoneType } = getZone(zonesList, adtype);
     const zoneTypeStr = zoneTypes[zoneType];
     const zoneTagApi = `https://api.adbutler.com/v1/zones/${zoneTypeStr}/${zoneId}/tags?type=iframe-no-js`;
-    const { data: { data: { iframe: zoneTag } }, error }  = await awaitHelper((await global.fetch(zoneTagApi, {
+    const { data: { data: { "iframe_no_js": zoneTag } }, error }  = await awaitHelper((await global.fetch(zoneTagApi, {
       headers: {
         "Authorization": `Basic ${networkId}`
       }
-    })).json())
+    })).json());
     this.zoneTag = zoneTag;
   }
 
@@ -72,11 +73,11 @@ const mapDispatchToProps = dispatch => ({
       update: zonesList
     });
    },
-  updateLoadingStatus() {
+  updateLoadingStatus(type) {
     return dispatch({
-      type: ZONES_LOADED
+      type
     })
   }
 });
 
-export const AdbutlerAd = connect(mapStateToProps)(AdbutlerAdBase);
+export const AdbutlerAd = connect(mapStateToProps, mapDispatchToProps)(AdbutlerAdBase);

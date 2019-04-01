@@ -10,7 +10,7 @@ import {
   MEMBER_BEING_LOADED,
   SUBSCRIPTION_GROUP_UPDATED,
   PAYMENT_OPTIONS_UPDATED, ACCESS_BEING_LOADED, ACCESS_UPDATED, METER_UPDATED,
-  UPDATE_ZONES, ZONES_LOADED
+  UPDATE_ZONES, ZONES_BEING_LOADED, ZONES_LOADED
 } from './actions';
 
 function setToTrueOnEvent() {
@@ -107,8 +107,9 @@ function adbutlerZonesReducer(state = [], action) {
   }
 }
 
-function zonesLoadingReducer(state = true, action) {
+function zonesLoadingReducer(state = false, action) {
   switch(action.type){
+    case ZONES_BEING_LOADED: return true;
     case ZONES_LOADED: return false;
     default: return state;
 
