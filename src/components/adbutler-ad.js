@@ -4,12 +4,12 @@ import { connect } from "react-redux";
 import get from "lodash/get";
 import { ZONES_BEING_LOADED, ZONES_LOADED, UPDATE_ZONES } from "../store/actions";
 
-const zoneTypes = {
-  "banner_zone": "banner",
-  "text_zone": "text",
-  "email_zone": "email",
-  "vast_zone": "vast-zone"
-}
+// const zoneTypes = {
+//   "banner_zone": "banner",
+//   "text_zone": "text",
+//   "email_zone": "email",
+//   "vast_zone": "vast-zone"
+// }
 
 function getZone(zonesList, name = '') {
   return zonesList.filter(zone => zone.name === name)[0];
@@ -40,9 +40,10 @@ class AdbutlerAdBase extends Component {
   async getZoneTag() {
     const {zonesList, adtype = "", networkId = ""} = this.props;
     // Hardcoding adtype to "Default Zone" now for testing purpose
-    const { id: zoneId, object: zoneType } = getZone(zonesList, "Default Zone");
-    const zoneTypeStr = zoneTypes[zoneType];
-    const zoneTagApi = `/adbutler/${zoneTypeStr}/${zoneId}`;
+    const zone = getZone(zonesList, "Default Zone");
+    console.log('got the zone---->', zone);
+    const { self } = zone;
+    const zoneTagApi = `/adbutler/zone?self=${self}`;
     const { data: { data: { "iframe_no_js": zoneTag } }, error }  = await awaitHelper((await global.fetch(zoneTagApi)).json());
     this.zoneTag = zoneTag;
   }
