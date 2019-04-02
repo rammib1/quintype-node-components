@@ -31,12 +31,8 @@ class AdbutlerAdBase extends Component {
 
   async getZones() {
     const networkId = get(this.props, ["networkId"], "");
-    const getZoneApi = `https://api.adbutler.com/v1/zones`;
-    const { data: { data: zonesList }, error } = await awaitHelper((await global.fetch(getZoneApi, {
-      headers: {
-        "Authorization": `Basic ${networkId}`
-      }
-    })));
+    const getZoneApi = `/adbutler/zones`;
+    const { data: { data: zonesList }, error } = await awaitHelper(await global.fetch(getZoneApi).json());
     this.props.updateZones(zonesList);
     this.props.updateLoadingStatus(ZONES_LOADED);
   }
@@ -46,12 +42,8 @@ class AdbutlerAdBase extends Component {
     // Hardcoding adtype to "Default Zone" now for testing purpose
     const { id: zoneId, object: zoneType } = getZone(zonesList, "Default Zone");
     const zoneTypeStr = zoneTypes[zoneType];
-    const zoneTagApi = `https://api.adbutler.com/v1/zones/${zoneTypeStr}/${zoneId}/tags?type=iframe-no-js`;
-    const { data: { data: { "iframe_no_js": zoneTag } }, error }  = await awaitHelper((await global.fetch(zoneTagApi, {
-      headers: {
-        "Authorization": `Basic ${networkId}`
-      }
-    })).json());
+    const zoneTagApi = `/adbutler/${zoneTypeStr}/${zoneId}`;
+    const { data: { data: { "iframe_no_js": zoneTag } }, error }  = await awaitHelper(await global.fetch(zoneTagApi).json());
     this.zoneTag = zoneTag;
   }
 
