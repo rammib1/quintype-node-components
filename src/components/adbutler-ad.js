@@ -32,7 +32,7 @@ class AdbutlerAdBase extends Component {
   async getZones() {
     const networkId = get(this.props, ["networkId"], "");
     const getZoneApi = `/adbutler/zones`;
-    const { data: { data: zonesList }, error } = await awaitHelper(await global.fetch(getZoneApi).json());
+    const { data: { data: zonesList }, error } = await awaitHelper((await global.fetch(getZoneApi)).json());
     this.props.updateZones(zonesList);
     this.props.updateLoadingStatus(ZONES_LOADED);
   }
@@ -43,7 +43,7 @@ class AdbutlerAdBase extends Component {
     const { id: zoneId, object: zoneType } = getZone(zonesList, "Default Zone");
     const zoneTypeStr = zoneTypes[zoneType];
     const zoneTagApi = `/adbutler/${zoneTypeStr}/${zoneId}`;
-    const { data: { data: { "iframe_no_js": zoneTag } }, error }  = await awaitHelper(await global.fetch(zoneTagApi).json());
+    const { data: { data: { "iframe_no_js": zoneTag } }, error }  = await awaitHelper((await global.fetch(zoneTagApi)).json());
     this.zoneTag = zoneTag;
   }
 
