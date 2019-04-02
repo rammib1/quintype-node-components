@@ -18,7 +18,9 @@ function getZone(zonesList, name = '') {
 class AdbutlerAdBase extends Component {
   constructor(props) {
     super(props);
-    this.zoneTag = '';
+    this.state = {
+      zoneTag: ''
+    };
   }
 
   componentDidMount() {
@@ -45,11 +47,13 @@ class AdbutlerAdBase extends Component {
     const { self } = zone;
     const zoneTagApi = `/adbutler/zone?self=${self}`;
     const { data: { data: { "iframe_no_js": zoneTag } }, error }  = await awaitHelper((await global.fetch(zoneTagApi)).json());
-    this.zoneTag = zoneTag;
+    this.setState({
+      zoneTag: zoneTag
+    })
   }
 
   render() {
-    return <div dangerouslySetInnerHTML={{__html: this.zoneTag}}></div>;
+    return <div dangerouslySetInnerHTML={{__html: this.state.zoneTag}}></div>;
   }
 }
 
