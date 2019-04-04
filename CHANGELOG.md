@@ -2,6 +2,15 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+# [1.56.0](https://github.com/quintype/quintype-node-components/compare/v1.55.2...v1.56.0) (2019-04-04)
+
+
+### Features
+
+* **api response transformer for load more stories base:** Accept apiResponseTransformer as a prop ([#77](https://github.com/quintype/quintype-node-components/issues/77)) ([3150c53](https://github.com/quintype/quintype-node-components/commit/3150c53))
+
+
+
 ## [1.55.2](https://github.com/quintype/quintype-node-components/compare/v1.55.1...v1.55.2) (2019-04-04)
 
 
