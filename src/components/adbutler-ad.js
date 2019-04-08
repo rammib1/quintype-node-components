@@ -2,17 +2,16 @@ import React from "react";
 import PropTypes from "prop-types";
 
 export function AdbutlerAd({ adtype, adbutlerConfig, sizes }) {
-  const { publisherId, [adtype]: zoneId } = adbutlerConfig;
-  const { [adtype]: size } = sizes;
+  const { publisherId = "", [adtype]: zoneId = "" } = adbutlerConfig;
+  const { [adtype]: [ width, height ] = [] } = sizes;
+  const src = `https://servedbyadbutler.com/adserve/;ID=${publisherId};size=${width}x${height};setID=${zoneId};type=iframe;click=CLICK_MACRO_PLACEHOLDER`;
 
   return (
     <div className="adbutler-wrapper">
       <iframe
-        src={`https://servedbyadbutler.com/adserve/;ID=${publisherId};size=${size[0]}x${
-          size[1]
-        };setID=${zoneId};type=iframe;click=CLICK_MACRO_PLACEHOLDER`}
-        width={size[0]}
-        height={size[1]}
+        src={src}
+        width={width}
+        height={height}
         marginWidth="0"
         marginHeight="0"
         hspace="0"
