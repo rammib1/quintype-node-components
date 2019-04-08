@@ -26,6 +26,7 @@ export * from './components/with-preview';
 export * from './components/social-logins/index';
 export * from './components/update-on-interval';
 export * from './components/access-type';
+export * from './components/adbutler-ad';
 
 export * from './store/actions';
 export * from './store/reducers';
