@@ -8,7 +8,7 @@ This is a set of components that is to be used to build a Quintype Node App. Thi
          * [Collection](#collection)
          * [ClientSideOnly](#clientsideonly)
          * [DfpAds](#dfpads)
-         * [AdbutlerAds] (#adbutlerads)
+         * [AdbutlerAds](#adbutlerads)
          * [HamburgerButton](#hamburgerbutton)
          * [ImageGalleryElement](#imagegalleryelement)
          * [InfiniteScroll](#infinitescroll)
