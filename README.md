@@ -8,6 +8,7 @@ This is a set of components that is to be used to build a Quintype Node App. Thi
          * [Collection](#collection)
          * [ClientSideOnly](#clientsideonly)
          * [DfpAds](#dfpads)
+         * [AdbutlerAds](#adbutlerads)
          * [HamburgerButton](#hamburgerbutton)
          * [ImageGalleryElement](#imagegalleryelement)
          * [InfiniteScroll](#infinitescroll)
@@ -133,6 +134,30 @@ export const DfpAd = createDfpAdComponent({
 });
 
 <DfpAd adtype="homepage-2" />
+```
+
+### AdbutlerAds
+This component can be used to get ads from `Adbutler` ad service provider based on the `adtype` you want to show
+
+```javascript
+import { AdbutlerAd } from '@quintype/components';
+
+// Lists publisher id and the respective mapping of the zone ids
+const adbutlerConfig = {
+  publisherId: "175635",
+  "Horizontal-Ad": "353618",
+  "Vertical-Ad": "353620",
+  "Story-Middle-Ad": "353618"
+};
+
+// Lists sizes of respective ads
+const sizes = {
+  "Horizontal-Ad": [728, 90], // [<width>, <height>]
+  "Vertical-Ad": [300, 600],
+  "Story-Middle-Ad": [728, 90]
+};
+
+<AdbutlerAd adtype="Story-Middle-Ad" adbutlerConfig={adbutlerConfig} sizes={sizes} />
 ```
 
 ### HamburgerButton
@@ -589,16 +614,16 @@ Our Marquee recommendation is `react-malarquee`. Just remember to mark all items
 The story table element renders a very basic table story element. It can be enhaced by using 'react-table', which supports pagination and other fancy things.
 
 ### UpdateOnInterval
- 
+
   Serves as a wrapper (using render props) used to update it's children via props while executing data loaders sent as props to the component.
- 
+
   Note : Dataloaders are made to be at an app level to keep the component generic, the return of Dataloaders are sent as props to its children.
- 
+
   Props | Type | Description | Optional
  --- | --- | --- | ---
  `interval`| `number`(ms) | Sets the time, defaults to 30s | True
  `dataLoader`| `func` | Executes the dataloader, the return of which will be the data to the components children.| False
- 
+
   Example :
  ```javascript
  import {UpdateOnInterval} from '@quintype/components';
@@ -620,45 +645,45 @@ The story table element renders a very basic table story element. It can be enha
         }
       </UpdateOnInterval>
  ```
- 
+
 ### AccessType
 
 `AccessType` is a generic connected render prop which exposes methods to handle access to stories / assets and initialize accesstype js
 
-  Name | arguments | Description 
- --- | --- | --- 
+  Name | arguments | Description
+ --- | --- | ---
  `initAccessType`| -NA- | Initializes accesstype, checks for existance of accesstype before requesting for AT js
  `initRazorPayPayment`| `selectedPlan`(object) | Executes accesstype js method to bring forth RP payment gateway
- `checkAccess`| `assetId`(string) | Checks if the user has access to the story/asset id passed 
+ `checkAccess`| `assetId`(string) | Checks if the user has access to the story/asset id passed
  `getSubscriptionForUser`| -NA- | Gets the subscriptions of the current logged in user
- `accessUpdated`| `accessObject`(object) | Sets the current story access to redux store 
+ `accessUpdated`| `accessObject`(object) | Sets the current story access to redux store
  `accessIsLoading`| `loading`(boolean) | A boolean which holds true between the request for access of a story and its response
- 
- 
+
+
  ##### Props
- 
-   Name | type | isRequired 
-  --- | --- | --- 
+
+   Name | type | isRequired
+  --- | --- | ---
   `children`| `func` | yes
   `email`| `string` | no
   `phone`| `number` | no
   `isStaging`| `boolean` | no
   `enableAccesstype`| `boolean` | yes
   `accessTypeKey`| `string` | yes
- 
- 
-###### Notes : 
- 
+
+
+###### Notes :
+
     * This component uses AccessType Js internally
     * It uses the Access API from subtype for metering, the API works on firebase which uses `thinmint` cookie (set by qlitics) of the user to verify and keep track of visits
     * This component only supports Razorpay payment options for now
     * It communicates to sketches where routes are in pattern `/api/access/v1/*`
-    * Metered story has a pingback which is achieved by the use of `navigator.sendBeacon` if available or falls back to fetch, this is needed to update the count of the visited stories for a user 
+    * Metered story has a pingback which is achieved by the use of `navigator.sendBeacon` if available or falls back to fetch, this is needed to update the count of the visited stories for a user
     * Access to story/asset is saved on the redux store under the keyword access which holds keys as story asset id and the access returned from the API as its value
-    * `subscriptions` is the key in the store under which all the subscription groups created for the specified account are maintained 
+    * `subscriptions` is the key in the store under which all the subscription groups created for the specified account are maintained
     * `paymentOptions` is the key under the store which has all the payment options created for the current AT account
     * `selectedPlan` used by `initRazorPayPayment` refers to one of the plan object nested within the subscription groups
-    
+
 ```javascript
 //access object on store
 
@@ -704,8 +729,8 @@ render() {
 }
 
 ```
- 
- 
+
+
 ###### Redux notes:
 
 The component dispatches the following actions
