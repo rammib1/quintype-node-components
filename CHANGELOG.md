@@ -2,6 +2,46 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+# [1.57.0](https://github.com/quintype/quintype-node-components/compare/v1.44.0...v1.57.0) (2019-04-10)
+
+
+### Bug Fixes
+
+* **babel-config:** Remove babel config ([49d4449](https://github.com/quintype/quintype-node-components/commit/49d4449))
+* **dependency:** revert to react 16.2.0 ([4a3a8b4](https://github.com/quintype/quintype-node-components/commit/4a3a8b4))
+* **package-lock:** package lock update ([d8b7b08](https://github.com/quintype/quintype-node-components/commit/d8b7b08))
+* **package-lock:** Update package lock ([e64ea74](https://github.com/quintype/quintype-node-components/commit/e64ea74))
+* **package-lock:** Update package-lock, audit fix ([c4ce647](https://github.com/quintype/quintype-node-components/commit/c4ce647))
+* **package.json:** Add lodash as peer depencency ([ba2697e](https://github.com/quintype/quintype-node-components/commit/ba2697e))
+* **readme:** Init accesstype documentation ([#73](https://github.com/quintype/quintype-node-components/issues/73)) ([dc8cd9a](https://github.com/quintype/quintype-node-components/commit/dc8cd9a))
+* **review-rating:** canShowEmptyRating option added ([#71](https://github.com/quintype/quintype-node-components/issues/71)) ([5a57144](https://github.com/quintype/quintype-node-components/commit/5a57144))
+* **search-box:** Implement initialValue - searchbox ([#70](https://github.com/quintype/quintype-node-components/issues/70)) ([257020a](https://github.com/quintype/quintype-node-components/commit/257020a))
+* **Story Element:** Replaced all Anchor tags to open in new tab ([#65](https://github.com/quintype/quintype-node-components/issues/65)) ([dbe7cb1](https://github.com/quintype/quintype-node-components/commit/dbe7cb1))
+* **story-element:** fail safe story element also read slug access ([37d1b88](https://github.com/quintype/quintype-node-components/commit/37d1b88))
+* **table story element:** fix breaking table story element ([#76](https://github.com/quintype/quintype-node-components/issues/76)) ([47d7aeb](https://github.com/quintype/quintype-node-components/commit/47d7aeb))
+* **With Member:** IsLoading is set to true on server side ([49636d7](https://github.com/quintype/quintype-node-components/commit/49636d7))
+
+
+### Features
+
+* **Adbutler Integration:** Add component to integrate Adbutler ad service provider ([#79](https://github.com/quintype/quintype-node-components/issues/79)) ([64edff0](https://github.com/quintype/quintype-node-components/commit/64edff0))
+* **api response transformer for load more stories base:** Accept apiResponseTransformer as a prop ([#77](https://github.com/quintype/quintype-node-components/issues/77)) ([3150c53](https://github.com/quintype/quintype-node-components/commit/3150c53))
+* **Breaking News:** Implemented breakingNewsLoaded ([#59](https://github.com/quintype/quintype-node-components/issues/59)) ([54c0846](https://github.com/quintype/quintype-node-components/commit/54c0846))
+* **build:** upgrade to Babel 7 ([#55](https://github.com/quintype/quintype-node-components/issues/55)) ([799514f](https://github.com/quintype/quintype-node-components/commit/799514f))
+* **Collection:** Passing the index to collection template ([8dcec03](https://github.com/quintype/quintype-node-components/commit/8dcec03))
+* **interval-update:** Component to update children components at intervals ([#58](https://github.com/quintype/quintype-node-components/issues/58)) ([1602b3c](https://github.com/quintype/quintype-node-components/commit/1602b3c))
+* **LazyLoad:** Eager Load Images ([#57](https://github.com/quintype/quintype-node-components/issues/57)) ([83cac37](https://github.com/quintype/quintype-node-components/commit/83cac37))
+* **LazyLoadImages:** EagerLoadImages now takes a predicate ([785a68d](https://github.com/quintype/quintype-node-components/commit/785a68d))
+* **LazyLoadImages:** Responsive image takes `eager=true` ([b4a14cb](https://github.com/quintype/quintype-node-components/commit/b4a14cb))
+* **native share:** Add support for native share using navigator.share ([#75](https://github.com/quintype/quintype-node-components/issues/75)) ([da29891](https://github.com/quintype/quintype-node-components/commit/da29891))
+* **package-lock:** Bump all dependencies to latest, optimize lodash ([c5523c4](https://github.com/quintype/quintype-node-components/commit/c5523c4))
+* **Performance:** Remove Lodash ([#67](https://github.com/quintype/quintype-node-components/issues/67)) ([240b444](https://github.com/quintype/quintype-node-components/commit/240b444))
+* **Preview:** Adding WithPreview component ([#56](https://github.com/quintype/quintype-node-components/issues/56)) ([adcebd0](https://github.com/quintype/quintype-node-components/commit/adcebd0))
+* **Query for Author:** If passed Author id query Author API ([#78](https://github.com/quintype/quintype-node-components/issues/78)) ([dd55c06](https://github.com/quintype/quintype-node-components/commit/dd55c06))
+* **With Member:** Set isLoading when updating t he member ([#54](https://github.com/quintype/quintype-node-components/issues/54)) ([3c0905b](https://github.com/quintype/quintype-node-components/commit/3c0905b))
+
+
+
 # [1.56.0](https://github.com/quintype/quintype-node-components/compare/v1.55.2...v1.56.0) (2019-04-04)
 
 
