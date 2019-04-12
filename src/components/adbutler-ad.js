@@ -22,13 +22,15 @@ export class AdbutlerAd extends Component {
   getSize() {
     const { adtype, sizes } = this.props;
     const { [adtype]: sizeMap } = sizes;
-    const screenWidth = get(window, ["screen", "width"], 992);
+    const screenWidth = get(window, ["screen", "width"]);
 
-    if (screenWidth < 448) {
+    if (screenWidth < 441) {
       return sizeMap["mobile"];
-    } else {
-      return sizeMap["desktop"];
     }
+    if(screenWidth < 992) {
+      return sizeMap["tablet"];
+    }
+    return sizeMap["desktop"];
   }
 
   render() {
