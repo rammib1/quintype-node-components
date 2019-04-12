@@ -1,26 +1,57 @@
-import React from "react";
+import React, { Component } from "react";
 import PropTypes from "prop-types";
+import get from "lodash/get";
 
-export function AdbutlerAd({ adtype, adbutlerConfig, sizes }) {
-  const { publisherId = "", [adtype]: zoneId = "" } = adbutlerConfig;
-  const { [adtype]: [ width = 0, height = 0 ] = [] } = sizes;
-  const src = `https://servedbyadbutler.com/adserve/;ID=${publisherId};size=${width}x${height};setID=${zoneId};type=iframe;click=CLICK_MACRO_PLACEHOLDER`;
 
-  return (
-    <div className="adbutler-wrapper">
-      <iframe
-        src={src}
-        width={width}
-        height={height}
-        marginWidth="0"
-        marginHeight="0"
-        hspace="0"
-        vspace="0"
-        frameBorder="0"
-        scrolling="no"
-      />
-    </div>
-  );
+export class AdbutlerAd extends Component {
+  constructor(props) {
+    super(props);
+    this.state = {
+      size: []
+    }
+    this.getSize = this.getSize.bind(this);
+  }
+
+  componentDidMount() {
+    const size = this.getSize();
+    this.setState({
+      size: size
+    })
+  }
+
+  getSize() {
+    const { adtype, sizes } = this.props;
+    const { [adtype]: sizeMap } = sizes;
+    const screenWidth = get(window, ["screen", "width"], 992);
+    console.log('getting sizes', sizes, sizeMap);
+    if (screenWidth < 448) {
+      return sizeMap["mobile"];
+    } else {
+      return sizeMap["desktop"];
+    }
+  }
+
+  render() {
+    const { adtype, adbutlerConfig } = this.props;
+    const { publisherId = "", [adtype]: zoneId = "" } = adbutlerConfig;
+    const [ width = 0, height = 0 ] = this.state.size;
+    const src = `https://servedbyadbutler.com/adserve/;ID=${publisherId};size=${width}x${height};setID=${zoneId};type=iframe;click=CLICK_MACRO_PLACEHOLDER`;
+    return (
+      <div className="adbutler-wrapper">
+        <iframe
+          src={src}
+          width={width}
+          height={height}
+          marginWidth="0"
+          marginHeight="0"
+          hspace="0"
+          vspace="0"
+          frameBorder="0"
+          scrolling="no"
+        />
+      </div>
+    );
+  }
 }
 
 AdbutlerAd.propTypes = {
