@@ -9,7 +9,6 @@ export class AdbutlerAd extends Component {
     this.state = {
       size: []
     }
-    this.getSize = this.getSize.bind(this);
   }
 
   componentDidMount() {
