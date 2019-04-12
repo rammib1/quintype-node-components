@@ -146,15 +146,21 @@ import { AdbutlerAd } from '@quintype/components';
 const adbutlerConfig = {
   publisherId: "175635",
   "Horizontal-Ad": "353618",
-  "Vertical-Ad": "353620",
-  "Story-Middle-Ad": "353618"
+  "Vertical-Ad": "353620"
 };
 
 // Lists sizes of respective ads
 const sizes = {
-  "Horizontal-Ad": [728, 90], // [<width>, <height>]
-  "Vertical-Ad": [300, 600],
-  "Story-Middle-Ad": [728, 90]
+  "Horizontal-Ad": {
+    mobile: [320, 50],  // [<width>, <height>]
+    tablet: [728, 90],
+    desktop: [728, 90]
+  },
+  "Vertical-Ad": {
+    mobile: [300, 250],
+    tablet: [300, 600],
+    desktop: [300, 600]
+  }
 };
 
 <AdbutlerAd adtype="Story-Middle-Ad" adbutlerConfig={adbutlerConfig} sizes={sizes} />
