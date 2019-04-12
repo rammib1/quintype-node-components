@@ -2,59 +2,44 @@ import React, { Component } from "react";
 import PropTypes from "prop-types";
 import get from "lodash/get";
 
+function getSize(sizeMap) {
+  const canUseDOM = typeof window !== 'undefined';
+  const screenWidth = canUseDOM && get(window, ["screen", "width"]);
 
-export class AdbutlerAd extends Component {
-  constructor(props) {
-    super(props);
-    this.state = {
-      size: []
-    }
+  if(!screenWidth) return [];
+
+  if (screenWidth < 441) {
+    return sizeMap["mobile"];
   }
-
-  componentDidMount() {
-    const size = this.getSize();
-    this.setState({
-      size: size
-    })
+  if(screenWidth < 992) {
+    return sizeMap["tablet"];
   }
+  return sizeMap["desktop"];
+}
 
-  getSize() {
-    const { adtype, sizes } = this.props;
-    const { [adtype]: sizeMap } = sizes;
-    const screenWidth = get(window, ["screen", "width"]);
+export function AdbutlerAd({ adtype, adbutlerConfig, sizes }) {
+  const { publisherId = "", [adtype]: zoneId = "" } = adbutlerConfig;
+  const { [adtype]: sizeMap } = sizes;
+  const size = getSize(sizeMap);
+  const [ width, height ] = size;
+  const src = `https://servedbyadbutler.com/adserve/;ID=${publisherId};size=${width}x${height};setID=${zoneId};type=iframe;click=CLICK_MACRO_PLACEHOLDER`;
+  const hasSize = size.length;
 
-    if (screenWidth < 441) {
-      return sizeMap["mobile"];
-    }
-    if(screenWidth < 992) {
-      return sizeMap["tablet"];
-    }
-    return sizeMap["desktop"];
-  }
-
-  render() {
-    const { adtype, adbutlerConfig } = this.props;
-    const { publisherId = "", [adtype]: zoneId = "" } = adbutlerConfig;
-    const [ width, height ] = this.state.size;
-    const src = `https://servedbyadbutler.com/adserve/;ID=${publisherId};size=${width}x${height};setID=${zoneId};type=iframe;click=CLICK_MACRO_PLACEHOLDER`;
-    const hasSize = this.state.size.length;
-
-    return (
-      <div className="adbutler-wrapper">
-        { hasSize && <iframe
-          src={src}
-          width={width}
-          height={height}
-          marginWidth="0"
-          marginHeight="0"
-          hspace="0"
-          vspace="0"
-          frameBorder="0"
-          scrolling="no"
-        /> }
-      </div>
-    );
-  }
+  return (
+    <div className="adbutler-wrapper">
+      { hasSize && <iframe
+        src={src}
+        width={width}
+        height={height}
+        marginWidth="0"
+        marginHeight="0"
+        hspace="0"
+        vspace="0"
+        frameBorder="0"
+        scrolling="no"
+      /> }
+    </div>
+  );
 }
 
 AdbutlerAd.propTypes = {
