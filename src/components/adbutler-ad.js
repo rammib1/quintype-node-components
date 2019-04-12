@@ -23,7 +23,7 @@ export class AdbutlerAd extends Component {
     const { adtype, sizes } = this.props;
     const { [adtype]: sizeMap } = sizes;
     const screenWidth = get(window, ["screen", "width"], 992);
-    console.log('getting sizes', sizes, sizeMap);
+
     if (screenWidth < 448) {
       return sizeMap["mobile"];
     } else {
@@ -34,11 +34,13 @@ export class AdbutlerAd extends Component {
   render() {
     const { adtype, adbutlerConfig } = this.props;
     const { publisherId = "", [adtype]: zoneId = "" } = adbutlerConfig;
-    const [ width = 0, height = 0 ] = this.state.size;
+    const [ width, height ] = this.state.size;
     const src = `https://servedbyadbutler.com/adserve/;ID=${publisherId};size=${width}x${height};setID=${zoneId};type=iframe;click=CLICK_MACRO_PLACEHOLDER`;
+    const hasSize = this.state.size.length;
+
     return (
       <div className="adbutler-wrapper">
-        <iframe
+        { hasSize && <iframe
           src={src}
           width={width}
           height={height}
@@ -48,7 +50,7 @@ export class AdbutlerAd extends Component {
           vspace="0"
           frameBorder="0"
           scrolling="no"
-        />
+        /> }
       </div>
     );
   }
