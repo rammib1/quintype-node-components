@@ -7,13 +7,8 @@ function getSize(sizeMap) {
   const screenWidth = canUseDOM && get(window, ["screen", "width"]);
 
   if(!screenWidth) return [];
-
-  if (screenWidth < 441) {
-    return sizeMap["mobile"];
-  }
-  if(screenWidth < 992) {
-    return sizeMap["tablet"];
-  }
+  if (screenWidth < 441) return sizeMap["mobile"];
+  if (screenWidth < 992) return sizeMap["tablet"];
   return sizeMap["desktop"];
 }
 
@@ -21,7 +16,7 @@ export function AdbutlerAd({ adtype, adbutlerConfig, sizes }) {
   const { publisherId = "", [adtype]: zoneId = "" } = adbutlerConfig;
   const { [adtype]: sizeMap } = sizes;
   const size = getSize(sizeMap);
-  const [ width, height ] = size;
+  const [ width = 0, height = 0 ] = size;
   const src = `https://servedbyadbutler.com/adserve/;ID=${publisherId};size=${width}x${height};setID=${zoneId};type=iframe;click=CLICK_MACRO_PLACEHOLDER`;
   const hasSize = size.length;
 
