@@ -146,15 +146,21 @@ import { AdbutlerAd } from '@quintype/components';
 const adbutlerConfig = {
   publisherId: "175635",
   "Horizontal-Ad": "353618",
-  "Vertical-Ad": "353620",
-  "Story-Middle-Ad": "353618"
+  "Vertical-Ad": "353620"
 };
 
 // Lists sizes of respective ads
 const sizes = {
-  "Horizontal-Ad": [728, 90], // [<width>, <height>]
-  "Vertical-Ad": [300, 600],
-  "Story-Middle-Ad": [728, 90]
+  "Horizontal-Ad": {
+    mobile: [320, 50],  // [<width>, <height>]
+    tablet: [728, 90],
+    desktop: [728, 90]
+  },
+  "Vertical-Ad": {
+    mobile: [300, 250],
+    tablet: [300, 600],
+    desktop: [300, 600]
+  }
 };
 
 <AdbutlerAd adtype="Story-Middle-Ad" adbutlerConfig={adbutlerConfig} sizes={sizes} />
@@ -219,6 +225,7 @@ exports.StoryPage = StoryPage;
 ### LazyCollection
 
 This component can be used to render a collection, but with the components being lazy. This takes all the same options as Collection, but with a `lazyAfter` prop.
+This Component also accepts extra props, which will be passed down to collection templates.
 
 Note: This does not accept `interstitial` items (yet). And home page items are not hidden after being rendered
 
@@ -230,7 +237,9 @@ import { LazyCollection } from '@quintype/components'
 <LazyCollection collection={collection}
                 collectionTemplates={collectionTemplates}
                 storyTemplates={storyTemplates}
-                lazyAfter={3} />
+                lazyAfter={3}
+                extraProp="some prop" />
+
 ```
 
 ### LazyLoadImages
