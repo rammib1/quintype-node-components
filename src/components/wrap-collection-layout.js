@@ -3,7 +3,7 @@ import {connect} from 'react-redux';
 import get from "lodash/get";
 
 import { LoadMoreCollectionStories } from './load-more-stories-base';
-import { LazyLoadImages } from './lazy-load-images';
+import { LazyLoadImages, EagerLoadImages } from './lazy-load-images';
 import { ClientSideOnly } from './client-side-only';
 
 function loadMoreWrapper(Component, data, enableLoadMoreButton, slug, numStoriesToLoad) {
@@ -18,7 +18,10 @@ function loadMoreWrapper(Component, data, enableLoadMoreButton, slug, numStories
     });
 }
 
-function lazyLoadWrapper(component, {lazy_load_images: lazyLoadImages = false}) {
+function lazyLoadWrapper(component, {lazy_load_images: lazyLoadImages = false}, eagerIndex) {
+  if(eagerIndex < 2) {
+    return React.createElement(EagerLoadImages, {}, component);
+  }
   return !lazyLoadImages ?
     component :
     React.createElement(LazyLoadImages, {}, component);
@@ -53,7 +56,7 @@ function WrapCollectionComponent(Component) {
 
     const component = loadMoreWrapper(Component, data, associatedMetadata.enable_load_more_button, props.collection.slug, associatedMetadata.subsequent_stories_load_count || 10);
 
-    return [clientSideLoadWrapper, lazyLoadWrapper].reduce((accumulator, currentElement) => currentElement(accumulator, associatedMetadata), component);
+    return [clientSideLoadWrapper, lazyLoadWrapper].reduce((accumulator, currentElement) => currentElement(accumulator, associatedMetadata, props.index), component);
   }
 }
 
