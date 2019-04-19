@@ -20,7 +20,7 @@ function loadMoreWrapper(Component, data, enableLoadMoreButton, slug, numStories
 
 function lazyLoadWrapper(component, {lazy_load_images: lazyLoadImages = false}, eagerIndex) {
   if(eagerIndex < 1) {
-    return React.createElement(EagerLoadImages, {}, component);
+    return React.createElement(EagerLoadImages, {predicate: val => val}, component);
   }
   return !lazyLoadImages ?
     component :
