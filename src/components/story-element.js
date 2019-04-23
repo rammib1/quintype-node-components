@@ -109,7 +109,7 @@ class StoryElementBase extends React.Component {
     this.destroyObserver();
   }
 
-  initiateObserver() {
+  initiateObserver = () => {
     if(this.props.disableAnalytics !== true || (global && !global.qlitics)) return false;
 
     const options = {
@@ -119,11 +119,11 @@ class StoryElementBase extends React.Component {
     };
     this.observer = new IntersectionObserver(this.observerCallback, options);
     this.observer.observe(this.storyElementRef);
-  }
+  };
 
-  destroyObserver() {
+  destroyObserver = () => {
     this.observer && this.observer.disconnect();
-  }
+  };
 
   observerCallback = entries => {
     entries.forEach(entry => {
