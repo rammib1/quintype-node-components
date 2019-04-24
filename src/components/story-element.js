@@ -110,7 +110,7 @@ class StoryElementBase extends React.Component {
   }
 
   initiateObserver = () => {
-    if(this.props.disableAnalytics !== true || (global && !global.qlitics)) return false;
+    if(this.props.disableAnalytics === true || (global && !global.qlitics)) return false;
 
     const options = {
       root: null,
