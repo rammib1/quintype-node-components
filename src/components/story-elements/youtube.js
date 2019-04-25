@@ -42,6 +42,8 @@ export default class StoryElementYoutube extends React.Component {
   }
 
   triggerQlitics = action => {
+    if(this.props.disableAnalytics === true) return false;
+    
     const {story = {}, card = {}, element = {}} = this.props;
     const qliticsData = {...getQliticsSchema(story,card,element), ...{'story-element-action': action}};
     if(global.qlitics){
