@@ -7,6 +7,7 @@ import Polltype from './story-elements/polltype';
 import {Table} from './story-elements/table';
 import { Link } from './link';
 import get from 'lodash/get';
+import {getQliticsSchema} from "../utils";
 
 function StoryElementText({element = {},externalLink}) {
   let text = element.text || '';
@@ -117,7 +118,7 @@ class StoryElementBase extends React.Component {
       rootMargin: '0px',
       threshold: 1.0
     };
-    this.observer = new IntersectionObserver(this.observerCallback, options);
+      this.observer = new IntersectionObserver(this.observerCallback, options);
     this.observer.observe(this.storyElementRef);
   };
 
@@ -143,14 +144,12 @@ class StoryElementBase extends React.Component {
 
   emitElementQlitics() {
     const {story = {}, card = {}, element = {}} = this.props;
-    global.qlitics('track', 'story-element-view', {
-      'story-content-id': story['story-content-id'],
-      'story-version-id': story['story-version-id'],
-      'card-content-id': card['content-id'],
-      'card-version-id': card['content-version-id'],
-      'story-element-id': element.id,
-      'story-element-type': element.subtype || element.type
-    });
+    if(global.qlitics){
+      global.qlitics('track', 'story-element-view', getQliticsSchema(story,card,element));
+    } else {
+      global.qlitics=global.qlitics||function(){(qlitics.q=qlitics.q||[]).push(arguments);};
+      global.qlitics('track', 'story-element-view', getQliticsSchema(story,card,element));
+    }
   }
 
   storyElement() {
