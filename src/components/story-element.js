@@ -130,7 +130,6 @@ class StoryElementBase extends React.Component {
     entries.forEach(entry => {
       if (entry.isIntersecting) {
         this.emitElementQlitics();
-        this.destroyObserver(); //destroy observer once the call is made
       }
     });
   };
