@@ -118,7 +118,7 @@ class StoryElementBase extends React.Component {
       rootMargin: '0px',
       threshold: 1.0
     };
-      this.observer = new IntersectionObserver(this.observerCallback, options);
+    this.observer = new IntersectionObserver(this.observerCallback, options);
     this.observer.observe(this.storyElementRef);
   };
 
