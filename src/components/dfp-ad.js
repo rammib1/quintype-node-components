@@ -9,7 +9,8 @@ function DfpAdBase({defaultNetworkID, config, collapseEmptyDivs, targetingArgume
                            collapseEmptyDivs={collapseEmptyDivs}
                            targetingArguments={targetingArguments}
                            sizeMapping={adConfig.viewPortSizeMapping}
-                           singleRequest={true}>
+                           lazyLoad={{ fetchMarginPercent: 0, renderMarginPercent: 0, mobileScaling: 0 }}
+                           singleRequest={false}>
     <AdSlot {...adConfig} />
   </DFPSlotsProvider>;
 }
