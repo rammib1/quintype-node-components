@@ -2,6 +2,15 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+# [2.0.0](https://github.com/quintype/quintype-node-components/compare/v1.58.1...v2.0.0) (2019-05-02)
+
+
+### Features
+
+* **react-redux:** Bump version to major  ([#86](https://github.com/quintype/quintype-node-components/issues/86)) ([d6d5f2d](https://github.com/quintype/quintype-node-components/commit/d6d5f2d))
+
+
+
 # [1.60.0](https://github.com/quintype/quintype-node-components/compare/v1.58.1...v1.60.0) (2019-05-02)
 
 
