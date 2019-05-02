@@ -1,8 +1,8 @@
-import React from 'react';
+import React, {Component} from 'react';
 import PropTypes from "prop-types";
-import {NavigationComponentBase} from "./navigation-component-base";
+import {connect} from "react-redux";
 
-export class SearchBox extends NavigationComponentBase {
+export class SearchBoxBase extends Component {
   constructor(props) {
     super(props);
     this.state = {
@@ -16,7 +16,7 @@ export class SearchBox extends NavigationComponentBase {
 
   onSubmit(e) {
     e.preventDefault();
-    this.state.query && this.navigateTo(`/search?q=${encodeURIComponent(this.state.query)}`);
+    this.state.query && this.props.navigateTo(`/search?q=${encodeURIComponent(this.state.query)}`);
     this.props.onSubmitHandler && this.props.onSubmitHandler(this.state.query);
   }
 
@@ -29,7 +29,7 @@ export class SearchBox extends NavigationComponentBase {
     this.textInput && this.textInput.focus();
   }
 
-  defaultTemplate({children}) {
+  static defaultTemplate({children}) {
     return children;
   }
 
@@ -52,7 +52,7 @@ export class SearchBox extends NavigationComponentBase {
 
 }
 
-SearchBox.protoTypes = {
+SearchBoxBase.protoTypes = {
   initValue: PropTypes.string,
   placeholder: PropTypes.string,
   className: PropTypes.string,
@@ -61,5 +61,17 @@ SearchBox.protoTypes = {
   inputId: PropTypes.string,
   template: PropTypes.element,
   onSubmitHandler: PropTypes.func,
-  onEscape: PropTypes.func
-}
+  onEscape: PropTypes.func,
+  navigateTo: PropTypes.func
+};
+
+
+const mapStateToProps = state => ({});
+
+const mapDispatchToProps = dispatch => ({
+  navigateTo: function(url) {
+    global.app.navigateToPage(dispatch, url);
+  }
+});
+
+export const SearchBox = connect(mapStateToProps, mapDispatchToProps)(SearchBoxBase);
