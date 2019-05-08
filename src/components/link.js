@@ -1,7 +1,7 @@
 import React from "react";
 import {connect} from "react-redux";
 
-function preventDefault(e) {
+function preventDefaultImpl(e) {
   e.preventDefault();
   e.stopPropagation();
 }
@@ -13,7 +13,7 @@ function LinkBase({
   href,
   currentHostUrl,
   navigateTo = navigateToImpl,
-  preventDefault = preventDefault,
+  preventDefault = preventDefaultImpl,
   disableAjaxLinks = global.disableAjaxLinks || global.disableAjaxNavigation,
   ...otherProps
 }) {
