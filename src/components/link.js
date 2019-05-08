@@ -17,6 +17,7 @@ function LinkBase({
   ...otherProps
 }) {
   return React.createElement("a", Object.assign(otherProps, {
+    href,
     onClick(e) {
       if(disableAjaxLinks)
         return;

@@ -1,7 +1,9 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
 exports[`Link Creates a Link 1`] = `
-<a>
+<a
+  href="/"
+>
   Click
 </a>
 `;
