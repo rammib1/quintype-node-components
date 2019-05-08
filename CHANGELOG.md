@@ -2,6 +2,16 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+# [2.1.0](https://github.com/quintype/quintype-node-components/compare/v2.0.1...v2.1.0) (2019-05-08)
+
+
+### Features
+
+* Adding Tests ([#87](https://github.com/quintype/quintype-node-components/issues/87)) ([2390ffe](https://github.com/quintype/quintype-node-components/commit/2390ffe))
+* Links now can support multiple domains ([#88](https://github.com/quintype/quintype-node-components/issues/88)) ([ced254e](https://github.com/quintype/quintype-node-components/commit/ced254e))
+
+
+
 ## [2.0.1](https://github.com/quintype/quintype-node-components/compare/v2.0.0...v2.0.1) (2019-05-02)
 
 
