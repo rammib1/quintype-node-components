@@ -29,6 +29,7 @@ This is a set of components that is to be used to build a Quintype Node App. Thi
          * [SocialShare](#socialshare)
          * [StoryElement](#storyelement)
          * [WithError](#witherror)
+         * [WithHostUrl](#withhosturl)
          * [WithMember](#withmember)
          * [WithPreview](#withpreview)
          * [WithSocialLogin](#withsociallogin)
@@ -531,6 +532,20 @@ function optionalErrorFn(props) {
 }
 
 const MyStoryElement = withError(ClassThatMayCrash, optionalErrorFn)
+```
+
+### WithHostUrl
+This function can be used to get access to the `currentHostUrl` and `primaryHostUrl`.
+
+```javascript
+import { WithHostUrl } from '@quintype/components';
+
+<WithHostUrl>{({ primaryHostUrl, currentHostUrl }) =>
+  <div>
+    <div>primaryHostUrl: {primaryHostUrl}</div>
+    <div>currentHostUrl: {currentHostUrl}</div>
+  </div>
+}</WithHostUrl>
 ```
 
 ### WithMember

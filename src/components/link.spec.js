@@ -1,4 +1,4 @@
-import { Link } from './link';
+import { Link } from '..';
 import { Provider } from 'react-redux';
 import { createStore } from 'redux';
 import { render, cleanup, fireEvent } from 'react-testing-library';

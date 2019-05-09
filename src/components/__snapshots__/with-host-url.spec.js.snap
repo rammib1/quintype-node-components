@@ -1,0 +1,14 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`WithHostUrl Passes the hosts to the render props 1`] = `
+<div>
+  <div>
+    primaryHostUrl: 
+    https://www.foo.com
+  </div>
+  <div>
+    currentHostUrl: 
+    https://subdomain.foo.com
+  </div>
+</div>
+`;
