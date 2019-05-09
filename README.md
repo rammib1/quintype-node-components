@@ -493,7 +493,7 @@ class CustomComponent extends React.Component {
 
   render() {
     return <div className="story-byline__social-share">
-              <SocialShare url={storyShareSlug}
+              <SocialShare fullUrl={this.props.story.url}
                 title='Headline of the story'
                 template={this.getSocialCardsTemplate}
                 hashtags='news,india,press' />

@@ -2,7 +2,7 @@ import React from "react";
 import {connect} from "react-redux";
 import {withError} from './with-error';
 
-function getNativeShareHandler(canNativeShare, title, fullUrl) {   
+function getNativeShareHandler(canNativeShare, title, fullUrl) {
   if (!canNativeShare) {
     return null;
   }
@@ -28,7 +28,7 @@ class SocialShareBase extends React.Component {
   }
 
   render() {
-    const fullUrl = `${this.props.publisherUrl}/${this.props.url}`;
+    const fullUrl = this.props.fullUrl || `${this.props.publisherUrl}/${this.props.url}`;
     const hashtags = this.props.hashtags ? this.props.hashtags : '';
 
     return React.createElement(this.props.template, Object.assign({
