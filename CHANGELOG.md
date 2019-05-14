@@ -2,6 +2,15 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+## [2.3.1](https://github.com/quintype/quintype-node-components/compare/v2.3.0...v2.3.1) (2019-05-14)
+
+
+### Bug Fixes
+
+* update quintype-js to 1.2.0 ([#90](https://github.com/quintype/quintype-node-components/issues/90)) ([4bc07ba](https://github.com/quintype/quintype-node-components/commit/4bc07ba))
+
+
+
 # [2.3.0](https://github.com/quintype/quintype-node-components/compare/v2.2.0...v2.3.0) (2019-05-11)
 
 
