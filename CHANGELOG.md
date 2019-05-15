@@ -2,6 +2,15 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+# [2.4.0](https://github.com/quintype/quintype-node-components/compare/v2.3.1...v2.4.0) (2019-05-15)
+
+
+### Features
+
+* **SocialShare:** url encoding the social share icons ([#91](https://github.com/quintype/quintype-node-components/issues/91)) ([e9bf88a](https://github.com/quintype/quintype-node-components/commit/e9bf88a))
+
+
+
 ## [2.3.1](https://github.com/quintype/quintype-node-components/compare/v2.3.0...v2.3.1) (2019-05-14)
 
 
