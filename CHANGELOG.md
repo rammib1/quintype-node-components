@@ -2,6 +2,15 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+# [2.5.0](https://github.com/quintype/quintype-node-components/compare/v2.4.0...v2.5.0) (2019-05-20)
+
+
+### Features
+
+* Adding WithLazy and WithClientSideOnly ([#92](https://github.com/quintype/quintype-node-components/issues/92)) ([d9ee369](https://github.com/quintype/quintype-node-components/commit/d9ee369))
+
+
+
 # [2.4.0](https://github.com/quintype/quintype-node-components/compare/v2.3.1...v2.4.0) (2019-05-15)
 
 
