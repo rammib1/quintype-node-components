@@ -33,7 +33,7 @@ function StoryElementAlsoRead({element, story}) {
   );
 }
 
-function StoryElementImage({element, story = {}, imageWidths, imageDefaultWidth}) {
+function StoryElementImage({element, story = {}, imageWidths, imageDefaultWidth, onClick = () => {}}) {
   return React.createElement("figure", {},
     React.createElement(ResponsiveImage, {
       slug: element["image-s3-key"],
@@ -42,7 +42,8 @@ function StoryElementImage({element, story = {}, imageWidths, imageDefaultWidth}
       defaultWidth: imageDefaultWidth || 640,
       widths: imageWidths || [360,640,1200],
       imgParams: {auto:['format', 'compress']},
-      alt: element.title || story.headline
+      alt: element.title || story.headline,
+      onClick
     }),
     element.title ? React.createElement("figcaption", {dangerouslySetInnerHTML: {__html: element.title}, className: "story-element-image-title"}) : undefined,
     element['image-attribution'] ? React.createElement("figcaption", {dangerouslySetInnerHTML: {__html: element['image-attribution']}, className: "story-element-image-attribution"}) : undefined
