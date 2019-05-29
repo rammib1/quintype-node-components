@@ -2,6 +2,28 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+# [2.6.0](https://github.com/quintype/quintype-node-components/compare/v1.58.1...v2.6.0) (2019-05-29)
+
+
+### Bug Fixes
+
+* Fix a shadowed variable ([e5466f3](https://github.com/quintype/quintype-node-components/commit/e5466f3))
+* Social Shares Handle Absolute URLs ([ed65f50](https://github.com/quintype/quintype-node-components/commit/ed65f50))
+* update quintype-js to 1.2.0 ([#90](https://github.com/quintype/quintype-node-components/issues/90)) ([4bc07ba](https://github.com/quintype/quintype-node-components/commit/4bc07ba))
+
+
+### Features
+
+* Adding WithLazy and WithClientSideOnly ([#92](https://github.com/quintype/quintype-node-components/issues/92)) ([d9ee369](https://github.com/quintype/quintype-node-components/commit/d9ee369))
+* **DfpAd Refresh:** expose a dfp function to refresh ads ([f2153ae](https://github.com/quintype/quintype-node-components/commit/f2153ae))
+* **Multi Domain:** Exporting WithHostUrl ([ebfa759](https://github.com/quintype/quintype-node-components/commit/ebfa759))
+* **react-redux:** Bump version to major  ([#86](https://github.com/quintype/quintype-node-components/issues/86)) ([d6d5f2d](https://github.com/quintype/quintype-node-components/commit/d6d5f2d))
+* **SocialShare:** url encoding the social share icons ([#91](https://github.com/quintype/quintype-node-components/issues/91)) ([e9bf88a](https://github.com/quintype/quintype-node-components/commit/e9bf88a))
+* Adding Tests ([#87](https://github.com/quintype/quintype-node-components/issues/87)) ([2390ffe](https://github.com/quintype/quintype-node-components/commit/2390ffe))
+* Links now can support multiple domains ([#88](https://github.com/quintype/quintype-node-components/issues/88)) ([ced254e](https://github.com/quintype/quintype-node-components/commit/ced254e))
+
+
+
 # [2.5.0](https://github.com/quintype/quintype-node-components/compare/v2.4.0...v2.5.0) (2019-05-20)
 
 
