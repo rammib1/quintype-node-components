@@ -64,7 +64,7 @@ function StoryElementImage({
     }),
     React.createElement(
       "div",
-      { className: "story-element-text-caption-attribution" },
+      { className: "story-element-caption-attribution-wrapper" },
       element.title
         ? React.createElement("figcaption", {
             dangerouslySetInnerHTML: { __html: element.title },
