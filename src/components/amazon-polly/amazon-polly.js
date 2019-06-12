@@ -31,7 +31,9 @@ export class AmazonPolly extends React.Component {
 
     return <div className={`${className}-wrapper`}>
       <div className={`${className}-text-wrapper`} onClick={this.onClickHandler}>
-        <HeadsetIcon size={24} className={`${className}-headset`} />
+        <div className={`${className}-headset-wrapper`}>
+          <HeadsetIcon size={24} className={`${className}-headset`} />
+        </div>
         <span className={`${className}-text`}>Listen to story</span>
       </div>
       {!this.state.isOpen ? null : <div className={`${className}-bar-wrapper`}>
