@@ -2,6 +2,15 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+# [2.7.0](https://github.com/quintype/quintype-node-components/compare/v2.6.0...v2.7.0) (2019-06-12)
+
+
+### Features
+
+* **image-caption:** add wrapper for image-caption and attribution in responsiveImage ([#94](https://github.com/quintype/quintype-node-components/issues/94)) ([07d7267](https://github.com/quintype/quintype-node-components/commit/07d7267))
+
+
+
 # [2.6.0](https://github.com/quintype/quintype-node-components/compare/v1.58.1...v2.6.0) (2019-05-29)
 
 
