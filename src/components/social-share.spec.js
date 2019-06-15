@@ -19,6 +19,6 @@ describe("SocialShare", () => {
       </Provider>
     )
 
-    expect(container.firstChild).toHaveTextContent("https://twitter.com/intent/tweet?url=https%3A%2F%2Fwww.google.com&text=Amazing%20Link&hashtags=awesome");
+    expect(container.firstChild).toHaveTextContent("https://twitter.com/intent/tweet?url=https://www.google.com&text=Amazing Link&hashtags=awesome");
   });
 })
