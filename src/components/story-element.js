@@ -19,12 +19,11 @@ function StoryElementText({ element = {}, externalLink }) {
   });
 }
 
-function StoryElementAlsoRead({ element, story }) {
+function StoryElementAlsoRead({ element, story, alsoreadText = "Also Read: " }) {
   const linkedStories = get(story, ["linked-stories"]);
   const linkedStoryId = get(element, ["metadata", "linked-story-id"]);
   const linkedStorySlug = get(linkedStories, [linkedStoryId, "slug"]);
   const storyUrl = `/${linkedStorySlug}`;
-
   const linkProps = {
     className: "story-element-text-also-read__link",
     href: storyUrl
@@ -36,7 +35,7 @@ function StoryElementAlsoRead({ element, story }) {
     React.createElement(
       "span",
       { className: "story-element-text-also-read__label" },
-      "Also read: "
+      alsoreadText 
     ),
     React.createElement(Link, linkProps, element.text)
   );
@@ -271,7 +270,6 @@ export class StoryElement extends React.Component {
     super(props);
     this.state = { crashed: false };
   }
-
   componentDidCatch(error, stack) {
     this.setState({
       crashed: true,
