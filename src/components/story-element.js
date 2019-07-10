@@ -19,7 +19,11 @@ function StoryElementText({ element = {}, externalLink }) {
   });
 }
 
-function StoryElementAlsoRead({ element, story, alsoreadText = "Also Read: " }) {
+function StoryElementAlsoRead({
+  element,
+  story,
+  alsoreadText = "Also Read: "
+}) {
   const linkedStories = get(story, ["linked-stories"]);
   const linkedStoryId = get(element, ["metadata", "linked-story-id"]);
   const linkedStorySlug = get(linkedStories, [linkedStoryId, "slug"]);
@@ -35,7 +39,7 @@ function StoryElementAlsoRead({ element, story, alsoreadText = "Also Read: " }) 
     React.createElement(
       "span",
       { className: "story-element-text-also-read__label" },
-      alsoreadText 
+      alsoreadText
     ),
     React.createElement(Link, linkProps, element.text)
   );
@@ -131,6 +135,19 @@ function StoryElementFile({ element }) {
   );
 }
 
+function StoryElementPreview({ element }) {
+  return React.createElement(
+    React.Fragment,
+    null,
+    React.createElement("object", {
+      data: element.url,
+      type: element["content-type"],
+      width: element.width,
+      height: element.height
+    })
+  );
+}
+
 // FIXME MISSING: composite
 // TODO: Can also support various subtypes (though not needed potentially)
 
@@ -144,7 +161,8 @@ const DEFAULT_TEMPLATES = {
   polltype: StoryElementPolltype,
   table: StoryElementTable,
   "also-read": StoryElementAlsoRead,
-  file: StoryElementFile
+  file: StoryElementFile,
+  preview: StoryElementPreview
 };
 
 class StoryElementBase extends React.Component {
