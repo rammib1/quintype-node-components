@@ -135,15 +135,15 @@ function StoryElementFile({ element }) {
   );
 }
 
-function StoryElementPreview({ element }) {
+function StoryElementPreview({ element, width, height }) {
   return React.createElement(
     React.Fragment,
     null,
     React.createElement("object", {
       data: element.url,
       type: element["content-type"],
-      width: element.width,
-      height: element.height
+      width: width,
+      height: height
     })
   );
 }
@@ -161,8 +161,8 @@ const DEFAULT_TEMPLATES = {
   polltype: StoryElementPolltype,
   table: StoryElementTable,
   "also-read": StoryElementAlsoRead,
-  file: StoryElementFile,
-  preview: StoryElementPreview
+  attachment: StoryElementPreview,
+  file: StoryElementFile
 };
 
 class StoryElementBase extends React.Component {
