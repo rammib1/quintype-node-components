@@ -2,6 +2,15 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+## [2.8.3](https://github.com/quintype/quintype-node-components/compare/v2.8.2...v2.8.3) (2019-07-17)
+
+
+### Bug Fixes
+
+* **accesstype:** Modify core to pure component ([#100](https://github.com/quintype/quintype-node-components/issues/100)) ([bd741aa](https://github.com/quintype/quintype-node-components/commit/bd741aa))
+
+
+
 ## [2.8.2](https://github.com/quintype/quintype-node-components/compare/v2.8.1...v2.8.2) (2019-06-27)
 
 
