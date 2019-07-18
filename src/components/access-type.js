@@ -12,15 +12,12 @@ import PropTypes from "prop-types";
 import {awaitHelper} from "../utils";
 
 class AccessTypeBase extends PureComponent {
-    constructor(props){
-        super(props);
-    }
 
     componentDidMount() {
         this.initAccessType();
     }
 
-    loadScript(callback) {
+    loadScript = callback => {
         const accessTypeKey = get(this.props, ['accessTypeKey']);
         const isStaging = get(this.props, ['isStaging']);
         const enableAccesstype = get(this.props, ['enableAccesstype']);
@@ -45,9 +42,9 @@ class AccessTypeBase extends PureComponent {
 
         global.AccessType && callback();
         return true;
-    }
+    };
 
-    async setUser(emailAddress, mobileNumber) {
+    setUser = async (emailAddress, mobileNumber) => {
         if(!global.AccessType){
             return {};
         }
@@ -58,9 +55,9 @@ class AccessTypeBase extends PureComponent {
             return error;
         }
         return user;
-    }
+    };
 
-    async getSubscription() {
+    getSubscription = async () => {
         const accessTypeKey = get(this.props, ['accessTypeKey']);
         const isStaging = get(this.props, ['isStaging']);
         let accessTypeHost = `https://www.accesstype.com/api/v1/subscription_groups.json?key=${accessTypeKey}`;
@@ -76,9 +73,9 @@ class AccessTypeBase extends PureComponent {
         const {'subscription_groups': subscriptionGroups = []} = subscriptions;
         this.props.subscriptionGroupLoaded(subscriptionGroups);
         return subscriptionGroups;
-    }
+    };
 
-    async getPaymentOptions() {
+    getPaymentOptions= async () => {
         if(!global.AccessType){
             return [];
         }
@@ -90,17 +87,17 @@ class AccessTypeBase extends PureComponent {
         }
         this.props.paymentOptionsLoaded(paymentOptions);
         return paymentOptions;
-    }
+    };
 
-    async runSequentialCalls() {
+    runSequentialCalls = async () => {
         const user = await this.setUser(this.props.email, this.props.phone);
         if(user) {
             this.getSubscription();
             this.getPaymentOptions();
         }
-    }
+    };
 
-    async getSubscriptionForUser() {
+    getSubscriptionForUser = async () => {
         if(!global.AccessType){
             return {};
         }
@@ -110,21 +107,19 @@ class AccessTypeBase extends PureComponent {
             return error;
         }
         return subscriptions;
-    }
+    };
 
-    initAccessType() {
+    initAccessType = () => {
         try {
             this.loadScript(() => this.runSequentialCalls());
-            console.log(`Accesstype loaded`);
         }
         catch (e) {
             console.warn(`Accesstype load fail`, e);
         }
-    }
+    };
 
 
-    initRazorPayPayment(selectedPlan) {
-
+    initRazorPayPayment = selectedPlan => {
         if(!selectedPlan){
             console.warn('Razor pay needs a plan');
             return false;
@@ -132,15 +127,16 @@ class AccessTypeBase extends PureComponent {
 
         const {paymentOptions} = this.props;
         const {id, title, description, 'price_cents': priceCents, 'price_currency': priceCurrency, 'duration_length': durationLength, 'duration_unit': durationUnit } = selectedPlan;
+        const paymentType = get(selectedPlan, ["recurring"]) ? "razorpay_recurring" : "razorpay";
         const paymentObject = {
             type: 'standard',
             plan: {id, title, description, price_cents: priceCents, price_currency: priceCurrency, duration_length: durationLength, duration_unit: durationUnit},
-            payment: {payment_type: 'razorpay', amount_cents: priceCents, amount_currency: priceCurrency},
+            payment: {payment_type: paymentType, amount_cents: priceCents, amount_currency: priceCurrency},
         };
         return paymentOptions.razorpay.proceed(paymentObject);
-    }
+    };
 
-    async pingBackMeteredStory(assetId, accessData) {
+    pingBackMeteredStory = async (assetId, accessData) => {
         const stringData = JSON.stringify(accessData);
 
         if(global.navigator && global.navigator.sendBeacon){
@@ -159,9 +155,9 @@ class AccessTypeBase extends PureComponent {
         };
         const {data, error} = await awaitHelper((await global.fetch(`/api/access/v1/stories/${assetId}/pingback`, meteredBody)).json());
         return true;
-    }
+    };
 
-    async checkAccess(assetId) {
+    checkAccess = async assetId => {
         if(!assetId){
             console.warn('AssetId is required');
             return false;
@@ -194,17 +190,18 @@ class AccessTypeBase extends PureComponent {
             return error;
         }
         return accessById;
-    }
+    };
 
     render() {
         const {children} = this.props;
+        console.log(`RENDERING AT`);
         return children({
-            initAccessType: () => this.initAccessType(),
-            initRazorPayPayment: initRazorPayPayment => this.initRazorPayPayment(initRazorPayPayment),
-            checkAccess: assetId => this.checkAccess(assetId),
-            getSubscriptionForUser: () => this.getSubscriptionForUser(),
-            accessUpdated: access => this.props.accessUpdated(access),
-            accessIsLoading: loading => this.props.accessIsLoading(loading)
+            initAccessType: this.initAccessType,
+            initRazorPayPayment: this.initRazorPayPayment,
+            checkAccess: this.checkAccess,
+            getSubscriptionForUser: this.getSubscriptionForUser,
+            accessUpdated: this.props.accessUpdated,
+            accessIsLoading: this.props.accessIsLoading
         });
     }
 }
