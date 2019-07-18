@@ -2,6 +2,15 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+# [2.9.0](https://github.com/quintype/quintype-node-components/compare/v2.8.3...v2.9.0) (2019-07-18)
+
+
+### Features
+
+* **accesstype:** Implement recurring plans for accesstype ([1337263](https://github.com/quintype/quintype-node-components/commit/1337263))
+
+
+
 ## [2.8.3](https://github.com/quintype/quintype-node-components/compare/v2.8.2...v2.8.3) (2019-07-17)
 
 
