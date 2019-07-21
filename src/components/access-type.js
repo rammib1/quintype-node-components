@@ -1,5 +1,5 @@
-import React, {PureComponent} from 'react';
-import {connect} from 'react-redux';
+import React, {Component} from 'react';
+import {connect, batch} from 'react-redux';
 import get from "lodash/get";
 import {
     ACCESS_BEING_LOADED,
@@ -11,7 +11,8 @@ import {
 import PropTypes from "prop-types";
 import {awaitHelper} from "../utils";
 
-class AccessTypeBase extends PureComponent {
+
+class AccessTypeBase extends Component {
 
     componentDidMount() {
         this.initAccessType();
@@ -70,9 +71,7 @@ class AccessTypeBase extends PureComponent {
                 error: 'subscriptions fetch failed'
             };
         }
-        const {'subscription_groups': subscriptionGroups = []} = subscriptions;
-        this.props.subscriptionGroupLoaded(subscriptionGroups);
-        return subscriptionGroups;
+        return subscriptions["subscription_groups"] || [];
     };
 
     getPaymentOptions= async () => {
@@ -85,15 +84,18 @@ class AccessTypeBase extends PureComponent {
                 error: 'payment options fetch failed'
             };
         }
-        this.props.paymentOptionsLoaded(paymentOptions);
         return paymentOptions;
     };
 
     runSequentialCalls = async () => {
         const user = await this.setUser(this.props.email, this.props.phone);
         if(user) {
-            this.getSubscription();
-            this.getPaymentOptions();
+            Promise.all([this.getSubscription(), this.getPaymentOptions()]).then(([subscriptionGroups, paymentOptions]) => {
+                batch(() => {
+                    this.props.subscriptionGroupLoaded(subscriptionGroups);
+                    this.props.paymentOptionsLoaded(paymentOptions);
+                })
+            })
         }
     };
 
@@ -146,8 +148,6 @@ class AccessTypeBase extends PureComponent {
 
         const meteredBody = {
             method: "POST",
-            cache: "no-cache",
-            "Cache-Control": "private,no-cache,no-store",
             headers: {
                 "Content-Type": "text/plain"
             },
@@ -164,13 +164,6 @@ class AccessTypeBase extends PureComponent {
         }
 
         this.props.accessIsLoading(true);
-
-
-        const accessObject = {
-            id: assetId,
-            type: 'story',
-            attributes: {}
-        };
 
         const meteringParam = this.props.disableMetering === true ? '?disable-meter=true' : '';
         const { error, data: accessData }  = await awaitHelper((await global.fetch(`/api/access/v1/stories/${assetId}/access${meteringParam}`)).json());
@@ -193,16 +186,17 @@ class AccessTypeBase extends PureComponent {
     };
 
     render() {
-        const {children} = this.props;
-        console.log(`RENDERING AT`);
-        return children({
-            initAccessType: this.initAccessType,
-            initRazorPayPayment: this.initRazorPayPayment,
-            checkAccess: this.checkAccess,
-            getSubscriptionForUser: this.getSubscriptionForUser,
-            accessUpdated: this.props.accessUpdated,
-            accessIsLoading: this.props.accessIsLoading
-        });
+      const {children} = this.props;
+
+      return children({
+        initAccessType: this.initAccessType,
+        initRazorPayPayment: this.initRazorPayPayment,
+        checkAccess: this.checkAccess,
+        getSubscriptionForUser: this.getSubscriptionForUser,
+        accessUpdated: this.props.accessUpdated,
+        accessIsLoading: this.props.accessIsLoading
+      });
+
     }
 }
 
@@ -228,3 +222,8 @@ const mapDispatchToProps = dispatch  => ({
 });
 
 export const AccessType = connect(mapStateToProps, mapDispatchToProps)(AccessTypeBase);
+
+
+export const accessTypeHOC = WrappedComponent => props => {
+    return <WrappedComponent {...props}/>;
+};
