@@ -1,3 +1,4 @@
+import get from "lodash/get";
 import {
   BREAKING_NEWS_UPDATED,
   CLIENT_SIDE_RENDERED,
@@ -11,6 +12,7 @@ import {
   SUBSCRIPTION_GROUP_UPDATED,
   PAYMENT_OPTIONS_UPDATED, ACCESS_BEING_LOADED, ACCESS_UPDATED, METER_UPDATED
 } from './actions';
+import {computeAccess} from "../utils";
 
 function setToTrueOnEvent() {
   const events = Array.from(arguments);
@@ -86,7 +88,7 @@ function accessLoadingReducer(state = true, action) {
 
 function accessReducer(state = {}, action) {
   switch (action.type) {
-    case ACCESS_UPDATED: return Object.assign({}, state, action.access);
+    case ACCESS_UPDATED: return computeAccess(state, action);
     default: return state;
   }
 }
