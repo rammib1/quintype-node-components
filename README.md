@@ -227,7 +227,18 @@ function StoryPage(props) {
 
 exports.StoryPage = StoryPage;
 ```
-
+#### doNotChangeUrl
+When the next story is focussed on, the url and title of the page will be set to the next story loaded by the Infinite Story Base. If this is not required, it can be disabled by setting the prop doNotChangeUrl={true}.
+A valid use case for this: If the after the story, we are showing the snapshots of the next few stories, not the actual stories we dont want to change the url to the current story shown in the snapshot.
+While disabling the url updating, Please make sure that GA is not being fired for the next story if doNotChangeUrl is set to true.
+An Example:
+```javascript
+  <InfiniteStoryBase {...props}
+                            render={StoryPageBase}
+                            loadItems={storyPageLoadItems}
+                            onItemFocus={(item) => console.log(`Story In View: ${item.story.headline}`)}
+                            doNotChangeUrl={true} />
+```
 ### LazyCollection
 
 This component can be used to render a collection, but with the components being lazy. This takes all the same options as Collection, but with a `lazyAfter` prop.
