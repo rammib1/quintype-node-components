@@ -2,6 +2,27 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+# [2.10.0](https://github.com/quintype/quintype-node-components/compare/v2.3.0...v2.10.0) (2019-08-26)
+
+
+### Bug Fixes
+
+* update quintype-js to 1.2.0 ([#90](https://github.com/quintype/quintype-node-components/issues/90)) ([4bc07ba](https://github.com/quintype/quintype-node-components/commit/4bc07ba))
+* **access-type:** Perf fix, access action dispatch :star: ([#101](https://github.com/quintype/quintype-node-components/issues/101)) ([394dbf0](https://github.com/quintype/quintype-node-components/commit/394dbf0))
+* **accesstype:** Modify core to pure component ([#100](https://github.com/quintype/quintype-node-components/issues/100)) ([bd741aa](https://github.com/quintype/quintype-node-components/commit/bd741aa))
+* **Encode social-share uri:** Add encoding back to social-share icons URIs ([#97](https://github.com/quintype/quintype-node-components/issues/97)) ([aca89a2](https://github.com/quintype/quintype-node-components/commit/aca89a2))
+
+
+### Features
+
+* Adding WithLazy and WithClientSideOnly ([#92](https://github.com/quintype/quintype-node-components/issues/92)) ([d9ee369](https://github.com/quintype/quintype-node-components/commit/d9ee369))
+* **accesstype:** Implement recurring plans for accesstype ([1337263](https://github.com/quintype/quintype-node-components/commit/1337263))
+* **image-caption:** add wrapper for image-caption and attribution in responsiveImage ([#94](https://github.com/quintype/quintype-node-components/issues/94)) ([07d7267](https://github.com/quintype/quintype-node-components/commit/07d7267))
+* **InfiniteStoryBase:** a new property disableSetUrl, when set to true will not execute setUrl ([#102](https://github.com/quintype/quintype-node-components/issues/102)) ([b1fb402](https://github.com/quintype/quintype-node-components/commit/b1fb402))
+* **SocialShare:** url encoding the social share icons ([#91](https://github.com/quintype/quintype-node-components/issues/91)) ([e9bf88a](https://github.com/quintype/quintype-node-components/commit/e9bf88a))
+
+
+
 ## [2.9.1](https://github.com/quintype/quintype-node-components/compare/v2.9.0...v2.9.1) (2019-07-23)
 
 
