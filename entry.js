@@ -14,8 +14,86 @@
 
     window.Wrapper = Wrapper;
 
-  import ClientSideOnlyBase from '../src/components/client-side-only.js';
+  import AccessTypeBase from '../src/components/access-type.js';
+Components.AccessTypeBase = AccessTypeBase;
+
+import AdbutlerAd from '../src/components/adbutler-ad.js';
+Components.AdbutlerAd = AdbutlerAd;
+
+import BreakingNewsBase from '../src/components/breaking-news.js';
+Components.BreakingNewsBase = BreakingNewsBase;
+
+import BreakingNewsItem from '../src/components/breaking-news-item.js';
+Components.BreakingNewsItem = BreakingNewsItem;
+
+import ClientSideOnlyBase from '../src/components/client-side-only.js';
 Components.ClientSideOnlyBase = ClientSideOnlyBase;
 
-import WithHostUrlBase from '../src/components/with-host-url.js';
-Components.WithHostUrlBase = WithHostUrlBase;
+import createDfpAdComponent from '../src/components/dfp-ad.js';
+Components.createDfpAdComponent = createDfpAdComponent;
+
+import HamburgerButtonBase from '../src/components/hamburger-button.js';
+Components.HamburgerButtonBase = HamburgerButtonBase;
+
+import LinkBase from '../src/components/link.js';
+Components.LinkBase = LinkBase;
+
+import LoadingIndicatorBase from '../src/components/loading-indicator.js';
+Components.LoadingIndicatorBase = LoadingIndicatorBase;
+
+import MenuBase from '../src/components/menu.js';
+Components.MenuBase = MenuBase;
+
+import MenuItem from '../src/components/menu-item.js';
+Components.MenuItem = MenuItem;
+
+import ReviewRating from '../src/components/review-rating/review-rating.js';
+Components.ReviewRating = ReviewRating;
+
+import SearchBoxBase from '../src/components/search-box.js';
+Components.SearchBoxBase = SearchBoxBase;
+
+import SearchPageBase from '../src/components/search-page-base.js';
+Components.SearchPageBase = SearchPageBase;
+
+import SocialShareBase from '../src/components/social-share.js';
+Components.SocialShareBase = SocialShareBase;
+
+import StoryElement from '../src/components/story-element.js';
+Components.StoryElement = StoryElement;
+
+import UpdateOnInterval from '../src/components/update-on-interval.js';
+Components.UpdateOnInterval = UpdateOnInterval;
+
+import WithClientSideOnly from '../src/components/with-client-side-only.js';
+Components.WithClientSideOnly = WithClientSideOnly;
+
+import withError from '../src/components/with-error.js';
+Components.withError = withError;
+
+import WithFacebookLogin from '../src/components/social-logins/with-facebook-login.js';
+Components.WithFacebookLogin = WithFacebookLogin;
+
+import WithGoogleLogin from '../src/components/social-logins/with-google-login.js';
+Components.WithGoogleLogin = WithGoogleLogin;
+
+import WithHostUrl from '../src/components/with-host-url.js';
+Components.WithHostUrl = WithHostUrl;
+
+import WithLazy from '../src/components/with-lazy.js';
+Components.WithLazy = WithLazy;
+
+import WithLinkedInLogin from '../src/components/social-logins/with-linkedin-login.js';
+Components.WithLinkedInLogin = WithLinkedInLogin;
+
+import WithMemberBase from '../src/components/with-member.js';
+Components.WithMemberBase = WithMemberBase;
+
+import WithPreview from '../src/components/with-preview.js';
+Components.WithPreview = WithPreview;
+
+import WithSocialLogin from '../src/components/social-logins/with-social-login.js';
+Components.WithSocialLogin = WithSocialLogin;
+
+import WithTwitterLogin from '../src/components/social-logins/with-twitter-login.js';
+Components.WithTwitterLogin = WithTwitterLogin;

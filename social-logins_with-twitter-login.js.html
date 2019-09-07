@@ -5,7 +5,7 @@
 <head>
     
     <meta charset="utf-8">
-    <title>JSDoc: client-side-only.js</title>
+    <title>JSDoc: social-logins/with-twitter-login.js</title>
 
     <script src="https://cdn.jsdelivr.net/gh/google/code-prettify@master/loader/run_prettify.js"></script>
     <script src="https://unpkg.com/@babel/standalone/babel.min.js"></script>
@@ -63,7 +63,7 @@
                 <div class="content" id="main-content-wrapper">
                     <header class="page-title">
                         <p>Source</p>
-                        <h1>client-side-only.js</h1>
+                        <h1>social-logins/with-twitter-login.js</h1>
                     </header>
                     
                     
@@ -73,38 +73,20 @@
     
     <section>
         <article>
-            <pre class="prettyprint source linenums"><code>import React from "react";
-import {connect} from "react-redux";
-
-import {mapStateToProps, mapDispatchToProps} from './impl/client-side-only-impl';
-
-class ClientSideOnlyBase extends React.Component {
-  render() {
-    if (this.props.clientSideRendered) {
-      return &lt;div className="client-side-only client-side-only-client">{this.props.children}&lt;/div>;
-    } else {
-      return React.createElement(
-        this.props.serverComponent || "div",
-        Object.assign({ className: "client-side-only client-side-only-server" }, this.props)
-      );
-    }
-  }
-}
+            <pre class="prettyprint source linenums"><code>import React from 'react';
+import { WithSocialLogin } from './with-social-login';
 
 /**
- * This component will be loaded by client, and bypassed when doing server side rendering.
- *
- * Example
- * ```javascript
- * import { ClientSideOnly } from '@quintype/components';
- * &lt;ClientSideOnly>
- *   This will be shown only on the client side
- * &lt;/ClientSideOnly>
- * ```
- * @see {@link WithClientSideOnly} for a render props version of this component
+ * @see {@link WithSocialLogin}
  * @component
+ * @category Login
  */
-export const ClientSideOnly = connect(mapStateToProps, mapDispatchToProps)(ClientSideOnlyBase);
+export function WithTwitterLogin({ clientId, children, scope, emailMandatory }) {
+  return React.createElement(WithSocialLogin, {
+    provider: 'twitter',
+    children: children
+  });
+}
 </code></pre>
         </article>
     </section>

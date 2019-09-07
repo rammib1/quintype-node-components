@@ -1,11 +1,9 @@
-
-
 <!DOCTYPE html>
 <html lang="en">
 <head>
     
     <meta charset="utf-8">
-    <title>JSDoc: client-side-only.js</title>
+    <title>JSDoc: createDfpAdComponent</title>
 
     <script src="https://cdn.jsdelivr.net/gh/google/code-prettify@master/loader/run_prettify.js"></script>
     <script src="https://unpkg.com/@babel/standalone/babel.min.js"></script>
@@ -62,52 +60,369 @@
             <div class="column is-9-desktop">
                 <div class="content" id="main-content-wrapper">
                     <header class="page-title">
-                        <p>Source</p>
-                        <h1>client-side-only.js</h1>
+                        <p>Components</p>
+                        <h1>createDfpAdComponent</h1>
                     </header>
                     
                     
 
 
 
+
+<section>
+
+<header>
     
-    <section>
-        <article>
-            <pre class="prettyprint source linenums"><code>import React from "react";
-import {connect} from "react-redux";
+        <h2><span class="attribs"><span class="type-signature"></span></span>createDfpAdComponent<span class="signature">(params)</span><span class="type-signature"></span></h2>
+        
+    
+</header>
 
-import {mapStateToProps, mapDispatchToProps} from './impl/client-side-only-impl';
+<article>
+    <div class="container-overview">
+    
+        
+            <div class='vertical-section'>
+                <h3 class="title"><span>Constructor</span></h3>
+                <div class="members">
+                    <div class="member">
 
-class ClientSideOnlyBase extends React.Component {
-  render() {
-    if (this.props.clientSideRendered) {
-      return &lt;div className="client-side-only client-side-only-client">{this.props.children}&lt;/div>;
-    } else {
-      return React.createElement(
-        this.props.serverComponent || "div",
-        Object.assign({ className: "client-side-only client-side-only-server" }, this.props)
-      );
-    }
-  }
+    
+    <h4 class="name" id="createDfpAdComponent">
+        
+        <span class="code-name">
+            new createDfpAdComponent<span class="signature">(params)</span><span class="type-signature"></span>
+        </span>
+    </h4>
+    
+
+    
+    
+    <div class="description">
+        <p>This is a function which can be used to manage ad units in a single place. A component must be created, and used with the <code>adtype</code> parameter. These ads are lazy-loaded and single-request mode is disabled by default which can be overwritten as follows.</p>
+<p>Example</p>
+<pre class="prettyprint source lang-javascript"><code>import { createDfpAdComponent } from '@quintype/components';
+
+export const CONFIG = {
+  &quot;homepage-2&quot;: { adUnit: &quot;HP_728x90-3&quot;, sizes: [[728, 90], [320, 50]] },
+  &quot;homepage-3&quot;: { adUnit: &quot;HP_728x90-3&quot;, sizes: [[728, 90], [320, 50]] },
 }
 
-/**
- * This component will be loaded by client, and bypassed when doing server side rendering.
- *
- * Example
- * ```javascript
- * import { ClientSideOnly } from '@quintype/components';
- * &lt;ClientSideOnly>
- *   This will be shown only on the client side
- * &lt;/ClientSideOnly>
- * ```
- * @see {@link WithClientSideOnly} for a render props version of this component
- * @component
- */
-export const ClientSideOnly = connect(mapStateToProps, mapDispatchToProps)(ClientSideOnlyBase);
+export const DfpAd = createDfpAdComponent({
+  defaultNetworkID: &quot;123456789&quot;,
+  config: CONFIG,
+  targeting: function(state) {
+    const params = {};
+
+    // if(storyIsSponsored) params['sponsor'] = storySponsor
+
+    return params;
+  },
+  // Only if you want to overwrite the existing values
+  lazyLoad: false,
+  singleRequest: true
+});
+
+&lt;DfpAd adtype=&quot;homepage-2&quot; />
 </code></pre>
-        </article>
-    </section>
+    </div>
+    
+
+
+
+
+
+
+
+
+
+
+
+    <h5>Parameters:</h5>
+    
+
+<table class="params">
+    <thead>
+    <tr>
+        
+        <th>Name</th>
+        
+
+        <th>Type</th>
+
+        
+
+        
+
+        <th class="last">Description</th>
+    </tr>
+    </thead>
+
+    <tbody>
+    
+
+        
+<tr class="deep-level-0">
+  
+      <td class="name"><code>params</code></td>
+  
+
+  <td class="type">
+  
+      
+<span class="param-type">Object</span>
+
+
+  
+  </td>
+
+  
+
+  
+
+  <td class="description last"></td>
+</tr>
+
+  
+  
+    
+<tr class="deep-level-1">
+  
+      <td class="name"><code>defaultNetworkID</code></td>
+  
+
+  <td class="type">
+  
+      
+<span class="param-type">string</span>
+
+
+  
+  </td>
+
+  
+
+  
+
+  <td class="description last"><p>Network Id of the Ad Provider</p></td>
+</tr>
+
+  
+    
+<tr class="deep-level-1">
+  
+      <td class="name"><code>config</code></td>
+  
+
+  <td class="type">
+  
+      
+<span class="param-type">Object</span>
+
+
+  
+  </td>
+
+  
+
+  
+
+  <td class="description last"><p>Configuration of the ads (see example)</p></td>
+</tr>
+
+  
+    
+<tr class="deep-level-1">
+  
+      <td class="name"><code>targeting</code></td>
+  
+
+  <td class="type">
+  
+      
+<span class="param-type">function</span>
+
+
+  
+  </td>
+
+  
+
+  
+
+  <td class="description last"><p>Function which takes in the current state, and returns targetting parameters</p></td>
+</tr>
+
+  
+    
+<tr class="deep-level-1">
+  
+      <td class="name"><code>collapseEmptyDivs</code></td>
+  
+
+  <td class="type">
+  
+      
+<span class="param-type">boolean</span>
+
+
+  
+  </td>
+
+  
+
+  
+
+  <td class="description last"><p>(default true)</p></td>
+</tr>
+
+  
+    
+<tr class="deep-level-1">
+  
+      <td class="name"><code>lazyLoad</code></td>
+  
+
+  <td class="type">
+  
+      
+<span class="param-type">boolean</span>
+
+
+  
+  </td>
+
+  
+
+  
+
+  <td class="description last"><p>(default true)</p></td>
+</tr>
+
+  
+    
+<tr class="deep-level-1">
+  
+      <td class="name"><code>singleRequest</code></td>
+  
+
+  <td class="type">
+  
+      
+<span class="param-type">boolean</span>
+
+
+  
+  </td>
+
+  
+
+  
+
+  <td class="description last"><p>Run Dfp in Single Request Mode (default false)</p></td>
+</tr>
+
+  
+
+
+    
+    </tbody>
+</table>
+
+
+
+
+
+<dl class="details">
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+    
+
+    
+
+    
+
+    
+        <p class="tag-source">
+            <a href="dfp-ad.js.html" class="button">View Source</a>
+            <span>
+                <a href="dfp-ad.js.html">dfp-ad.js</a>, <a href="dfp-ad.js.html#line45">line 45</a>
+            </span>
+        </p>
+    
+</dl>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+</div>
+                </div>
+            </div>
+        
+    
+    </div>
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+</article>
+
+</section>
 
 
 

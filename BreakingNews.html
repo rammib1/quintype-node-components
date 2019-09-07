@@ -1,11 +1,9 @@
-
-
 <!DOCTYPE html>
 <html lang="en">
 <head>
     
     <meta charset="utf-8">
-    <title>JSDoc: client-side-only.js</title>
+    <title>JSDoc: BreakingNews</title>
 
     <script src="https://cdn.jsdelivr.net/gh/google/code-prettify@master/loader/run_prettify.js"></script>
     <script src="https://unpkg.com/@babel/standalone/babel.min.js"></script>
@@ -62,52 +60,166 @@
             <div class="column is-9-desktop">
                 <div class="content" id="main-content-wrapper">
                     <header class="page-title">
-                        <p>Source</p>
-                        <h1>client-side-only.js</h1>
+                        <p>Components</p>
+                        <h1>BreakingNews</h1>
                     </header>
                     
                     
 
 
 
+
+<section>
+
+<header>
     
-    <section>
-        <article>
-            <pre class="prettyprint source linenums"><code>import React from "react";
-import {connect} from "react-redux";
+        <h2><span class="attribs"><span class="type-signature"></span></span>BreakingNews<span class="signature">()</span><span class="type-signature"></span></h2>
+        
+    
+</header>
 
-import {mapStateToProps, mapDispatchToProps} from './impl/client-side-only-impl';
+<article>
+    <div class="container-overview">
+    
+        
+            <div class='vertical-section'>
+                <h3 class="title"><span>Constructor</span></h3>
+                <div class="members">
+                    <div class="member">
 
-class ClientSideOnlyBase extends React.Component {
-  render() {
-    if (this.props.clientSideRendered) {
-      return &lt;div className="client-side-only client-side-only-client">{this.props.children}&lt;/div>;
-    } else {
-      return React.createElement(
-        this.props.serverComponent || "div",
-        Object.assign({ className: "client-side-only client-side-only-server" }, this.props)
-      );
-    }
-  }
-}
+    
+    <h4 class="name" id="BreakingNews">
+        
+        <span class="code-name">
+            new BreakingNews<span class="signature">()</span><span class="type-signature"></span>
+        </span>
+    </h4>
+    
 
-/**
- * This component will be loaded by client, and bypassed when doing server side rendering.
- *
- * Example
- * ```javascript
- * import { ClientSideOnly } from '@quintype/components';
- * &lt;ClientSideOnly>
- *   This will be shown only on the client side
- * &lt;/ClientSideOnly>
- * ```
- * @see {@link WithClientSideOnly} for a render props version of this component
- * @component
- */
-export const ClientSideOnly = connect(mapStateToProps, mapDispatchToProps)(ClientSideOnlyBase);
+    
+    
+    <div class="description">
+        <p>This component will automatically fetch breaking news every 30 seconds, and render the provided view.</p>
+<p>Example</p>
+<pre class="prettyprint source lang-javascript"><code>import { renderBreakingNews } from '@quintype/framework/client/start';
+const BreakingNewsView = ({breakingNews, breakingNewsLoaded}) =>
+  &lt;ul>{breakingNews.map((item, index) => &lt;li key={index}>&lt;BreakingNewsItem item={item} />&lt;/li>)}&lt;/ul>
+renderBreakingNews('breaking-news-container', store, BreakingNewsView);
 </code></pre>
-        </article>
-    </section>
+    </div>
+    
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<dl class="details">
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+    
+
+    
+    <dt class="tag-see">See:</dt>
+    <dd class="tag-see">
+        <ul>
+            <li><a href="BreakingNewsItem.html">BreakingNewsItem</a></li>
+        </ul>
+    </dd>
+    
+
+    
+
+    
+        <p class="tag-source">
+            <a href="breaking-news.js.html" class="button">View Source</a>
+            <span>
+                <a href="breaking-news.js.html">breaking-news.js</a>, <a href="breaking-news.js.html#line53">line 53</a>
+            </span>
+        </p>
+    
+</dl>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+</div>
+                </div>
+            </div>
+        
+    
+    </div>
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+</article>
+
+</section>
 
 
 

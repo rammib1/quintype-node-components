@@ -5,7 +5,7 @@
 <head>
     
     <meta charset="utf-8">
-    <title>JSDoc: client-side-only.js</title>
+    <title>JSDoc: adbutler-ad.js</title>
 
     <script src="https://cdn.jsdelivr.net/gh/google/code-prettify@master/loader/run_prettify.js"></script>
     <script src="https://unpkg.com/@babel/standalone/babel.min.js"></script>
@@ -63,7 +63,7 @@
                 <div class="content" id="main-content-wrapper">
                     <header class="page-title">
                         <p>Source</p>
-                        <h1>client-side-only.js</h1>
+                        <h1>adbutler-ad.js</h1>
                     </header>
                     
                     
@@ -74,37 +74,84 @@
     <section>
         <article>
             <pre class="prettyprint source linenums"><code>import React from "react";
-import {connect} from "react-redux";
+import PropTypes from "prop-types";
+import get from "lodash/get";
 
-import {mapStateToProps, mapDispatchToProps} from './impl/client-side-only-impl';
+function getSize(sizeMap) {
+  const canUseDOM = !!(
+    typeof window !== 'undefined' &amp;&amp;
+    window.document &amp;&amp;
+    window.document.createElement);
+  const screenWidth = canUseDOM &amp;&amp; get(window, ["screen", "width"], 440);
 
-class ClientSideOnlyBase extends React.Component {
-  render() {
-    if (this.props.clientSideRendered) {
-      return &lt;div className="client-side-only client-side-only-client">{this.props.children}&lt;/div>;
-    } else {
-      return React.createElement(
-        this.props.serverComponent || "div",
-        Object.assign({ className: "client-side-only client-side-only-server" }, this.props)
-      );
-    }
-  }
+  if(!screenWidth) return [];
+  if (screenWidth &lt; 441) return sizeMap["mobile"];
+  if (screenWidth &lt; 992) return sizeMap["tablet"];
+  return sizeMap["desktop"];
 }
 
 /**
- * This component will be loaded by client, and bypassed when doing server side rendering.
+ * This component can be used to get ads from `Adbutler` ad service provider based on the `adtype` you want to show
  *
  * Example
  * ```javascript
- * import { ClientSideOnly } from '@quintype/components';
- * &lt;ClientSideOnly>
- *   This will be shown only on the client side
- * &lt;/ClientSideOnly>
+ * import { AdbutlerAd } from '@quintype/components';
+ *
+ * // Lists publisher id and the respective mapping of the zone ids
+ * const adbutlerConfig = {
+ *   publisherId: "175635",
+ *   "Horizontal-Ad": "353618",
+ *   "Vertical-Ad": "353620"
+ * };
+ *
+ * // Lists sizes of respective ads
+ * const sizes = {
+ *   "Horizontal-Ad": {
+ *     mobile: [320, 50],  // [&lt;width>, &lt;height>]
+ *     tablet: [728, 90],
+ *     desktop: [728, 90]
+ *   },
+ *   "Vertical-Ad": {
+ *     mobile: [300, 250],
+ *     tablet: [300, 600],
+ *     desktop: [300, 600]
+ *   }
+ * };
+ *
+ * &lt;AdbutlerAd adtype="Story-Middle-Ad" adbutlerConfig={adbutlerConfig} sizes={sizes} />
  * ```
- * @see {@link WithClientSideOnly} for a render props version of this component
  * @component
  */
-export const ClientSideOnly = connect(mapStateToProps, mapDispatchToProps)(ClientSideOnlyBase);
+export function AdbutlerAd({ adtype, adbutlerConfig, sizes }) {
+  const { publisherId = "", [adtype]: zoneId = "" } = adbutlerConfig;
+  const { [adtype]: sizeMap } = sizes;
+  const size = getSize(sizeMap);
+  const [ width = 0, height = 0 ] = size;
+  const src = `https://servedbyadbutler.com/adserve/;ID=${publisherId};size=${width}x${height};setID=${zoneId};type=iframe;click=CLICK_MACRO_PLACEHOLDER`;
+  const hasSize = size.length;
+
+  return (
+    &lt;div className="adbutler-wrapper">
+      { hasSize ? &lt;iframe
+        src={src}
+        width={width}
+        height={height}
+        marginWidth="0"
+        marginHeight="0"
+        hspace="0"
+        vspace="0"
+        frameBorder="0"
+        scrolling="no"
+      /> : null }
+    &lt;/div>
+  );
+}
+
+AdbutlerAd.propTypes = {
+  adtype: PropTypes.string,
+  adbutlerConfig: PropTypes.object,
+  sizes: PropTypes.object
+};
 </code></pre>
         </article>
     </section>

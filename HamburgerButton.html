@@ -1,11 +1,9 @@
-
-
 <!DOCTYPE html>
 <html lang="en">
 <head>
     
     <meta charset="utf-8">
-    <title>JSDoc: client-side-only.js</title>
+    <title>JSDoc: HamburgerButton</title>
 
     <script src="https://cdn.jsdelivr.net/gh/google/code-prettify@master/loader/run_prettify.js"></script>
     <script src="https://unpkg.com/@babel/standalone/babel.min.js"></script>
@@ -62,52 +60,159 @@
             <div class="column is-9-desktop">
                 <div class="content" id="main-content-wrapper">
                     <header class="page-title">
-                        <p>Source</p>
-                        <h1>client-side-only.js</h1>
+                        <p>Components</p>
+                        <h1>HamburgerButton</h1>
                     </header>
                     
                     
 
 
 
+
+<section>
+
+<header>
     
-    <section>
-        <article>
-            <pre class="prettyprint source linenums"><code>import React from "react";
-import {connect} from "react-redux";
+        <h2><span class="attribs"><span class="type-signature"></span></span>HamburgerButton<span class="signature">()</span><span class="type-signature"></span></h2>
+        
+    
+</header>
 
-import {mapStateToProps, mapDispatchToProps} from './impl/client-side-only-impl';
+<article>
+    <div class="container-overview">
+    
+        
+            <div class='vertical-section'>
+                <h3 class="title"><span>Constructor</span></h3>
+                <div class="members">
+                    <div class="member">
 
-class ClientSideOnlyBase extends React.Component {
-  render() {
-    if (this.props.clientSideRendered) {
-      return &lt;div className="client-side-only client-side-only-client">{this.props.children}&lt;/div>;
-    } else {
-      return React.createElement(
-        this.props.serverComponent || "div",
-        Object.assign({ className: "client-side-only client-side-only-server" }, this.props)
-      );
-    }
-  }
-}
+    
+    <h4 class="name" id="HamburgerButton">
+        
+        <span class="code-name">
+            new HamburgerButton<span class="signature">()</span><span class="type-signature"></span>
+        </span>
+    </h4>
+    
 
-/**
- * This component will be loaded by client, and bypassed when doing server side rendering.
- *
- * Example
- * ```javascript
- * import { ClientSideOnly } from '@quintype/components';
- * &lt;ClientSideOnly>
- *   This will be shown only on the client side
- * &lt;/ClientSideOnly>
- * ```
- * @see {@link WithClientSideOnly} for a render props version of this component
- * @component
- */
-export const ClientSideOnly = connect(mapStateToProps, mapDispatchToProps)(ClientSideOnlyBase);
+    
+    
+    <div class="description">
+        <p>This component can be used to trigger an action openening the Hamburger menu. The state can be accessed via state.hamburgerOpened</p>
+<p>Example</p>
+<pre class="prettyprint source lang-javascript"><code>import { HamburgerButton } from '@quintype/components';
+&lt;HamburgerButton>
+  &lt;img src=&quot;/path/to/hamburger.png&quot;/>
+&lt;/HamburgerButton>
 </code></pre>
-        </article>
-    </section>
+    </div>
+    
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<dl class="details">
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+    
+
+    
+
+    
+
+    
+        <p class="tag-source">
+            <a href="hamburger-button.js.html" class="button">View Source</a>
+            <span>
+                <a href="hamburger-button.js.html">hamburger-button.js</a>, <a href="hamburger-button.js.html#line32">line 32</a>
+            </span>
+        </p>
+    
+</dl>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+</div>
+                </div>
+            </div>
+        
+    
+    </div>
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+</article>
+
+</section>
 
 
 

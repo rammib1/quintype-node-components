@@ -5,7 +5,7 @@
 <head>
     
     <meta charset="utf-8">
-    <title>JSDoc: client-side-only.js</title>
+    <title>JSDoc: review-rating/review-rating.js</title>
 
     <script src="https://cdn.jsdelivr.net/gh/google/code-prettify@master/loader/run_prettify.js"></script>
     <script src="https://unpkg.com/@babel/standalone/babel.min.js"></script>
@@ -63,7 +63,7 @@
                 <div class="content" id="main-content-wrapper">
                     <header class="page-title">
                         <p>Source</p>
-                        <h1>client-side-only.js</h1>
+                        <h1>review-rating/review-rating.js</h1>
                     </header>
                     
                     
@@ -74,37 +74,91 @@
     <section>
         <article>
             <pre class="prettyprint source linenums"><code>import React from "react";
-import {connect} from "react-redux";
-
-import {mapStateToProps, mapDispatchToProps} from './impl/client-side-only-impl';
-
-class ClientSideOnlyBase extends React.Component {
-  render() {
-    if (this.props.clientSideRendered) {
-      return &lt;div className="client-side-only client-side-only-client">{this.props.children}&lt;/div>;
-    } else {
-      return React.createElement(
-        this.props.serverComponent || "div",
-        Object.assign({ className: "client-side-only client-side-only-server" }, this.props)
-      );
-    }
-  }
-}
+import { StarIcon } from "./star-icon";
+import PropTypes from "prop-types";
 
 /**
- * This component will be loaded by client, and bypassed when doing server side rendering.
+ * This component takes in the value for rating and renders star for the value passed in. This comopent is generally used for story review type.
  *
  * Example
  * ```javascript
- * import { ClientSideOnly } from '@quintype/components';
- * &lt;ClientSideOnly>
- *   This will be shown only on the client side
- * &lt;/ClientSideOnly>
+ * import { ReviewRating } from '@quintype/components';
+ *
+ * &lt;ReviewRating value="3" />
  * ```
- * @see {@link WithClientSideOnly} for a render props version of this component
+ * The component supports additional props which allows more customization, you can pass in props like size, color, count of stars or even change the render from star to a custom svg component. Refer to component src to know exact details of what is supported.
  * @component
  */
-export const ClientSideOnly = connect(mapStateToProps, mapDispatchToProps)(ClientSideOnlyBase);
+export function ReviewRating({
+                        value,
+                        canShowEmptyRating = false,
+                        size=20,
+                        activeColor="gold",
+                        inActiveColor="gray",
+                        count=5,
+                        showHalfStar=true,
+                        className="review-rating",
+                        activeSymbol=null,
+                        inActiveSymbol=null,
+                        halfActiveSymbol=null
+                      }) {
+
+
+  if(!canShowEmptyRating &amp;&amp; value &lt; 0.1) return null;
+
+
+  const activeComponent = index => activeSymbol ? React.cloneElement(activeSymbol, {size, activeColor, inActiveColor,className:`${className}-symbol active`, key: `review-${index}`}) : &lt;StarIcon size={size} foregroundColor={activeColor} backgroundColor={activeColor} className={`${className}-symbol active`} key={`review-${index}`} data-test-id = "star-icon"/>;
+
+  const inActiveComponent = index => inActiveSymbol ? React.cloneElement(inActiveSymbol, {size, activeColor, inActiveColor, className:`${className}-symbol inactive`, key: `review-${index}`}) : &lt;StarIcon size={size} foregroundColor={inActiveColor} backgroundColor={inActiveColor} className={`${className}-symbol inactive`} key={`review-${index}`} />;
+
+  const halfActiveComponent = index => halfActiveSymbol ? React.cloneElement(halfActiveSymbol, {size, activeColor, inActiveColor, className:`${className}-symbol half-active`, key: `review-${index}`}) : &lt;StarIcon size={size} foregroundColor={activeColor} backgroundColor={inActiveColor} className={`${className}-symbol half-active`} key={`review-${index}`} />;
+
+
+  let children = [];
+  for(let i = 1; i &lt;= count; i++) {
+
+    if(i &lt;= Math.floor(value)) {
+      children.push(activeComponent(i));
+    }
+    else if(showHalfStar &amp;&amp; ((value - Math.floor(value)) > 0) &amp;&amp; (i === Math.round(value))) {
+      children.push(halfActiveComponent(i));
+    }
+    else {
+      children.push(inActiveComponent(i));
+    }
+  }
+
+  return (
+    &lt;div className={className}>
+      {children}
+    &lt;/div>
+  );
+};
+
+ReviewRating.propTypes = {
+  /** Rating value to be displayed */
+  value: PropTypes.number.isRequired,
+  /** Can show Empty rating */
+  canShowEmptyRating: PropTypes.bool,
+  /** Size of the icon (star) */
+  size: PropTypes.number,
+  /** Active color */
+  activeColor: PropTypes.string,
+  /** Inactive/ disabled stars color */
+  inActiveColor: PropTypes.string,
+  /** Number of stars to render */
+  count: PropTypes.number,
+  /** Show half stars */
+  showHalfStar: PropTypes.bool,
+  /** Classname for the containing div */
+  className: PropTypes.string,
+  /** Optional React component to render instead of active star */
+  activeSymbol: PropTypes.element,
+  /** Optional React component to render instead of inactive star */
+  inActiveSymbol: PropTypes.element,
+  /** Optional React component to render instead of half active star */
+  halfActiveSymbol: PropTypes.elemenet
+};
 </code></pre>
         </article>
     </section>

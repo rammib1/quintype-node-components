@@ -5,7 +5,7 @@
 <head>
     
     <meta charset="utf-8">
-    <title>JSDoc: client-side-only.js</title>
+    <title>JSDoc: social-share.js</title>
 
     <script src="https://cdn.jsdelivr.net/gh/google/code-prettify@master/loader/run_prettify.js"></script>
     <script src="https://unpkg.com/@babel/standalone/babel.min.js"></script>
@@ -63,7 +63,7 @@
                 <div class="content" id="main-content-wrapper">
                     <header class="page-title">
                         <p>Source</p>
-                        <h1>client-side-only.js</h1>
+                        <h1>social-share.js</h1>
                     </header>
                     
                     
@@ -75,36 +75,92 @@
         <article>
             <pre class="prettyprint source linenums"><code>import React from "react";
 import {connect} from "react-redux";
+import {withError} from './with-error';
 
-import {mapStateToProps, mapDispatchToProps} from './impl/client-side-only-impl';
+function getNativeShareHandler(canNativeShare, title, fullUrl) {
+  if (!canNativeShare) {
+    return null;
+  }
 
-class ClientSideOnlyBase extends React.Component {
-  render() {
-    if (this.props.clientSideRendered) {
-      return &lt;div className="client-side-only client-side-only-client">{this.props.children}&lt;/div>;
-    } else {
-      return React.createElement(
-        this.props.serverComponent || "div",
-        Object.assign({ className: "client-side-only client-side-only-server" }, this.props)
-      );
-    }
+  return function handleShare() {
+    window.navigator.share({
+      title: title,
+      url: fullUrl,
+    }).catch(console.error);
   }
 }
 
+class SocialShareBase extends React.Component {
+  constructor(props) {
+    super(props);
+    this.state = {
+      canNativeShare: false
+    }
+  }
+
+  componentDidMount() {
+    this.setState({canNativeShare: global &amp;&amp; global.navigator &amp;&amp; global.navigator.share})
+  }
+
+  render() {
+    const fullUrl = this.props.fullUrl || `${this.props.publisherUrl}/${this.props.url}`;
+    const hashtags = this.props.hashtags ? this.props.hashtags : '';
+
+    return React.createElement(this.props.template, Object.assign({
+      fbUrl: `https://www.facebook.com/sharer.php?u=${encodeURIComponent(fullUrl)}`,
+      twitterUrl: `https://twitter.com/intent/tweet?url=${encodeURIComponent(fullUrl)}&amp;text=${encodeURIComponent(this.props.title)}&amp;hashtags=${hashtags}`,
+      gplusUrl: `https://plus.google.com/share?url=${encodeURIComponent(fullUrl)}`,
+      linkedinUrl: `https://www.linkedin.com/shareArticle?url=${encodeURIComponent(fullUrl)}&amp;title=${encodeURIComponent(this.props.title)}`,
+      whatsappUrl: `https://api.whatsapp.com/send?text=${encodeURIComponent(fullUrl)}`,
+      mailtoUrl: `mailto:${''}?subject=${encodeURIComponent(this.props.title)}&amp;body=${encodeURIComponent(fullUrl)}`,
+      handleNativeShare: getNativeShareHandler(this.state.canNativeShare, this.props.title, fullUrl)
+    }, this.props));
+  }
+}
+
+function mapStateToProps(state) {
+  return {
+    publisherUrl: state.qt.config["sketches-host"]
+  };
+}
+
 /**
- * This component will be loaded by client, and bypassed when doing server side rendering.
+ * This component renders social share component to front end app.
  *
  * Example
  * ```javascript
- * import { ClientSideOnly } from '@quintype/components';
- * &lt;ClientSideOnly>
- *   This will be shown only on the client side
- * &lt;/ClientSideOnly>
+ * import { SocialShare } from '@quintype/components';
+ *
+ * class CustomComponent extends React.Component {
+ *   getSocialCardsTemplate({fbUrl, twitterUrl, gplusUrl, linkedinUrl, handleNativeShare}) {
+ *     return &lt;ul className="social-share-icons">
+*        &lt;li className="social-share-icon">
+*          &lt;a href={fbUrl} target="_blank">
+*            &lt;img src={fbIcon} alt="fb icon"/>
+*          &lt;/a>
+*        &lt;/li>
+*        {handleNativeShare &amp;&amp; &lt;li className="social-share-icon">
+*          &lt;button onClick={handleNativeShare}>
+*            &lt;img src={fbIcon} alt="share icon"/>
+*          &lt;/button>
+*        &lt;/li>}
+*      &lt;/ul>
+ *   }
+ *
+ *   render() {
+ *     return &lt;div className="story-byline__social-share">
+ *       &lt;SocialShare fullUrl={this.props.story.url}
+ *         title='Headline of the story'
+ *         template={this.getSocialCardsTemplate}
+ *         hashtags='news,india,press' />
+ *     &lt;/div>
+ *   }
+ * }
  * ```
- * @see {@link WithClientSideOnly} for a render props version of this component
+ *
  * @component
  */
-export const ClientSideOnly = connect(mapStateToProps, mapDispatchToProps)(ClientSideOnlyBase);
+export const SocialShare = connect(mapStateToProps, {})(withError(SocialShareBase));
 </code></pre>
         </article>
     </section>

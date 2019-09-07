@@ -5,7 +5,7 @@
 <head>
     
     <meta charset="utf-8">
-    <title>JSDoc: client-side-only.js</title>
+    <title>JSDoc: dfp-ad.js</title>
 
     <script src="https://cdn.jsdelivr.net/gh/google/code-prettify@master/loader/run_prettify.js"></script>
     <script src="https://unpkg.com/@babel/standalone/babel.min.js"></script>
@@ -63,7 +63,7 @@
                 <div class="content" id="main-content-wrapper">
                     <header class="page-title">
                         <p>Source</p>
-                        <h1>client-side-only.js</h1>
+                        <h1>dfp-ad.js</h1>
                     </header>
                     
                     
@@ -73,38 +73,76 @@
     
     <section>
         <article>
-            <pre class="prettyprint source linenums"><code>import React from "react";
-import {connect} from "react-redux";
+            <pre class="prettyprint source linenums"><code>import React from 'react';
+import {AdSlot, DFPSlotsProvider, DFPManager} from 'react-dfp';
+import {connect} from 'react-redux';
+import {withError} from './with-error';
 
-import {mapStateToProps, mapDispatchToProps} from './impl/client-side-only-impl';
-
-class ClientSideOnlyBase extends React.Component {
-  render() {
-    if (this.props.clientSideRendered) {
-      return &lt;div className="client-side-only client-side-only-client">{this.props.children}&lt;/div>;
-    } else {
-      return React.createElement(
-        this.props.serverComponent || "div",
-        Object.assign({ className: "client-side-only client-side-only-server" }, this.props)
-      );
-    }
-  }
-}
 
 /**
- * This component will be loaded by client, and bypassed when doing server side rendering.
+ * This is a function which can be used to manage ad units in a single place. A component must be created, and used with the `adtype` parameter. These ads are lazy-loaded and single-request mode is disabled by default which can be overwritten as follows.
  *
  * Example
  * ```javascript
- * import { ClientSideOnly } from '@quintype/components';
- * &lt;ClientSideOnly>
- *   This will be shown only on the client side
- * &lt;/ClientSideOnly>
+ * import { createDfpAdComponent } from '@quintype/components';
+ *
+ * export const CONFIG = {
+ *   "homepage-2": { adUnit: "HP_728x90-3", sizes: [[728, 90], [320, 50]] },
+ *   "homepage-3": { adUnit: "HP_728x90-3", sizes: [[728, 90], [320, 50]] },
+ * }
+ *
+ * export const DfpAd = createDfpAdComponent({
+ *   defaultNetworkID: "123456789",
+ *   config: CONFIG,
+ *   targeting: function(state) {
+ *     const params = {};
+ *
+ *     // if(storyIsSponsored) params['sponsor'] = storySponsor
+ *
+ *     return params;
+ *   },
+ *   // Only if you want to overwrite the existing values
+ *   lazyLoad: false,
+ *   singleRequest: true
+ * });
+ *
+ * &lt;DfpAd adtype="homepage-2" />
  * ```
- * @see {@link WithClientSideOnly} for a render props version of this component
+ * @param {Object} params
+ * @param {string} params.defaultNetworkID - Network Id of the Ad Provider
+ * @param {Object} params.config - Configuration of the ads (see example)
+ * @param {function} params.targeting - Function which takes in the current state, and returns targetting parameters
+ * @param {boolean} params.collapseEmptyDivs (default true)
+ * @param {boolean} params.lazyLoad (default true)
+ * @param {boolean} params.singleRequest - Run Dfp in Single Request Mode (default false)
  * @component
  */
-export const ClientSideOnly = connect(mapStateToProps, mapDispatchToProps)(ClientSideOnlyBase);
+export function createDfpAdComponent({ defaultNetworkID, config, targeting, collapseEmptyDivs = true, lazyLoad = true, singleRequest = false }) {
+  return connect((state) => ({
+    targetingArguments: targeting(state),
+    defaultNetworkID: defaultNetworkID,
+    config: config,
+    collapseEmptyDivs: collapseEmptyDivs,
+    lazyLoad: lazyLoad,
+    singleRequest: singleRequest
+  }), () => ({}))(withError(DfpAdBase));
+}
+
+function DfpAdBase({defaultNetworkID, config, collapseEmptyDivs, targetingArguments, adtype, lazyLoad, singleRequest}) {
+  const adConfig = config[adtype];
+  return &lt;DFPSlotsProvider dfpNetworkId={defaultNetworkID}
+                           collapseEmptyDivs={collapseEmptyDivs}
+                           targetingArguments={targetingArguments}
+                           sizeMapping={adConfig.viewPortSizeMapping}
+                           lazyLoad={lazyLoad}
+                           singleRequest={singleRequest}>
+    &lt;AdSlot {...adConfig} />
+  &lt;/DFPSlotsProvider>;
+}
+
+export function refreshDfpAds(adSlots) {
+  DFPManager.refresh(adSlots);
+}
 </code></pre>
         </article>
     </section>

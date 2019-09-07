@@ -5,7 +5,7 @@
 <head>
     
     <meta charset="utf-8">
-    <title>JSDoc: client-side-only.js</title>
+    <title>JSDoc: social-logins/with-social-login.js</title>
 
     <script src="https://cdn.jsdelivr.net/gh/google/code-prettify@master/loader/run_prettify.js"></script>
     <script src="https://unpkg.com/@babel/standalone/babel.min.js"></script>
@@ -63,7 +63,7 @@
                 <div class="content" id="main-content-wrapper">
                     <header class="page-title">
                         <p>Source</p>
-                        <h1>client-side-only.js</h1>
+                        <h1>social-logins/with-social-login.js</h1>
                     </header>
                     
                     
@@ -73,38 +73,93 @@
     
     <section>
         <article>
-            <pre class="prettyprint source linenums"><code>import React from "react";
-import {connect} from "react-redux";
-
-import {mapStateToProps, mapDispatchToProps} from './impl/client-side-only-impl';
-
-class ClientSideOnlyBase extends React.Component {
-  render() {
-    if (this.props.clientSideRendered) {
-      return &lt;div className="client-side-only client-side-only-client">{this.props.children}&lt;/div>;
-    } else {
-      return React.createElement(
-        this.props.serverComponent || "div",
-        Object.assign({ className: "client-side-only client-side-only-server" }, this.props)
-      );
-    }
-  }
-}
+            <pre class="prettyprint source linenums"><code>import React from 'react';
+import PropTypes from 'prop-types';
+import { postRequest } from '../api-client';
 
 /**
- * This component will be loaded by client, and bypassed when doing server side rendering.
+ * This is an abstract render props component for logging in with social accounts. The component adds two items to scope: `serverSideLoginPath` for redirecting to server side, and `login` for doing a client side login. Calling `login()` returns a promise which can be used to handle success and failure cases.
+ *
+ * This component should not be used directly, but should be used via one of the scomponents mentioned in the example.
+ *
+ * NOTE:
+ * - Twitter and LinkedIn do not support ClientSideLogin, and thus `login()` will just redirect to the server. It also ignores the apiKey
+ * - Twitter and LinkedIn do not verify presence of email on the client side. Please ask for these permissions in the app
  *
  * Example
  * ```javascript
- * import { ClientSideOnly } from '@quintype/components';
- * &lt;ClientSideOnly>
- *   This will be shown only on the client side
- * &lt;/ClientSideOnly>
+ * import { WithFacebookLogin, WithGoogleLogin, WithTwitterLogin, WithLinkedInLogin } from '@quintype/components';
+ *
+ * function socialLogin(e, login) {
+ *   e.preventDefault();
+ *   login().then(() => window.location.refresh()); // Can also make an API call to /api/v1/members/me
+ * }
+ *
+ * &lt;WithFacebookLogin appId="apiKey" scope="email" emailMandatory>{({ login, serverSideLoginPath }) =>
+ *     &lt;a href={serverSideLoginPath} onClick={e => socialLogin(e, login)}>
+ *       &lt;img src={assetify(facebookIcon)} />
+ *     &lt;/a>
+ * }&lt;/WithFacebookLogin>
+ * &lt;WithGoogleLogin clientId="clientId" scope="email" emailMandatory>{({ login, serverSideLoginPath }) =>
+ *     &lt;a href={serverSideLoginPath} onClick={e => socialLogin(e, login)}>
+ *       &lt;img src={assetify(gplusIcon)} />
+ *     &lt;/a>
+ * }&lt;/WithGoogleLogin>
+ * &lt;WithTwitterLogin apiKey="apiKey" emailMandatory>{({login, serverSideLoginPath}) =>
+ *     &lt;a href={serverSideLoginPath} onClick={e => socialLogin(e, login)}>
+ *       &lt;img src={assetify(twitterIcon)} />
+ *     &lt;/a>
+ * }&lt;/WithTwitterLogin>
+ * &lt;WithLinkedInLogin clientKey="clientKey" emailMandatory>{({login, serverSideLoginPath}) =>
+ *     &lt;a href={serverSideLoginPath} onClick={e => socialLogin(e, login)}>
+ *       &lt;img src={assetify(linkedInIcon)} />
+ *     &lt;/a>
+ * }&lt;/WithLinkedInLogin>
  * ```
- * @see {@link WithClientSideOnly} for a render props version of this component
  * @component
+ * @hideconstructor
+ * @category Login
  */
-export const ClientSideOnly = connect(mapStateToProps, mapDispatchToProps)(ClientSideOnlyBase);
+export class WithSocialLogin extends React.Component {
+  constructor(props) {
+    super(props);
+    this.serverSideLoginPath = `/login?auth-provider=${this.props.provider}&amp;remote-host=${global.location &amp;&amp; global.location.origin}`;
+  }
+
+  componentDidMount() {
+    this.props.initialize();
+  }
+
+  render() {
+    return this.props.children({
+      login: props => this.props.socialLogin.call(this, props).then(token => createSession(this.props.provider, token)),
+      serverSideLoginPath: this.serverSideLoginPath
+    });
+  }
+}
+
+function createSession(provider, token) {
+  return postRequest(`/api/login/${provider}`, {
+    token,
+    'set-session': true
+  }).json(r => r);
+}
+
+WithSocialLogin.propTypes = {
+  initialize: PropTypes.func.isRequired,
+  socialLogin: PropTypes.func.isRequired,
+  children: PropTypes.func.isRequired,
+  provider: PropTypes.string.isRequired
+};
+
+WithSocialLogin.defaultProps = {
+  initialize: () => {},
+  // function is rebound in WithSocialLogin
+  socialLogin: function() {
+    window.location = this.serverSideLoginPath;
+    return Promise.reject('EXPECT_REDIRECT');
+  }
+}
 </code></pre>
         </article>
     </section>

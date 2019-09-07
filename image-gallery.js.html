@@ -5,7 +5,7 @@
 <head>
     
     <meta charset="utf-8">
-    <title>JSDoc: client-side-only.js</title>
+    <title>JSDoc: image-gallery.js</title>
 
     <script src="https://cdn.jsdelivr.net/gh/google/code-prettify@master/loader/run_prettify.js"></script>
     <script src="https://unpkg.com/@babel/standalone/babel.min.js"></script>
@@ -63,7 +63,7 @@
                 <div class="content" id="main-content-wrapper">
                     <header class="page-title">
                         <p>Source</p>
-                        <h1>client-side-only.js</h1>
+                        <h1>image-gallery.js</h1>
                     </header>
                     
                     
@@ -74,37 +74,37 @@
     <section>
         <article>
             <pre class="prettyprint source linenums"><code>import React from "react";
-import {connect} from "react-redux";
-
-import {mapStateToProps, mapDispatchToProps} from './impl/client-side-only-impl';
-
-class ClientSideOnlyBase extends React.Component {
-  render() {
-    if (this.props.clientSideRendered) {
-      return &lt;div className="client-side-only client-side-only-client">{this.props.children}&lt;/div>;
-    } else {
-      return React.createElement(
-        this.props.serverComponent || "div",
-        Object.assign({ className: "client-side-only client-side-only-server" }, this.props)
-      );
-    }
-  }
-}
+import { ResponsiveImage } from "./responsive-image";
 
 /**
- * This component will be loaded by client, and bypassed when doing server side rendering.
+ * This component can be used for adding image gallery on the story page.
  *
  * Example
  * ```javascript
- * import { ClientSideOnly } from '@quintype/components';
- * &lt;ClientSideOnly>
- *   This will be shown only on the client side
- * &lt;/ClientSideOnly>
+ * import { ImageGalleryElement } from "@quintype/components";
+ *
+ * &lt;ImageGalleryElement element={element} key={element.id} imageAspectRatio={[4,3]} />
  * ```
- * @see {@link WithClientSideOnly} for a render props version of this component
- * @component
  */
-export const ClientSideOnly = connect(mapStateToProps, mapDispatchToProps)(ClientSideOnlyBase);
+export function ImageGalleryElement({ className, imageAspectRatio, defaultWidth, element = {}, widths, story, onClickHandler }) {
+  const images = element['story-elements'].map((image, index) => (
+    &lt;figure data-test-id="story-element-image-container" key={image.id}
+      className={`story-element-image-gallery__image-container ${onClickHandler ? 'custom-cursor' : ''}`}
+      onClick={() => onClickHandler &amp;&amp; onClickHandler(index)}>
+      &lt;ResponsiveImage slug={image["image-s3-key"]}
+        metadata={image["metadata"]}
+        aspectRatio={imageAspectRatio ? imageAspectRatio : [1, 1]}
+        defaultWidth={defaultWidth ? defaultWidth : 480}
+        widths={widths ? widths : [250, 480, 640]}
+        imgParams={{ auto: ['format', 'compress'] }}
+        className={className ? className : 'story-element-image-gallery__image'}
+        alt={image.title || story.headline} />
+    &lt;/figure>));
+
+  return &lt;div className="story-element-image-gallery" data-test-id="story-element-image-gallery">{images}&lt;/div>
+}
+
+ImageGalleryElement.propTypes = {};
 </code></pre>
         </article>
     </section>

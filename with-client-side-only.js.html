@@ -1,9 +1,11 @@
+
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
     
     <meta charset="utf-8">
-    <title>JSDoc: ClientSideOnlyBase</title>
+    <title>JSDoc: with-client-side-only.js</title>
 
     <script src="https://cdn.jsdelivr.net/gh/google/code-prettify@master/loader/run_prettify.js"></script>
     <script src="https://unpkg.com/@babel/standalone/babel.min.js"></script>
@@ -53,158 +55,50 @@
             <div class="column is-3" id="sidebarNav">
                 <div class="sidebar">
                     <nav>
-                        <h2><a href="index.html">Home</a></h2><div class="category"><h3>Components</h3><ul><li><a href="ClientSideOnlyBase.html">ClientSideOnlyBase</a></li><li><a href="WithHostUrlBase.html">WithHostUrlBase</a></li></ul></div>
+                        <h2><a href="index.html">Home</a></h2><div class="category"><h3>Components</h3><ul><li><a href="AdbutlerAd.html">AdbutlerAd</a></li><li><a href="BreakingNews.html">BreakingNews</a></li><li><a href="BreakingNewsItem.html">BreakingNewsItem</a></li><li><a href="ClientSideOnly.html">ClientSideOnly</a></li><li><a href="createDfpAdComponent.html">createDfpAdComponent</a></li><li><a href="HamburgerButton.html">HamburgerButton</a></li><li><a href="Link.html">Link</a></li><li><a href="LoadingIndicator.html">LoadingIndicator</a></li><li><a href="Menu.html">Menu</a></li><li><a href="MenuItem.html">MenuItem</a></li><li><a href="ReviewRating.html">ReviewRating</a></li><li><a href="SearchBox.html">SearchBox</a></li><li><a href="SearchPageBase.html">SearchPageBase</a></li><li><a href="SocialShare.html">SocialShare</a></li><li><a href="StoryElement.html">StoryElement</a></li><li><a href="UpdateOnInterval.html">UpdateOnInterval</a></li><li><a href="WithClientSideOnly.html">WithClientSideOnly</a></li><li><a href="withError.html">withError</a></li><li><a href="WithHostUrl.html">WithHostUrl</a></li><li><a href="WithLazy.html">WithLazy</a></li><li><a href="WithPreview.html">WithPreview</a></li></ul><h3>Global</h3><ul><li><a href="global.html#ImageGalleryElement">ImageGalleryElement</a></li></ul></div><div class="category"><h2>Login</h2><h3>Components</h3><ul><li><a href="WithFacebookLogin.html">WithFacebookLogin</a></li><li><a href="WithGoogleLogin.html">WithGoogleLogin</a></li><li><a href="WithLinkedInLogin.html">WithLinkedInLogin</a></li><li><a href="WithMember.html">WithMember</a></li><li><a href="WithSocialLogin.html">WithSocialLogin</a></li><li><a href="WithTwitterLogin.html">WithTwitterLogin</a></li></ul></div><div class="category"><h2>Subscription</h2><h3>Components</h3><ul><li><a href="AccessType.html">AccessType</a></li></ul></div>
                     </nav>
                 </div>
             </div>
             <div class="column is-9-desktop">
                 <div class="content" id="main-content-wrapper">
                     <header class="page-title">
-                        <p>Components</p>
-                        <h1>ClientSideOnlyBase</h1>
+                        <p>Source</p>
+                        <h1>with-client-side-only.js</h1>
                     </header>
                     
                     
 
 
 
-
-<section>
-
-<header>
     
-        <h2><span class="attribs"><span class="type-signature"></span></span>ClientSideOnlyBase<span class="signature">()</span><span class="type-signature"></span></h2>
-        
-            <div class="class-description"><p>Something cool here</p></div>
-        
-    
-</header>
-
-<article>
-    <div class="container-overview">
-    
-        
-            <div class='vertical-section'>
-                <h3 class="title"><span>Constructor</span></h3>
-                <div class="members">
-                    <div class="member">
-
-    
-    <h4 class="name" id="ClientSideOnlyBase">
-        
-        <span class="code-name">
-            new ClientSideOnlyBase<span class="signature">()</span><span class="type-signature"></span>
-        </span>
-    </h4>
-    
-
-    
-    
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-<dl class="details">
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-    
-
-    
-
-    
-
-    
-        <p class="tag-source">
-            <a href="client-side-only.js.html" class="button">View Source</a>
-            <span>
-                <a href="client-side-only.js.html">client-side-only.js</a>, <a href="client-side-only.js.html#line9">line 9</a>
-            </span>
-        </p>
-    
-</dl>
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-</div>
-                </div>
-            </div>
-        
-    
-    </div>
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-</article>
-
-</section>
+    <section>
+        <article>
+            <pre class="prettyprint source linenums"><code>import { connect } from "react-redux";
+
+import { mapStateToProps, mapDispatchToProps } from './impl/client-side-only-impl';
+
+/**
+ * This component calls the render prop with `clientSideRendered` = true if the client side is completely loaded, and false during SSR and initial bootup.
+ *
+ * Example
+ * ```javascript
+ * import { WithClientSideOnly } from '@quintype/components';
+ * &lt;WithClientSideOnly>
+ *   {({clientSideRendered}) => (
+ *     {clientSideRendered &amp;&amp; &lt;span>This will be shown only on the client side&lt;/span>}
+ *   )}
+ * &lt;/WithClientSideOnly>
+ * ```
+ * @component
+ */
+export const WithClientSideOnly = connect(mapStateToProps, mapDispatchToProps)(WithClientSideOnlyBase);
+
+function WithClientSideOnlyBase({ clientSideRendered = false, children }) {
+  return children({ clientSideRendered })
+}
+</code></pre>
+        </article>
+    </section>
 
 
 

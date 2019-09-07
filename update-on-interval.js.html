@@ -5,7 +5,7 @@
 <head>
     
     <meta charset="utf-8">
-    <title>JSDoc: client-side-only.js</title>
+    <title>JSDoc: update-on-interval.js</title>
 
     <script src="https://cdn.jsdelivr.net/gh/google/code-prettify@master/loader/run_prettify.js"></script>
     <script src="https://unpkg.com/@babel/standalone/babel.min.js"></script>
@@ -63,7 +63,7 @@
                 <div class="content" id="main-content-wrapper">
                     <header class="page-title">
                         <p>Source</p>
-                        <h1>client-side-only.js</h1>
+                        <h1>update-on-interval.js</h1>
                     </header>
                     
                     
@@ -73,38 +73,85 @@
     
     <section>
         <article>
-            <pre class="prettyprint source linenums"><code>import React from "react";
-import {connect} from "react-redux";
-
-import {mapStateToProps, mapDispatchToProps} from './impl/client-side-only-impl';
-
-class ClientSideOnlyBase extends React.Component {
-  render() {
-    if (this.props.clientSideRendered) {
-      return &lt;div className="client-side-only client-side-only-client">{this.props.children}&lt;/div>;
-    } else {
-      return React.createElement(
-        this.props.serverComponent || "div",
-        Object.assign({ className: "client-side-only client-side-only-server" }, this.props)
-      );
-    }
-  }
-}
+            <pre class="prettyprint source linenums"><code>import React, {Component} from 'react';
+import PropTypes from 'prop-types';
 
 /**
- * This component will be loaded by client, and bypassed when doing server side rendering.
+ * This render props component willupdate it's children via props while executing data loaders sent as props to the component.
+ *
+ * Note: Dataloaders are made to be at an app level to keep the component generic, the return of Dataloaders are sent as props to its children.
  *
  * Example
- * ```javascript
- * import { ClientSideOnly } from '@quintype/components';
- * &lt;ClientSideOnly>
- *   This will be shown only on the client side
- * &lt;/ClientSideOnly>
- * ```
- * @see {@link WithClientSideOnly} for a render props version of this component
+ *  ```javascript
+ *  import {UpdateOnInterval} from '@quintype/components';
+ *
+ *  const story = {
+ *     'example' : 'data'
+ *  };
+ *
+ *  function getData() {
+ *      return fetch('/url/something')//...
+ *  }
+ *
+ * &lt;UpdateOnInterval dataLoader={getData} interval={3000} initData={story}>
+ *   {
+ *     ({data}) => &lt;Component data={data}>&lt;/Component>
+ *   }
+ * &lt;/UpdateOnInterval>
+ *  ```
  * @component
+ * @hideconstructor
  */
-export const ClientSideOnly = connect(mapStateToProps, mapDispatchToProps)(ClientSideOnlyBase);
+export class UpdateOnInterval extends Component {
+    constructor(props){
+        super(props);
+        this.fetchIntervalIndex = -1;
+        this.state = {
+            data: this.props.initData
+        };
+    }
+
+    componentDidMount() {
+        this.registerInterval();
+    }
+
+    componentWillMount() {
+        this.unregisterInterval();
+    }
+
+    registerInterval() {
+        this.fetchIntervalIndex = setInterval(() => this.setData(), this.props.interval);
+    }
+
+    unregisterInterval() {
+        clearInterval(this.fetchIntervalIndex);
+    }
+
+    async setData() {
+        const data = typeof this.props.dataLoader === 'function' ? await this.props.dataLoader() : {};
+        this.setState({data});
+    }
+
+    render() {
+        const {children} = this.props;
+        const {data} = this.state;
+        return children({data});
+    }
+}
+
+UpdateOnInterval.defaultProps = {
+    interval : 30000,
+    initData: {}
+};
+
+UpdateOnInterval.propTypes = {
+    /** Sets the time (ms) */
+    interval : PropTypes.number,
+    /** Async Function to load data */
+    dataLoader : PropTypes.func.isRequired,
+    /** The initial data for server side rendering */
+    initData : PropTypes.any.isRequired
+};
 </code></pre>
         </article>
     </section>

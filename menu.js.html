@@ -5,7 +5,7 @@
 <head>
     
     <meta charset="utf-8">
-    <title>JSDoc: client-side-only.js</title>
+    <title>JSDoc: menu.js</title>
 
     <script src="https://cdn.jsdelivr.net/gh/google/code-prettify@master/loader/run_prettify.js"></script>
     <script src="https://unpkg.com/@babel/standalone/babel.min.js"></script>
@@ -63,7 +63,7 @@
                 <div class="content" id="main-content-wrapper">
                     <header class="page-title">
                         <p>Source</p>
-                        <h1>client-side-only.js</h1>
+                        <h1>menu.js</h1>
                     </header>
                     
                     
@@ -76,35 +76,47 @@
             <pre class="prettyprint source linenums"><code>import React from "react";
 import {connect} from "react-redux";
 
-import {mapStateToProps, mapDispatchToProps} from './impl/client-side-only-impl';
+function MenuBase({children, className, itemClassName, items, currentUrl, slice}) {
+  items = items.slice.apply(items, slice);
+  return (
+    &lt;ul className={className}>
+      {children}
+      {items.map((item, ix) => &lt;MenuItem key={ix}
+                                         item={item}
+                                         className={itemClassName}
+                                         currentUrl={currentUrl}/>)}
+    &lt;/ul>
+  );
+}
 
-class ClientSideOnlyBase extends React.Component {
-  render() {
-    if (this.props.clientSideRendered) {
-      return &lt;div className="client-side-only client-side-only-client">{this.props.children}&lt;/div>;
-    } else {
-      return React.createElement(
-        this.props.serverComponent || "div",
-        Object.assign({ className: "client-side-only client-side-only-server" }, this.props)
-      );
-    }
+function mapStateToProps(state) {
+  return {
+    items: state.qt.config.layout.menu,
+    currentUrl: state.qt.currentPath,
   }
 }
 
 /**
- * This component will be loaded by client, and bypassed when doing server side rendering.
+ * This component can be used to render a menu from the menuItems in the editor. An extra class called active is applied if the menu item is the current url. By default, links will resolve via AJAX.
  *
- * Example
+ * Items will automatically be pulled from `config`, please remember to expose the `layout` key.
+ *
+ * Children are prepended to the list of items. Slice can be passed to extract a set of menu items.
+ *
  * ```javascript
- * import { ClientSideOnly } from '@quintype/components';
- * &lt;ClientSideOnly>
- *   This will be shown only on the client side
- * &lt;/ClientSideOnly>
+ * import { Menu } from '@quintype/components';
+ *
+ * &lt;Menu className="menu-class" itemClassName="item-class" slice={[0, 10]}>
+ *   &lt;li>
+ *     &lt;a className="item-class" href="/"> होम &lt;/a>
+ *   &lt;/li>
+ * &lt;/Menu>
  * ```
- * @see {@link WithClientSideOnly} for a render props version of this component
+ * @deprecated
+ * @see {@link MenuItem}
  * @component
  */
-export const ClientSideOnly = connect(mapStateToProps, mapDispatchToProps)(ClientSideOnlyBase);
+export const Menu = connect(mapStateToProps, () => ({}))(MenuBase);
 </code></pre>
         </article>
     </section>

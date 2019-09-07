@@ -5,7 +5,7 @@
 <head>
     
     <meta charset="utf-8">
-    <title>JSDoc: client-side-only.js</title>
+    <title>JSDoc: search-box.js</title>
 
     <script src="https://cdn.jsdelivr.net/gh/google/code-prettify@master/loader/run_prettify.js"></script>
     <script src="https://unpkg.com/@babel/standalone/babel.min.js"></script>
@@ -63,7 +63,7 @@
                 <div class="content" id="main-content-wrapper">
                     <header class="page-title">
                         <p>Source</p>
-                        <h1>client-side-only.js</h1>
+                        <h1>search-box.js</h1>
                     </header>
                     
                     
@@ -73,38 +73,96 @@
     
     <section>
         <article>
-            <pre class="prettyprint source linenums"><code>import React from "react";
+            <pre class="prettyprint source linenums"><code>import React from 'react';
+import PropTypes from 'prop-types';
 import {connect} from "react-redux";
 
-import {mapStateToProps, mapDispatchToProps} from './impl/client-side-only-impl';
-
-class ClientSideOnlyBase extends React.Component {
-  render() {
-    if (this.props.clientSideRendered) {
-      return &lt;div className="client-side-only client-side-only-client">{this.props.children}&lt;/div>;
-    } else {
-      return React.createElement(
-        this.props.serverComponent || "div",
-        Object.assign({ className: "client-side-only client-side-only-server" }, this.props)
-      );
-    }
+class SearchBoxBase extends React.Component {
+  constructor(props) {
+    super(props);
+    this.state = {
+      query: this.props.initValue || ""
+    };
   }
+
+  componentDidMount() {
+    this.focus();
+  }
+
+  onSubmit(e) {
+    e.preventDefault();
+    this.state.query &amp;&amp; this.props.navigateTo(`/search?q=${encodeURIComponent(this.state.query)}`);
+    this.props.onSubmitHandler &amp;&amp; this.props.onSubmitHandler(this.state.query);
+  }
+
+  keyPress(e) {
+    if (e.keyCode === 27)
+      this.props.onEscape &amp;&amp; this.props.onEscape();
+  }
+
+  focus() {
+    this.textInput &amp;&amp; this.textInput.focus();
+  }
+
+  static defaultTemplate({ children }) {
+    return children;
+  }
+
+  render() {
+    const Render = this.props.template || this.defaultTemplate;
+    return &lt;form role="search" action="/search" onSubmit={(e) => this.onSubmit(e)} className={this.props.className} ref={this.props.formRef}>
+      &lt;Render>
+        &lt;input type="search"
+          name="q"
+          placeholder={this.props.placeholder}
+          value={this.state.query}
+          onChange={(e) => this.setState({ query: e.target.value })}
+          className={this.props.inputClassName}
+          id={this.props.inputId}
+          ref={(input) => this.textInput = input}
+          onKeyDown={(e) => this.keyPress(e)} />
+      &lt;/Render>
+    &lt;/form>
+  }
+
 }
 
+SearchBoxBase.propTypes = {
+  initValue: PropTypes.string,
+  placeholder: PropTypes.string,
+  className: PropTypes.string,
+  formRef: PropTypes.any,
+  inputClassName: PropTypes.string,
+  inputId: PropTypes.string,
+  template: PropTypes.element,
+  onSubmitHandler: PropTypes.func,
+  onEscape: PropTypes.func,
+  navigateTo: PropTypes.func
+};
+
+const mapStateToProps = state => ({});
+
+const mapDispatchToProps = dispatch => ({
+  navigateTo: function (url) {
+    global.app.navigateToPage(dispatch, url);
+  }
+});
+
+
 /**
- * This component will be loaded by client, and bypassed when doing server side rendering.
+ * This component provides a form with a search text box. On submit, the user is redirected to the search page via AJAX.
+ *
+ * A template function can also be passed in, to do custom rendering. The template prop will be called with childen having the child text box.
  *
  * Example
  * ```javascript
- * import { ClientSideOnly } from '@quintype/components';
- * &lt;ClientSideOnly>
- *   This will be shown only on the client side
- * &lt;/ClientSideOnly>
+ * import { SearchBox } from '@quintype/components';
+ *
+ * &lt;SearchBox className="foobar" placeholder="search" inputClassName="foobar-box" inputId="stg" inputRef={(x) => this.foo = x} onEscape={() => this.closeDialog()}/>
  * ```
- * @see {@link WithClientSideOnly} for a render props version of this component
  * @component
  */
-export const ClientSideOnly = connect(mapStateToProps, mapDispatchToProps)(ClientSideOnlyBase);
+export const SearchBox = connect(mapStateToProps, mapDispatchToProps)(SearchBoxBase);
 </code></pre>
         </article>
     </section>

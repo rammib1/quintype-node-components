@@ -5,7 +5,7 @@
 <head>
     
     <meta charset="utf-8">
-    <title>JSDoc: client-side-only.js</title>
+    <title>JSDoc: search-page-base.js</title>
 
     <script src="https://cdn.jsdelivr.net/gh/google/code-prettify@master/loader/run_prettify.js"></script>
     <script src="https://unpkg.com/@babel/standalone/babel.min.js"></script>
@@ -63,7 +63,7 @@
                 <div class="content" id="main-content-wrapper">
                     <header class="page-title">
                         <p>Source</p>
-                        <h1>client-side-only.js</h1>
+                        <h1>search-page-base.js</h1>
                     </header>
                     
                     
@@ -73,38 +73,44 @@
     
     <section>
         <article>
-            <pre class="prettyprint source linenums"><code>import React from "react";
-import {connect} from "react-redux";
+            <pre class="prettyprint source linenums"><code>import React from 'react';
+import get from "lodash/get";
+import { getRequest } from './api-client';
 
-import {mapStateToProps, mapDispatchToProps} from './impl/client-side-only-impl';
-
-class ClientSideOnlyBase extends React.Component {
-  render() {
-    if (this.props.clientSideRendered) {
-      return &lt;div className="client-side-only client-side-only-client">{this.props.children}&lt;/div>;
-    } else {
-      return React.createElement(
-        this.props.serverComponent || "div",
-        Object.assign({ className: "client-side-only client-side-only-server" }, this.props)
-      );
-    }
-  }
-}
+import { LoadMoreStoriesManager } from './load-more-stories-base'
 
 /**
- * This component will be loaded by client, and bypassed when doing server side rendering.
+ * This component is to handle search functionality and also handles load more.
  *
- * Example
+ * A template must be passed in to render search results. Fields can be passed to get specific fields in the results. The contents of `props.data` are passed to the rendered template.
+ *
  * ```javascript
- * import { ClientSideOnly } from '@quintype/components';
- * &lt;ClientSideOnly>
- *   This will be shown only on the client side
- * &lt;/ClientSideOnly>
+ * import { SearchPageBase } from "@quintype/components";
+ *
+ * function SearchPageView({query, stories, onLoadMore, loading, noMoreStories}) {
+ *   return &lt;div />;
+ * }
+ *
+ * &lt;SearchPageBase template={SearchPageView} fields={"id,headline"} {...props}/>
  * ```
- * @see {@link WithClientSideOnly} for a render props version of this component
  * @component
+ * @hideconstructor
  */
-export const ClientSideOnly = connect(mapStateToProps, mapDispatchToProps)(ClientSideOnlyBase);
+export class SearchPageBase extends React.Component {
+  search(pageNumber) {
+    return getRequest("/api/v1/search", Object.assign(this.props.params, {
+      offset: (this.props.storiesPerPage || 20) * pageNumber,
+      fields: this.props.fields
+    })).json(response => get(response, ["results", "stories"], []));
+  }
+
+  render() {
+    return React.createElement(LoadMoreStoriesManager, Object.assign({}, this.props.data, {
+      template: this.props.template,
+      loadStories: (pageNumber) => this.search(pageNumber)
+    }));
+  }
+}
 </code></pre>
         </article>
     </section>
