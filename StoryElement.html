@@ -1,11 +1,9 @@
-
-
 <!DOCTYPE html>
 <html lang="en">
 <head>
     
     <meta charset="utf-8">
-    <title>JSDoc: social-logins/with-google-login.js</title>
+    <title>JSDoc: StoryElement</title>
 
     <script src="https://cdn.jsdelivr.net/gh/google/code-prettify@master/loader/run_prettify.js"></script>
     <script src="https://unpkg.com/@babel/standalone/babel.min.js"></script>
@@ -62,76 +60,153 @@
             <div class="column is-9-desktop">
                 <div class="content" id="main-content-wrapper">
                     <header class="page-title">
-                        <p>Source</p>
-                        <h1>social-logins/with-google-login.js</h1>
+                        <p>Components</p>
+                        <h1>StoryElement</h1>
                     </header>
                     
                     
 
 
 
+
+<section>
+
+<header>
     
-    <section>
-        <article>
-            <pre class="prettyprint source linenums"><code>import React from 'react';
-import { WithSocialLogin } from './with-social-login';
-
-/**
- * @see {@link WithSocialLogin}
- * @component
- * @category Login
- */
-export function WithGoogleLogin({ clientId, children, scope, emailMandatory }) {
-  return React.createElement(WithSocialLogin, {
-    provider: 'google',
-    initialize: () => loadGoogleSDK(clientId, scope),
-    socialLogin: () => loginWithGoogle({ emailMandatory }),
-    children: children
-  });
+        <h2><span class="attribs"><span class="type-signature"></span></span>StoryElement</h2>
+        
+            <div class="class-description"><p>This component renders different types of story elements
+Qlitics event is fired on story-elements become visible (this can be disabled by passing a prop called <code>disableAnalytics={true}</code>)</p>
+<p>Example</p>
+<pre class="prettyprint source lang-javascript"><code>import { StoryElement } from '@quintype/components';
+function StoryCard(props){
+  return &lt;div>
+    {props.card['story-elements'].map((element, index) => &lt;StoryElement element={element} key={index} story={props.story}>&lt;/StoryElement>)}
+  &lt;/div>
 }
-
-
-const onScriptLoaded = (clientId, scope) => {
-  global.gapi.load('client:auth2', () =>
-    global.gapi.client.init({ clientId, scope })
-  );
-};
-
-const loginWithGoogle = ({ emailMandatory } = {}) => {
-  if(!global.gapi || !global.gapi.client) {
-    return Promise.reject("NOT_LOADED");
-  }
-
-  const GoogleAuth = global.gapi.auth2.getAuthInstance();
-
-  if (!GoogleAuth) {
-    return Promise.reject("NOT_LOADED");
-  }
-
-  return GoogleAuth.signIn()
-    .then(response =>
-      emailMandatory &amp;&amp; !response.getBasicProfile().getEmail()
-        ? Promise.reject('NO_EMAIL')
-        : { 'access-token': response.getAuthResponse().access_token }
-    )
-    .catch(() => Promise.reject('NOT_GRANTED'));
-};
-
-const loadGoogleSDK = (clientId, scope) => {
-  if (global.gapi) {
-    return;
-  }
-
-  const script = document.createElement('script');
-  script.src = 'https://apis.google.com/js/api.js';
-  script.async = true;
-  script.defer = true;
-  script.onload = () => onScriptLoaded(clientId, scope);
-  document.getElementsByTagName('body')[0].appendChild(script);
-};
 </code></pre>
-        </article>
-    </section>
+<p>For different quality images in Image Story Element, pass <code>imageWidths</code> and <code>imageDefaultWidth</code> as props</p>
+<pre class="prettyprint source lang-javascript"><code>&lt;StoryElement story={story} element={element} imageWidths={[420,1040,1600]} imageDefaultWidth={1040}/>
+</code></pre></div>
+        
+    
+</header>
+
+<article>
+    <div class="container-overview">
+    
+        
+            
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<dl class="details">
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+    
+
+    
+
+    
+
+    
+        <p class="tag-source">
+            <a href="story-element.js.html" class="button">View Source</a>
+            <span>
+                <a href="story-element.js.html">story-element.js</a>, <a href="story-element.js.html#line35">line 35</a>
+            </span>
+        </p>
+    
+</dl>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+        
+    
+    </div>
+
+    
+
+    
+
+    
+        <h3 class="subsection-title">Classes</h3>
+
+        <dl>
+            <dt><a href="StoryElement.html">StoryElement</a></dt>
+            <dd></dd>
+        </dl>
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+</article>
+
+</section>
 
 
 

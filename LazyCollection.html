@@ -1,11 +1,9 @@
-
-
 <!DOCTYPE html>
 <html lang="en">
 <head>
     
     <meta charset="utf-8">
-    <title>JSDoc: social-logins/with-google-login.js</title>
+    <title>JSDoc: LazyCollection</title>
 
     <script src="https://cdn.jsdelivr.net/gh/google/code-prettify@master/loader/run_prettify.js"></script>
     <script src="https://unpkg.com/@babel/standalone/babel.min.js"></script>
@@ -62,76 +60,234 @@
             <div class="column is-9-desktop">
                 <div class="content" id="main-content-wrapper">
                     <header class="page-title">
-                        <p>Source</p>
-                        <h1>social-logins/with-google-login.js</h1>
+                        <p>Components</p>
+                        <h1>LazyCollection</h1>
                     </header>
                     
                     
 
 
 
+
+<section>
+
+<header>
     
-    <section>
-        <article>
-            <pre class="prettyprint source linenums"><code>import React from 'react';
-import { WithSocialLogin } from './with-social-login';
+        <h2><span class="attribs"><span class="type-signature"></span></span>LazyCollection<span class="signature">()</span><span class="type-signature"></span></h2>
+        
+    
+</header>
 
-/**
- * @see {@link WithSocialLogin}
- * @component
- * @category Login
- */
-export function WithGoogleLogin({ clientId, children, scope, emailMandatory }) {
-  return React.createElement(WithSocialLogin, {
-    provider: 'google',
-    initialize: () => loadGoogleSDK(clientId, scope),
-    socialLogin: () => loginWithGoogle({ emailMandatory }),
-    children: children
-  });
-}
+<article>
+    <div class="container-overview">
+    
+        
+            <div class='vertical-section'>
+                <h3 class="title"><span>Constructor</span></h3>
+                <div class="members">
+                    <div class="member">
 
+    
+    <h4 class="name" id="LazyCollection">
+        
+        <span class="code-name">
+            new LazyCollection<span class="signature">()</span><span class="type-signature"></span>
+        </span>
+    </h4>
+    
 
-const onScriptLoaded = (clientId, scope) => {
-  global.gapi.load('client:auth2', () =>
-    global.gapi.client.init({ clientId, scope })
-  );
-};
+    
+    
+    <div class="description">
+        <p>This component can be used to render a collection, but with the components being lazy. This takes all the same options as Collection, but with a <code>lazyAfter</code> prop.
+This Component also accepts extra props, which will be passed down to collection templates.</p>
+<p>This Component is similar to <a href="Collection.html">Collection</a>. Please see that for a more detailed example.</p>
+<p>Note: This does not accept <code>interstitial</code> items (yet). And home page items are not hidden after being rendered</p>
+<pre class="prettyprint source lang-javascript"><code>import { LazyCollection } from '@quintype/components'
 
-const loginWithGoogle = ({ emailMandatory } = {}) => {
-  if(!global.gapi || !global.gapi.client) {
-    return Promise.reject("NOT_LOADED");
-  }
+// collection = Collection.getCollectionBySlug(client, 'home', {}, {depth: 1})
 
-  const GoogleAuth = global.gapi.auth2.getAuthInstance();
+&lt;LazyCollection collection={collection}
+                collectionTemplates={collectionTemplates}
+                storyTemplates={storyTemplates}
+                lazyAfter={3}
+                extraProp=&quot;some prop&quot; />
 
-  if (!GoogleAuth) {
-    return Promise.reject("NOT_LOADED");
-  }
-
-  return GoogleAuth.signIn()
-    .then(response =>
-      emailMandatory &amp;&amp; !response.getBasicProfile().getEmail()
-        ? Promise.reject('NO_EMAIL')
-        : { 'access-token': response.getAuthResponse().access_token }
-    )
-    .catch(() => Promise.reject('NOT_GRANTED'));
-};
-
-const loadGoogleSDK = (clientId, scope) => {
-  if (global.gapi) {
-    return;
-  }
-
-  const script = document.createElement('script');
-  script.src = 'https://apis.google.com/js/api.js';
-  script.async = true;
-  script.defer = true;
-  script.onload = () => onScriptLoaded(clientId, scope);
-  document.getElementsByTagName('body')[0].appendChild(script);
-};
 </code></pre>
-        </article>
-    </section>
+    </div>
+    
+
+
+
+
+
+
+
+
+
+    <h5>PropTypes:</h5>
+    
+
+<table class="params">
+  <thead>
+  <tr>
+      <th>Name</th>
+      <th>Type</th>
+      <th>Required</th>
+      <th>Description</th>
+      <th class="last">Default</th>
+  </tr>
+  </thead>
+
+  <tbody>
+  
+        <tr class="deep-level-0">
+          <td class="name"><code>className</code></td>
+          <td>
+            string
+            
+          </td>
+          <td>No</td>
+          <td></td>
+          <td></td>
+        </tr>
+        
+  
+        <tr class="deep-level-0">
+          <td class="name"><code>collection</code></td>
+          <td>
+            object
+            
+          </td>
+          <td>No</td>
+          <td></td>
+          <td></td>
+        </tr>
+        
+  
+        <tr class="deep-level-0">
+          <td class="name"><code>collectionTemplates</code></td>
+          <td>
+            func
+            
+          </td>
+          <td>No</td>
+          <td></td>
+          <td>"() => CollectionNotImplemented"</td>
+        </tr>
+        
+  
+        <tr class="deep-level-0">
+          <td class="name"><code>storyTemplates</code></td>
+          <td>
+            func
+            
+          </td>
+          <td>No</td>
+          <td></td>
+          <td>"() => StoryNotImplemented"</td>
+        </tr>
+        
+  
+  </tbody>
+</table>
+
+
+
+
+
+
+
+<dl class="details">
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+    
+
+    
+
+    
+
+    
+        <p class="tag-source">
+            <a href="lazy-collection.js.html" class="button">View Source</a>
+            <span>
+                <a href="lazy-collection.js.html">lazy-collection.js</a>, <a href="lazy-collection.js.html#line28">line 28</a>
+            </span>
+        </p>
+    
+</dl>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+</div>
+                </div>
+            </div>
+        
+    
+    </div>
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+</article>
+
+</section>
 
 
 

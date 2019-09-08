@@ -29,11 +29,17 @@ Components.BreakingNewsItem = BreakingNewsItem;
 import ClientSideOnlyBase from '../src/components/client-side-only.js';
 Components.ClientSideOnlyBase = ClientSideOnlyBase;
 
-import createDfpAdComponent from '../src/components/dfp-ad.js';
-Components.createDfpAdComponent = createDfpAdComponent;
+import Collection from '../src/components/collection.js';
+Components.Collection = Collection;
 
 import HamburgerButtonBase from '../src/components/hamburger-button.js';
 Components.HamburgerButtonBase = HamburgerButtonBase;
+
+import ImageGalleryElement from '../src/components/image-gallery.js';
+Components.ImageGalleryElement = ImageGalleryElement;
+
+import LazyCollection from '../src/components/lazy-collection.js';
+Components.LazyCollection = LazyCollection;
 
 import LinkBase from '../src/components/link.js';
 Components.LinkBase = LinkBase;
@@ -68,9 +74,6 @@ Components.UpdateOnInterval = UpdateOnInterval;
 import WithClientSideOnly from '../src/components/with-client-side-only.js';
 Components.WithClientSideOnly = WithClientSideOnly;
 
-import withError from '../src/components/with-error.js';
-Components.withError = withError;
-
 import WithFacebookLogin from '../src/components/social-logins/with-facebook-login.js';
 Components.WithFacebookLogin = WithFacebookLogin;
 
@@ -88,9 +91,6 @@ Components.WithLinkedInLogin = WithLinkedInLogin;
 
 import WithMemberBase from '../src/components/with-member.js';
 Components.WithMemberBase = WithMemberBase;
-
-import WithPreview from '../src/components/with-preview.js';
-Components.WithPreview = WithPreview;
 
 import WithSocialLogin from '../src/components/social-logins/with-social-login.js';
 Components.WithSocialLogin = WithSocialLogin;

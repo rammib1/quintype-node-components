@@ -53,7 +53,7 @@
             <div class="column is-3" id="sidebarNav">
                 <div class="sidebar">
                     <nav>
-                        <h2><a href="index.html">Home</a></h2><div class="category"><h3>Components</h3><ul><li><a href="AdbutlerAd.html">AdbutlerAd</a></li><li><a href="BreakingNews.html">BreakingNews</a></li><li><a href="BreakingNewsItem.html">BreakingNewsItem</a></li><li><a href="ClientSideOnly.html">ClientSideOnly</a></li><li><a href="createDfpAdComponent.html">createDfpAdComponent</a></li><li><a href="HamburgerButton.html">HamburgerButton</a></li><li><a href="Link.html">Link</a></li><li><a href="LoadingIndicator.html">LoadingIndicator</a></li><li><a href="Menu.html">Menu</a></li><li><a href="MenuItem.html">MenuItem</a></li><li><a href="ReviewRating.html">ReviewRating</a></li><li><a href="SearchBox.html">SearchBox</a></li><li><a href="SearchPageBase.html">SearchPageBase</a></li><li><a href="SocialShare.html">SocialShare</a></li><li><a href="StoryElement.html">StoryElement</a></li><li><a href="UpdateOnInterval.html">UpdateOnInterval</a></li><li><a href="WithClientSideOnly.html">WithClientSideOnly</a></li><li><a href="withError.html">withError</a></li><li><a href="WithHostUrl.html">WithHostUrl</a></li><li><a href="WithLazy.html">WithLazy</a></li><li><a href="WithPreview.html">WithPreview</a></li></ul><h3>Global</h3><ul><li><a href="global.html#ImageGalleryElement">ImageGalleryElement</a></li></ul></div><div class="category"><h2>Login</h2><h3>Components</h3><ul><li><a href="WithFacebookLogin.html">WithFacebookLogin</a></li><li><a href="WithGoogleLogin.html">WithGoogleLogin</a></li><li><a href="WithLinkedInLogin.html">WithLinkedInLogin</a></li><li><a href="WithMember.html">WithMember</a></li><li><a href="WithSocialLogin.html">WithSocialLogin</a></li><li><a href="WithTwitterLogin.html">WithTwitterLogin</a></li></ul></div><div class="category"><h2>Subscription</h2><h3>Components</h3><ul><li><a href="AccessType.html">AccessType</a></li></ul></div>
+                        <h2><a href="index.html">Home</a></h2><div class="category"></div><div class="category"><h2>Ads</h2><h3>Components</h3><ul><li><a href="AdbutlerAd.html">AdbutlerAd</a></li></ul><h3>Global</h3><ul><li><a href="global.html#createDfpAdComponent">createDfpAdComponent</a></li></ul></div><div class="category"><h2>Collection Page</h2><h3>Components</h3><ul><li><a href="Collection.html">Collection</a></li><li><a href="LazyCollection.html">LazyCollection</a></li></ul><h3>Global</h3><ul><li><a href="global.html#collectionToStories">collectionToStories</a></li><li><a href="global.html#wrapCollectionLayout">wrapCollectionLayout</a></li></ul></div><div class="category"><h2>Header</h2><h3>Components</h3><ul><li><a href="BreakingNews.html">BreakingNews</a></li><li><a href="BreakingNewsItem.html">BreakingNewsItem</a></li><li><a href="HamburgerButton.html">HamburgerButton</a></li><li><a href="Menu.html">Menu</a></li><li><a href="MenuItem.html">MenuItem</a></li><li><a href="SearchBox.html">SearchBox</a></li></ul></div><div class="category"><h2>Login</h2><h3>Components</h3><ul><li><a href="WithFacebookLogin.html">WithFacebookLogin</a></li><li><a href="WithGoogleLogin.html">WithGoogleLogin</a></li><li><a href="WithLinkedInLogin.html">WithLinkedInLogin</a></li><li><a href="WithMember.html">WithMember</a></li><li><a href="WithSocialLogin.html">WithSocialLogin</a></li><li><a href="WithTwitterLogin.html">WithTwitterLogin</a></li></ul></div><div class="category"><h2>Other</h2><h3>Components</h3><ul><li><a href="ClientSideOnly.html">ClientSideOnly</a></li><li><a href="Link.html">Link</a></li><li><a href="LoadingIndicator.html">LoadingIndicator</a></li><li><a href="SearchPageBase.html">SearchPageBase</a></li><li><a href="UpdateOnInterval.html">UpdateOnInterval</a></li><li><a href="WithClientSideOnly.html">WithClientSideOnly</a></li><li><a href="WithHostUrl.html">WithHostUrl</a></li><li><a href="WithLazy.html">WithLazy</a></li></ul><h3>Global</h3><ul><li><a href="global.html#withError">withError</a></li><li><a href="global.html#WithPreview">WithPreview</a></li></ul></div><div class="category"><h2>Story Page</h2><h3>Components</h3><ul><li><a href="ImageGalleryElement.html">ImageGalleryElement</a></li><li><a href="ReviewRating.html">ReviewRating</a></li><li><a href="SocialShare.html">SocialShare</a></li><li><a href="StoryElement.html">StoryElement</a></li></ul></div><div class="category"><h2>Subscription</h2><h3>Components</h3><ul><li><a href="AccessType.html">AccessType</a></li></ul></div>
                     </nav>
                 </div>
             </div>
@@ -90,42 +90,6 @@
     <section>
         <article><h1>Quintype Components</h1>
 <p>This is a set of components that is to be used to build a Quintype Node App. This README servers as documentation of the components. Please see <a href="https://github.com/quintype/malibu">malibu</a> for a reference application using this architecture.</p>
-<h3>Collection</h3>
-<p>This component can be used to render a collection. You should typically pass this a collection that represents a page. Also see <a href="#lazycollection">LazyCollection</a>.</p>
-<pre class="prettyprint source lang-javascript"><code>import {Collection} from '@quintype/components'
-
-// collection = Collection.getCollectionBySlug(client, 'home', {}, {depth: 1})
-
-function TwoColLayout({collection, associatedMetadata, index}) {
-  // for item in collection.item
-  //   if item.type == story
-  //     showStory
-  //   else if item.type == colection
-  //     &lt;Collection />
-  // speed = associatedMetadata.scroll_speed
-}
-
-function collectionTemplates(layout, index) {
-  if(layout == 'twoColLayout')
-    return TwoColLayout;
-}
-
-// optional
-function storyTemplates(index) {
-  return StoryTemplate;
-}
-
-// optional
-function interstitial(index) {
-  if(index % 2 == 0)
-    return &lt;AdComponent />
-}
-
-&lt;Collection collection={collection}
-            collectionTemplates={collectionTemplates}
-            storyTemplates={storyTemplates}
-            interstitial={interstitial} />
-</code></pre>
 <h3>InfiniteScroll</h3>
 <p>This component can be used to implement InfiniteScroll. This is an internal component.</p>
 <h3>InfiniteStoryBase</h3>
@@ -167,21 +131,6 @@ An Example:</p>
                             loadItems={storyPageLoadItems}
                             onItemFocus={(item) => console.log(`Story In View: ${item.story.headline}`)}
                             doNotChangeUrl={true} />
-</code></pre>
-<h3>LazyCollection</h3>
-<p>This component can be used to render a collection, but with the components being lazy. This takes all the same options as Collection, but with a <code>lazyAfter</code> prop.
-This Component also accepts extra props, which will be passed down to collection templates.</p>
-<p>Note: This does not accept <code>interstitial</code> items (yet). And home page items are not hidden after being rendered</p>
-<pre class="prettyprint source lang-javascript"><code>import { LazyCollection } from '@quintype/components'
-
-// collection = Collection.getCollectionBySlug(client, 'home', {}, {depth: 1})
-
-&lt;LazyCollection collection={collection}
-                collectionTemplates={collectionTemplates}
-                storyTemplates={storyTemplates}
-                lazyAfter={3}
-                extraProp=&quot;some prop&quot; />
-
 </code></pre>
 <h3>LazyLoadImages</h3>
 <p>This component will ensure all <a href="#ResponsiveImage">ResponsiveImages</a> that are in its descendent path will be loaded async. By default, the image is loaded with an empty gif, and the image becomes visible when the image scrolls 250 from the edge of the screen.</p>

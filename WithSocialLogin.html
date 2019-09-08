@@ -1,11 +1,9 @@
-
-
 <!DOCTYPE html>
 <html lang="en">
 <head>
     
     <meta charset="utf-8">
-    <title>JSDoc: social-logins/with-google-login.js</title>
+    <title>JSDoc: WithSocialLogin</title>
 
     <script src="https://cdn.jsdelivr.net/gh/google/code-prettify@master/loader/run_prettify.js"></script>
     <script src="https://unpkg.com/@babel/standalone/babel.min.js"></script>
@@ -62,76 +60,243 @@
             <div class="column is-9-desktop">
                 <div class="content" id="main-content-wrapper">
                     <header class="page-title">
-                        <p>Source</p>
-                        <h1>social-logins/with-google-login.js</h1>
+                        <p>Components</p>
+                        <h1>WithSocialLogin</h1>
                     </header>
                     
                     
 
 
 
-    
-    <section>
-        <article>
-            <pre class="prettyprint source linenums"><code>import React from 'react';
-import { WithSocialLogin } from './with-social-login';
 
-/**
- * @see {@link WithSocialLogin}
- * @component
- * @category Login
- */
-export function WithGoogleLogin({ clientId, children, scope, emailMandatory }) {
-  return React.createElement(WithSocialLogin, {
-    provider: 'google',
-    initialize: () => loadGoogleSDK(clientId, scope),
-    socialLogin: () => loginWithGoogle({ emailMandatory }),
-    children: children
-  });
+<section>
+
+<header>
+    
+        <h2><span class="attribs"><span class="type-signature"></span></span>WithSocialLogin</h2>
+        
+            <div class="class-description"><p>This is an abstract render props component for logging in with social accounts. The component adds two items to scope: <code>serverSideLoginPath</code> for redirecting to server side, and <code>login</code> for doing a client side login. Calling <code>login()</code> returns a promise which can be used to handle success and failure cases.</p>
+<p>This component should not be used directly, but should be used via one of the scomponents mentioned in the example.</p>
+<p>NOTE:</p>
+<ul>
+<li>Twitter and LinkedIn do not support ClientSideLogin, and thus <code>login()</code> will just redirect to the server. It also ignores the apiKey</li>
+<li>Twitter and LinkedIn do not verify presence of email on the client side. Please ask for these permissions in the app</li>
+</ul>
+<p>Example</p>
+<pre class="prettyprint source lang-javascript"><code>import { WithFacebookLogin, WithGoogleLogin, WithTwitterLogin, WithLinkedInLogin } from '@quintype/components';
+
+function socialLogin(e, login) {
+  e.preventDefault();
+  login().then(() => window.location.refresh()); // Can also make an API call to /api/v1/members/me
 }
 
+&lt;WithFacebookLogin appId=&quot;apiKey&quot; scope=&quot;email&quot; emailMandatory>{({ login, serverSideLoginPath }) =>
+    &lt;a href={serverSideLoginPath} onClick={e => socialLogin(e, login)}>
+      &lt;img src={assetify(facebookIcon)} />
+    &lt;/a>
+}&lt;/WithFacebookLogin>
+&lt;WithGoogleLogin clientId=&quot;clientId&quot; scope=&quot;email&quot; emailMandatory>{({ login, serverSideLoginPath }) =>
+    &lt;a href={serverSideLoginPath} onClick={e => socialLogin(e, login)}>
+      &lt;img src={assetify(gplusIcon)} />
+    &lt;/a>
+}&lt;/WithGoogleLogin>
+&lt;WithTwitterLogin apiKey=&quot;apiKey&quot; emailMandatory>{({login, serverSideLoginPath}) =>
+    &lt;a href={serverSideLoginPath} onClick={e => socialLogin(e, login)}>
+      &lt;img src={assetify(twitterIcon)} />
+    &lt;/a>
+}&lt;/WithTwitterLogin>
+&lt;WithLinkedInLogin clientKey=&quot;clientKey&quot; emailMandatory>{({login, serverSideLoginPath}) =>
+    &lt;a href={serverSideLoginPath} onClick={e => socialLogin(e, login)}>
+      &lt;img src={assetify(linkedInIcon)} />
+    &lt;/a>
+}&lt;/WithLinkedInLogin>
+</code></pre></div>
+        
+    
+</header>
 
-const onScriptLoaded = (clientId, scope) => {
-  global.gapi.load('client:auth2', () =>
-    global.gapi.client.init({ clientId, scope })
-  );
-};
+<article>
+    <div class="container-overview">
+    
+        
+            
 
-const loginWithGoogle = ({ emailMandatory } = {}) => {
-  if(!global.gapi || !global.gapi.client) {
-    return Promise.reject("NOT_LOADED");
-  }
 
-  const GoogleAuth = global.gapi.auth2.getAuthInstance();
 
-  if (!GoogleAuth) {
-    return Promise.reject("NOT_LOADED");
-  }
 
-  return GoogleAuth.signIn()
-    .then(response =>
-      emailMandatory &amp;&amp; !response.getBasicProfile().getEmail()
-        ? Promise.reject('NO_EMAIL')
-        : { 'access-token': response.getAuthResponse().access_token }
-    )
-    .catch(() => Promise.reject('NOT_GRANTED'));
-};
 
-const loadGoogleSDK = (clientId, scope) => {
-  if (global.gapi) {
-    return;
-  }
 
-  const script = document.createElement('script');
-  script.src = 'https://apis.google.com/js/api.js';
-  script.async = true;
-  script.defer = true;
-  script.onload = () => onScriptLoaded(clientId, scope);
-  document.getElementsByTagName('body')[0].appendChild(script);
-};
-</code></pre>
-        </article>
-    </section>
+
+
+
+    <h5>PropTypes:</h5>
+    
+
+<table class="params">
+  <thead>
+  <tr>
+      <th>Name</th>
+      <th>Type</th>
+      <th>Required</th>
+      <th>Description</th>
+      <th class="last">Default</th>
+  </tr>
+  </thead>
+
+  <tbody>
+  
+        <tr class="deep-level-0">
+          <td class="name"><code>initialize</code></td>
+          <td>
+            func
+            
+          </td>
+          <td>No</td>
+          <td></td>
+          <td>"() => {}"</td>
+        </tr>
+        
+  
+        <tr class="deep-level-0">
+          <td class="name"><code>socialLogin</code></td>
+          <td>
+            func
+            
+          </td>
+          <td>No</td>
+          <td></td>
+          <td>"function() {\n  window.location = this.serverSideLoginPath;\n  return Promise.reject('EXPECT_REDIRECT');\n}"</td>
+        </tr>
+        
+  
+        <tr class="deep-level-0">
+          <td class="name"><code>children</code></td>
+          <td>
+            func
+            
+          </td>
+          <td>Yes</td>
+          <td></td>
+          <td></td>
+        </tr>
+        
+  
+        <tr class="deep-level-0">
+          <td class="name"><code>provider</code></td>
+          <td>
+            string
+            
+          </td>
+          <td>Yes</td>
+          <td></td>
+          <td></td>
+        </tr>
+        
+  
+  </tbody>
+</table>
+
+
+
+
+
+
+
+<dl class="details">
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+    
+
+    
+
+    
+
+    
+        <p class="tag-source">
+            <a href="social-logins_with-social-login.js.html" class="button">View Source</a>
+            <span>
+                <a href="social-logins_with-social-login.js.html">social-logins/with-social-login.js</a>, <a href="social-logins_with-social-login.js.html#line49">line 49</a>
+            </span>
+        </p>
+    
+</dl>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+        
+    
+    </div>
+
+    
+
+    
+
+    
+        <h3 class="subsection-title">Classes</h3>
+
+        <dl>
+            <dt><a href="WithSocialLogin.html">WithSocialLogin</a></dt>
+            <dd></dd>
+        </dl>
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+</article>
+
+</section>
 
 
 
