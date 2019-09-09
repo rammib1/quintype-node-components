@@ -2,7 +2,7 @@ import React from 'react';
 import {connect} from 'react-redux';
 import get from "lodash/get";
 
-import { LoadMoreCollectionStories } from './load-more-stories-base';
+import { LoadMoreCollectionStories } from './load-more-collection-stories';
 import { LazyLoadImages } from './lazy-load-images';
 import { ClientSideOnly } from './client-side-only';
 
