@@ -95,7 +95,7 @@ ResponsiveImageBase.contextTypes = {
 }
 
 ResponsiveImageBase.propTypes = {
-  /** The Path to the image, relative to images.assettype.com. Usually /publisher/yyyy/mm/<rand>/image-name.type */
+  /** The Path to the image, relative to images.assettype.com. Usually publisher/yyyy/mm/<rand>/image-name.type */
   slug: string.isRequired,
 
   /** The image metadata as returned by the editor. Usually has width, height and focus point */
