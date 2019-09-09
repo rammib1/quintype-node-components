@@ -32,14 +32,23 @@ Components.ClientSideOnlyBase = ClientSideOnlyBase;
 import Collection from '../src/components/collection.js';
 Components.Collection = Collection;
 
+import EagerLoadImages from '../src/components/eager-load-images.js';
+Components.EagerLoadImages = EagerLoadImages;
+
 import HamburgerButtonBase from '../src/components/hamburger-button.js';
 Components.HamburgerButtonBase = HamburgerButtonBase;
 
 import ImageGalleryElement from '../src/components/image-gallery.js';
 Components.ImageGalleryElement = ImageGalleryElement;
 
+import InfiniteStoryBase from '../src/components/infinite-story-base.js';
+Components.InfiniteStoryBase = InfiniteStoryBase;
+
 import LazyCollection from '../src/components/lazy-collection.js';
 Components.LazyCollection = LazyCollection;
+
+import LazyLoadImages from '../src/components/lazy-load-images.js';
+Components.LazyLoadImages = LazyLoadImages;
 
 import LinkBase from '../src/components/link.js';
 Components.LinkBase = LinkBase;
@@ -47,11 +56,26 @@ Components.LinkBase = LinkBase;
 import LoadingIndicatorBase from '../src/components/loading-indicator.js';
 Components.LoadingIndicatorBase = LoadingIndicatorBase;
 
+import LoadMoreCollectionStories from '../src/components/load-more-collection-stories.js';
+Components.LoadMoreCollectionStories = LoadMoreCollectionStories;
+
+import LoadMoreStoriesBase from '../src/components/load-more-stories-base.js';
+Components.LoadMoreStoriesBase = LoadMoreStoriesBase;
+
 import MenuBase from '../src/components/menu.js';
 Components.MenuBase = MenuBase;
 
 import MenuItem from '../src/components/menu-item.js';
 Components.MenuItem = MenuItem;
+
+import ResponsiveHeroImage from '../src/components/responsive-hero-image.js';
+Components.ResponsiveHeroImage = ResponsiveHeroImage;
+
+import ResponsiveImageBase from '../src/components/responsive-image.js';
+Components.ResponsiveImageBase = ResponsiveImageBase;
+
+import ResponsiveSource from '../src/components/responsive-source.js';
+Components.ResponsiveSource = ResponsiveSource;
 
 import ReviewRating from '../src/components/review-rating/review-rating.js';
 Components.ReviewRating = ReviewRating;
