@@ -2,6 +2,15 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+# [2.13.0](https://github.com/quintype/quintype-node-components/compare/v2.12.1...v2.13.0) (2019-09-10)
+
+
+### Features
+
+* Pass props along with state for dfp ads ([#103](https://github.com/quintype/quintype-node-components/issues/103)) ([430a360](https://github.com/quintype/quintype-node-components/commit/430a360))
+
+
+
 ## [2.12.1](https://github.com/quintype/quintype-node-components/compare/v2.12.0...v2.12.1) (2019-09-09)
 
 
