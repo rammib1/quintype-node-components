@@ -340,7 +340,7 @@ export const CONFIG = {
 export const DfpAd = createDfpAdComponent({
   defaultNetworkID: &quot;123456789&quot;,
   config: CONFIG,
-  targeting: function(state) {
+  targeting: function(state, ownProps) {
     const params = {};
 
     // if(storyIsSponsored) params['sponsor'] = storySponsor
@@ -479,7 +479,7 @@ export const DfpAd = createDfpAdComponent({
 
   
 
-  <td class="description last"><p>Function which takes in the current state, and returns targetting parameters</p></td>
+  <td class="description last"><p>Function which takes in the current state, props from the parent component and returns targetting parameters</p></td>
 </tr>
 
   
