@@ -20,7 +20,7 @@
         "verbose": true,
         "tutorials": "./docs-src/tutorials",
         "template": "./docs-src",
-        "sitemapRoot": "https://quintype.github.io/quintype-node-components"
+        "sitemapRoot": "https://developers.quintype.com/quintype-node-components"
     },
     "sourceType": "module",
     "templates": {
