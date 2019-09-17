@@ -101,8 +101,15 @@
     
     
     <div class="description">
-        <p>This component can be used to render a collection. You should typically pass this a collection that represents a page. Also see <a href="LazyCollection.html">LazyCollection</a>.</p>
-<p>Example</p>
+        <p>This component can be used to render a <a href="https://developers.quintype.com/malibu/terminology#collections">collection</a>.</p>
+<p>This component will render each item in the collection recursively</p>
+<ul>
+<li>If the item is a story, then the story is generated using the template returned by <code>props.storyTemplates(index)</code></li>
+<li>If the item is a collection, then the collection is rendered using the template returned by <code>props.collectionTemplates(layout, index)</code>, where layout comes from <code>item[&quot;associated-metadata&quot;][&quot;layout&quot;]</code></li>
+</ul>
+<p>Typically, this component will be passed a collection representing an entire page (either the home or section page), and will render the entire page for you.</p>
+<p>Also see <a href="LazyCollection.html">LazyCollection</a> for a component which behaves similarly, but loads lazily after a point.
+Example</p>
 <pre class="prettyprint source lang-javascript"><code>import {Collection} from '@quintype/components'
 
 // collection = Collection.getCollectionBySlug(client, 'home', {}, {depth: 1})
@@ -268,7 +275,7 @@ function interstitial(index) {
         <p class="tag-source">
             <a href="collection.js.html" class="button">View Source</a>
             <span>
-                <a href="collection.js.html">collection.js</a>, <a href="collection.js.html#line47">line 47</a>
+                <a href="collection.js.html">collection.js</a>, <a href="collection.js.html#line54">line 54</a>
             </span>
         </p>
     

@@ -80,8 +80,15 @@ import { string, object, func } from 'prop-types';
 import { StoryNotImplemented, CollectionNotImplemented, renderCollectionItem } from './impl/collection-impl';
 
 /**
- * This component can be used to render a collection. You should typically pass this a collection that represents a page. Also see {@link LazyCollection}.
+ * This component can be used to render a [collection](https://developers.quintype.com/malibu/terminology#collections).
  *
+ * This component will render each item in the collection recursively
+ * * If the item is a story, then the story is generated using the template returned by `props.storyTemplates(index)`
+ * * If the item is a collection, then the collection is rendered using the template returned by `props.collectionTemplates(layout, index)`, where layout comes from `item["associated-metadata"]["layout"]`
+ *
+ * Typically, this component will be passed a collection representing an entire page (either the home or section page), and will render the entire page for you.
+ *
+ * Also see {@link LazyCollection} for a component which behaves similarly, but loads lazily after a point.
  * Example
  * ```javascript
  * import {Collection} from '@quintype/components'
