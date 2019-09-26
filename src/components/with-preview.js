@@ -2,6 +2,8 @@ import React from "react";
 
 /**
  * This higher order function can be used for the home or story page preview. It takes a component, and a function to map the story into props suitable for the component
+ * 
+ * Preview in the Quintype CMS works by sending a postMessage to an iframe every time the story changes. This file abstracts this for you, and will just render the given component
  *
  * Example
  * ```javascript
