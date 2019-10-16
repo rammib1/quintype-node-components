@@ -1,7 +1,5 @@
 *This library is part of the [Malibu Framework](https://developers.quintype.com/malibu)*.
 
-# @quintype/components
-
 This is a set of *viewless* components that is to be used to build a Quintype Publisher App with the [malibu](https://github.com/quintype/malibu) framework. These components handle a variety of common functionality like resizing images, and handling logins in a performant way.
 
 If you are looking for a good place to start, take a look at the [malibu tutorial](https://developers.quintype.com/malibu/tutorial).
