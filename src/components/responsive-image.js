@@ -4,7 +4,6 @@ import {FocusedImage} from "quintype-js";
 import {func, string, arrayOf, number, object} from 'prop-types';
 import emptyWebGif from 'empty-web-gif';
 import omit from '@babel/runtime/helpers/objectWithoutProperties';
-import { objectExpression } from "@babel/types";
 
 const USED_PARAMS = ["imageCDN","defaultWidth","widths","imgParams","slug","metadata","aspectRatio", "reactTag", "eager"];
 
