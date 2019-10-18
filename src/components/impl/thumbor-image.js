@@ -3,21 +3,7 @@ import emptyWebGif from 'empty-web-gif';
 import omit from '@babel/runtime/helpers/objectWithoutProperties';
 import { func } from 'prop-types';
 import { FocusedImage } from "quintype-js";
-
-export const USED_PARAMS = ["imageCDN", "defaultWidth", "widths", "imgParams", "slug", "metadata", "aspectRatio", "reactTag", "eager"];
-
-// Add the following CSS somewhere: img.qt-image { width: 100%; object-fit: cover; }
-function hashString(string) {
-  if (!string)
-    return 0;
-
-  var hash = 0, i;
-  for (i = 0; i < string.length; i++) {
-    hash = ((hash << 5) - hash) + string.charCodeAt(i);
-    hash |= 0; // Convert to 32bit integer
-  }
-  return hash;
-}
+import { USED_PARAMS, hashString } from './image-utils';
 
 export function responsiveProps(props) {
   const image = new FocusedImage(props.slug, props.metadata);
@@ -35,9 +21,6 @@ export function responsiveProps(props) {
 
 export class ThumborImage extends React.Component {
   constructor(props, context) {
-    if (process.env.NODE_ENV == 'development' && !props.alt && !props.reactTag) {
-      global.console && global.console.warn(`Image Found without an alt attribute: ${responsiveProps(props).src}`);
-    }
     super(props, context);
     this.state = {
       showImage: !this.shouldLazyLoad()

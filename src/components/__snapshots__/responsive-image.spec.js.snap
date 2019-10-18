@@ -9,6 +9,15 @@ exports[`ResponsiveImage Adds a focus point 1`] = `
 />
 `;
 
+exports[`ResponsiveImage Checks for a gumlet image 1`] = `
+<img
+  alt="Alt Text"
+  class="qt-image"
+  data-src="https://images.assettype.com/somepublisher%2Fimage.png?rect=0%2C0%2C759%2C427"
+  src="data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7"
+/>
+`;
+
 exports[`ResponsiveImage Does not add a rect param if the focus point is missing 1`] = `
 <img
   alt="Alt Text"
