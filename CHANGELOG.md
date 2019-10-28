@@ -2,6 +2,15 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+## [2.14.2](https://github.com/quintype/quintype-node-components/compare/v2.14.1...v2.14.2) (2019-10-28)
+
+
+### Bug Fixes
+
+* Gumlet loads dynamically in case you've updated the PWA ([2d4ae0d](https://github.com/quintype/quintype-node-components/commit/2d4ae0d))
+
+
+
 ## [2.14.1](https://github.com/quintype/quintype-node-components/compare/v2.14.0...v2.14.1) (2019-10-28)
 
 
