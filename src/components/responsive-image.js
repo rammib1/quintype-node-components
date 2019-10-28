@@ -1,96 +1,25 @@
-import React from "react";
 import {connect} from "react-redux";
-import {FocusedImage} from "quintype-js";
-import {func, string, arrayOf, number, object} from 'prop-types';
-import emptyWebGif from 'empty-web-gif';
-import omit from '@babel/runtime/helpers/objectWithoutProperties';
-
-const USED_PARAMS = ["imageCDN","defaultWidth","widths","imgParams","slug","metadata","aspectRatio", "reactTag", "eager"];
-
-// Add the following CSS somewhere: img.qt-image { width: 100%; object-fit: cover; }
-
-function hashString(string) {
-  if(!string)
-    return 0;
-
-  var hash = 0, i, chr;
-  for (i = 0; i < string.length; i++) {
-    hash  = ((hash << 5) - hash) + string.charCodeAt(i);
-    hash |= 0; // Convert to 32bit integer
-  }
-  return hash;
-}
-
-function responsiveProps(props) {
-  const image = new FocusedImage(props.slug, props.metadata);
-
-  function generatePath(size) {
-    return "//" + props.imageCDN + "/" + image.path(props.aspectRatio, Object.assign({w: size}, props.imgParams));
-  }
-
-  return {
-    src: generatePath(props.defaultWidth),
-    srcSet: props.widths ?  props.widths.map((size) => `${generatePath(size)} ${size}w`).join(",") : undefined,
-    key: hashString(props.slug),
-  }
-}
-
-class ResponsiveImageBase extends React.Component {
-  constructor(props, context) {
-    if(process.env.NODE_ENV == 'development' && !props.alt && !props.reactTag) {
-      global.console && global.console.warn(`Image Found without an alt attribute: ${responsiveProps(props).src}`);
-    }
-
-    super(props, context);
-    this.state = {
-      showImage: !this.shouldLazyLoad()
-    }
-  }
-
-  shouldLazyLoad() {
-    if (this.props.eager === true) {
-      return false;
-    }
-    if (this.context.lazyLoadEagerPredicate && this.context.lazyLoadEagerPredicate(this.props.eager)) {
-      return false;
-    }
-    if (this.context.lazyLoadObserveImage && this.context.lazyLoadUnobserveImage) {
-      return true;
-    }
-    return false;
-  }
-
-  render() {
-    const imageProps = this.state.showImage ? responsiveProps(this.props) : {src: emptyWebGif};
-    return React.createElement(this.props.reactTag || "img", Object.assign(imageProps, omit(this.props, USED_PARAMS), {
-      ref: dom => this.dom = dom,
-      className: this.props.className ? `qt-image ${this.props.className}` : 'qt-image'
-    }));
-  }
-
-  componentDidMount() {
-    this.shouldLazyLoad() && this.context.lazyLoadObserveImage(this.dom, this);
-  }
-
-  componentWillUnmount() {
-    this.shouldLazyLoad() && this.context.lazyLoadUnobserveImage(this.dom, this);
-  }
-
-  showImage() {
-    this.setState({showImage: true});
-  }
-}
+import React from "react";
+import { ThumborImage } from "./impl/thumbor-image";
+import { string, arrayOf, number, object } from 'prop-types';
+import { GumletImage } from "./impl/gumlet-image";
 
 function mapStateToProps(state) {
   return {
-    imageCDN: state.qt.config["cdn-image"]
+    imageCDN: state.qt.config["cdn-image"],
+    imageCDNFormat: state.qt.config["image-cdn-format"] || "thumbor"
   };
 }
 
-ResponsiveImageBase.contextTypes = {
-  lazyLoadObserveImage: func,
-  lazyLoadUnobserveImage: func,
-  lazyLoadEagerPredicate: func
+function ResponsiveImageBase(props) {
+  if (process.env.NODE_ENV == 'development' && !props.alt && !props.reactTag) {
+    global.console && global.console.warn(`Image Found without an alt attribute: ${props.slug}`);
+  }
+
+  if(props.imageCDNFormat === "gumlet") {
+    return React.createElement(GumletImage, props);
+  }
+  return React.createElement(ThumborImage, props);
 }
 
 ResponsiveImageBase.propTypes = {
@@ -116,8 +45,14 @@ ResponsiveImageBase.propTypes = {
   sizes: string,
 
   /** Other parameters to pass to the image resizing engine */
-  imgParams: object
-}
+  imgParams: object,
+
+  /** The hostname of the image CDN. This comes automatically from redux store, <em>config["cdn-image"]</em> */
+  imageCDN: string,
+
+  /** The Image CDN Format. This comes automatically from redux store, <em>config["image-cdn-format"]</em> (default: <em>"thumbor"</em>) */
+  imageCDNFormat: string
+};
 
 /**
  * This component takes an image, and resizes it to the correct aspect ratio using imgix or thumbor.
