@@ -2,6 +2,15 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+## [2.14.1](https://github.com/quintype/quintype-node-components/compare/v2.14.0...v2.14.1) (2019-10-28)
+
+
+### Bug Fixes
+
+* Remove junk params from noscript tag ([31e574c](https://github.com/quintype/quintype-node-components/commit/31e574c))
+
+
+
 # [2.14.0](https://github.com/quintype/quintype-node-components/compare/v2.13.0...v2.14.0) (2019-10-28)
 
 
