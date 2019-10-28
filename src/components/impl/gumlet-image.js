@@ -19,7 +19,7 @@ export function GumletImage(props) {
   return <React.Fragment>
     <Tag {...imageProps} {...omit(props, USED_PARAMS)} className={className ? `qt-image ${className}` : 'qt-image'} />
     <noscript>
-      <Tag src={`https://${imageCDN}/${image.path(aspectRatio, {...imgParams, w: 1200})}`} {...omit(props, USED_PARAMS)} />
+      <img src={`https://${imageCDN}/${image.path(aspectRatio, {...imgParams, w: 1200})}`} alt={props.alt || ""} />
     </noscript>
   </React.Fragment>
 }
