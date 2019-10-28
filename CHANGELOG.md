@@ -2,6 +2,15 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+# [2.14.0](https://github.com/quintype/quintype-node-components/compare/v2.13.0...v2.14.0) (2019-10-28)
+
+
+### Features
+
+* Supporting Gumlet Images ([#106](https://github.com/quintype/quintype-node-components/issues/106)) ([277eaef](https://github.com/quintype/quintype-node-components/commit/277eaef))
+
+
+
 # [2.13.0](https://github.com/quintype/quintype-node-components/compare/v2.12.1...v2.13.0) (2019-09-10)
 
 
