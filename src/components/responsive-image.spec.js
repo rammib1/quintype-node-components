@@ -59,7 +59,7 @@ describe("ResponsiveImage", () => {
 
     const image = container.firstChild;
     expect(image.getAttribute("data-src")).toBe("https://images.assettype.com/somepublisher%2Fimage.png?rect=0%2C0%2C759%2C427");
-    expect(image.getAttribute("src")).toBe("data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7");
+    expect(image.getAttribute("src")).toBe("data:image/gif;base64,R0lGODlhAQABAAD/ACwAAAAAAQABAAACADs=");
     expect(image).toMatchSnapshot();
   });
 })
