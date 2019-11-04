@@ -2,6 +2,15 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+## [2.14.4](https://github.com/quintype/quintype-node-components/compare/v2.14.3...v2.14.4) (2019-11-04)
+
+
+### Bug Fixes
+
+* Passing neverHideItem from InfiniteStoryBase ([#108](https://github.com/quintype/quintype-node-components/issues/108)) ([6db16ae](https://github.com/quintype/quintype-node-components/commit/6db16ae))
+
+
+
 ## [2.14.3](https://github.com/quintype/quintype-node-components/compare/v2.14.2...v2.14.3) (2019-10-31)
 
 
