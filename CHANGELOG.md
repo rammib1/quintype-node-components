@@ -2,6 +2,15 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+# [2.15.0](https://github.com/quintype/quintype-node-components/compare/v2.14.4...v2.15.0) (2019-12-19)
+
+
+### Features
+
+* wrapCollectionLayout preserves storyLimit ([#110](https://github.com/quintype/quintype-node-components/issues/110)) ([361bb06](https://github.com/quintype/quintype-node-components/commit/361bb06))
+
+
+
 ## [2.14.4](https://github.com/quintype/quintype-node-components/compare/v2.14.3...v2.14.4) (2019-11-04)
 
 
