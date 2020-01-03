@@ -28,7 +28,8 @@ import {withError} from './with-error';
  *   },
  *   // Only if you want to overwrite the existing values
  *   lazyLoad: false,
- *   singleRequest: true
+ *   singleRequest: true,
+ *   disableInitialLoad: true,
  * });
  *
  * <DfpAd adtype="homepage-2" />
@@ -40,6 +41,7 @@ import {withError} from './with-error';
  * @param {boolean} params.collapseEmptyDivs (default true)
  * @param {boolean} params.lazyLoad (default true)
  * @param {boolean} params.singleRequest - Run Dfp in Single Request Mode (default false)
+ * @param {boolean} params.disableInitialLoad - Ads should not load on initial page load (default false)
  * @category Ads
  * @returns {Component} A component that can
  */
