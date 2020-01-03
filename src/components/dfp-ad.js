@@ -43,25 +43,27 @@ import {withError} from './with-error';
  * @category Ads
  * @returns {Component} A component that can
  */
-export function createDfpAdComponent({ defaultNetworkID, config, targeting, collapseEmptyDivs = true, lazyLoad = true, singleRequest = false }) {
+export function createDfpAdComponent({ defaultNetworkID, config, targeting, collapseEmptyDivs = true, lazyLoad = true, singleRequest = false, disableInitialLoad = false }) {
   return connect((state, ownProps) => ({
     targetingArguments: targeting(state, ownProps),
     defaultNetworkID: defaultNetworkID,
     config: config,
     collapseEmptyDivs: collapseEmptyDivs,
     lazyLoad: lazyLoad,
-    singleRequest: singleRequest
+    singleRequest: singleRequest,
+    disableInitialLoad: disableInitialLoad,
   }), () => ({}))(withError(DfpAdBase));
 }
 
-function DfpAdBase({defaultNetworkID, config, collapseEmptyDivs, targetingArguments, adtype, lazyLoad, singleRequest}) {
+function DfpAdBase({defaultNetworkID, config, collapseEmptyDivs, targetingArguments, adtype, lazyLoad, singleRequest, disableInitialLoad}) {
   const adConfig = config[adtype];
   return <DFPSlotsProvider dfpNetworkId={defaultNetworkID}
                            collapseEmptyDivs={collapseEmptyDivs}
                            targetingArguments={targetingArguments}
                            sizeMapping={adConfig.viewPortSizeMapping}
                            lazyLoad={lazyLoad}
-                           singleRequest={singleRequest}>
+                           singleRequest={singleRequest}
+                           disableInitialLoad={disableInitialLoad}>
     <AdSlot {...adConfig} />
   </DFPSlotsProvider>;
 }
