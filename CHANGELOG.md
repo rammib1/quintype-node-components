@@ -2,6 +2,15 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+## [2.15.1](https://github.com/quintype/quintype-node-components/compare/v2.15.0...v2.15.1) (2020-01-03)
+
+
+### Bug Fixes
+
+* **ResponsiveSource:** Removing the src="false" from everywhere ([034d403](https://github.com/quintype/quintype-node-components/commit/034d403))
+
+
+
 # [2.15.0](https://github.com/quintype/quintype-node-components/compare/v2.14.4...v2.15.0) (2019-12-19)
 
 
