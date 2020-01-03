@@ -36,7 +36,7 @@ import {ResponsiveImage} from './responsive-image';
 export const ResponsiveSource = function (props) {
   return React.createElement(ResponsiveImage, Object.assign({
     reactTag: 'source',
-    src: false,
+    src: undefined,
     defaultWidth: 1024
   }, props));
 }
