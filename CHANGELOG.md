@@ -2,6 +2,15 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+## [2.15.2](https://github.com/quintype/quintype-node-components/compare/v2.15.1...v2.15.2) (2020-01-09)
+
+
+### Bug Fixes
+
+* InfiniteStoryBase sets the correct url ([#112](https://github.com/quintype/quintype-node-components/issues/112)) ([11656dc](https://github.com/quintype/quintype-node-components/commit/11656dc))
+
+
+
 ## [2.15.1](https://github.com/quintype/quintype-node-components/compare/v2.15.0...v2.15.1) (2020-01-03)
 
 
