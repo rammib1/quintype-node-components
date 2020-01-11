@@ -2,6 +2,15 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+## [2.15.3](https://github.com/quintype/quintype-node-components/compare/v2.15.2...v2.15.3) (2020-01-11)
+
+
+### Bug Fixes
+
+* **Subdirectory:** api-client honors the mount point ([158266d](https://github.com/quintype/quintype-node-components/commit/158266d))
+
+
+
 ## [2.15.2](https://github.com/quintype/quintype-node-components/compare/v2.15.1...v2.15.2) (2020-01-09)
 
 
