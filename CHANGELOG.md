@@ -2,6 +2,15 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+## [2.15.4](https://github.com/quintype/quintype-node-components/compare/v2.15.3...v2.15.4) (2020-01-13)
+
+
+### Bug Fixes
+
+* defaulting mountAt to undefined, to avoid a crash ([c1ff3db](https://github.com/quintype/quintype-node-components/commit/c1ff3db))
+
+
+
 ## [2.15.3](https://github.com/quintype/quintype-node-components/compare/v2.15.2...v2.15.3) (2020-01-11)
 
 
