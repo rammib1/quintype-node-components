@@ -49,7 +49,7 @@ export class WithSocialLogin extends React.Component {
   constructor(props) {
     super(props);
     this.serverSideLoginPath = `/login?auth-provider=${this.props.provider}&remote-host=${global.location && global.location.origin}`;
-    this.serverSideSSOLoginPath = `/sso-login?auth-provider=${this.props.provider}&redirectUrl=${this.props.sso ? this.props.redirectUrl : global.location && global.location.origin}`;
+    this.serverSideSSOLoginPath = `/sso-login?auth-provider=${this.props.provider}&redirectUrl=${this.props.sso && this.props.redirectUrl ? this.props.redirectUrl : global.location && global.location.origin}`;
   }
 
   componentDidMount() {
@@ -59,7 +59,7 @@ export class WithSocialLogin extends React.Component {
   render() {
     return this.props.children({
       login: props => this.props.socialLogin.call(this, props).then(token => createSession(this.props.provider, token)),
-      serverSideLoginPath: this.props.sso ? this.props.serverSideSSOLoginPath : this.serverSideLoginPath
+      serverSideLoginPath: this.props.sso ? this.serverSideSSOLoginPath : this.serverSideLoginPath
     });
   }
 }
