@@ -1,8 +1,7 @@
-import React from 'react';
-import {AdSlot, DFPSlotsProvider, DFPManager} from 'react-dfp';
-import {connect} from 'react-redux';
-import {withError} from './with-error';
-
+import React, { useEffect } from "react";
+import { AdSlot, DFPManager, DFPSlotsProvider } from "react-dfp";
+import { connect } from "react-redux";
+import { withError } from "./with-error";
 
 /**
  * This is a function which can be used to manage ad units in a single place. A component must be created, and used with the `adtype` parameter. These ads are lazy-loaded and single-request mode is disabled by default which can be overwritten as follows.
@@ -43,27 +42,54 @@ import {withError} from './with-error';
  * @category Ads
  * @returns {Component} A component that can
  */
-export function createDfpAdComponent({ defaultNetworkID, config, targeting, collapseEmptyDivs = true, lazyLoad = true, singleRequest = false }) {
-  return connect((state, ownProps) => ({
-    targetingArguments: targeting(state, ownProps),
-    defaultNetworkID: defaultNetworkID,
-    config: config,
-    collapseEmptyDivs: collapseEmptyDivs,
-    lazyLoad: lazyLoad,
-    singleRequest: singleRequest
-  }), () => ({}))(withError(DfpAdBase));
+export function createDfpAdComponent({
+  defaultNetworkID,
+  config,
+  targeting,
+  collapseEmptyDivs = true,
+  lazyLoad = true,
+  singleRequest = false
+}) {
+  return connect(
+    (state, ownProps) => ({
+      targetingArguments: targeting(state, ownProps),
+      defaultNetworkID: defaultNetworkID,
+      config: config,
+      collapseEmptyDivs: collapseEmptyDivs,
+      lazyLoad: lazyLoad,
+      singleRequest: singleRequest
+    }),
+    () => ({})
+  )(withError(DfpAdBase));
 }
 
-function DfpAdBase({defaultNetworkID, config, collapseEmptyDivs, targetingArguments, adtype, lazyLoad, singleRequest}) {
+function DfpAdBase({
+  defaultNetworkID,
+  config,
+  collapseEmptyDivs,
+  targetingArguments,
+  adtype,
+  lazyLoad,
+  singleRequest
+}) {
+  useEffect(() => {
+    DFPManager.getGoogletag().then(googletag => {
+      googletag.pubads().updateCorrelator();
+    });
+  }, []);
   const adConfig = config[adtype];
-  return <DFPSlotsProvider dfpNetworkId={defaultNetworkID}
-                           collapseEmptyDivs={collapseEmptyDivs}
-                           targetingArguments={targetingArguments}
-                           sizeMapping={adConfig.viewPortSizeMapping}
-                           lazyLoad={lazyLoad}
-                           singleRequest={singleRequest}>
-    <AdSlot {...adConfig} />
-  </DFPSlotsProvider>;
+  return (
+    <DFPSlotsProvider
+      dfpNetworkId={defaultNetworkID}
+      collapseEmptyDivs={collapseEmptyDivs}
+      targetingArguments={targetingArguments}
+      sizeMapping={adConfig.viewPortSizeMapping}
+      lazyLoad={lazyLoad}
+      singleRequest={singleRequest}
+    >
+      <AdSlot {...adConfig} />
+    </DFPSlotsProvider>
+  );
 }
 
 export function refreshDfpAds(adSlots) {
