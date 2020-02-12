@@ -72,10 +72,11 @@ function DfpAdBase({
   lazyLoad,
   singleRequest
 }) {
-  useEffect(() => {
-    DFPManager.getGoogletag().then(googletag => {
+  useEffect(async () => {
+    const googletag = await DFPManager.getGoogletag();
+    if (typeof googletag.pubads === "function") {
       googletag.pubads().updateCorrelator();
-    });
+    }
   }, []);
   const adConfig = config[adtype];
   return (
