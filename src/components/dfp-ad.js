@@ -73,12 +73,12 @@ function DfpAdBase({
   singleRequest
 }) {
   useEffect(() => {
-    const reloadFn = async () => {
+    async function reloadFn() {
       const googletag = await DFPManager.getGoogletag();
       if (typeof googletag.pubads === "function") {
         googletag.pubads().updateCorrelator();
       }
-    };
+    }
     reloadFn();
   }, []);
   const adConfig = config[adtype];
