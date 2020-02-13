@@ -2,6 +2,15 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+# [2.16.0](https://github.com/quintype/quintype-node-components/compare/v2.15.4...v2.16.0) (2020-02-13)
+
+
+### Features
+
+* **ads:** Add slot id prop to dfp ad slots ([#116](https://github.com/quintype/quintype-node-components/issues/116)) ([9b193a2](https://github.com/quintype/quintype-node-components/commit/9b193a2))
+
+
+
 ## [2.15.4](https://github.com/quintype/quintype-node-components/compare/v2.15.3...v2.15.4) (2020-01-13)
 
 
