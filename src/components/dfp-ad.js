@@ -77,6 +77,8 @@ function DfpAdBase({
   singleRequest
 }) {
   const adConfig = config[adtype];
+
+  const adProps = { slotId, ...adConfig };
   return (
     <DFPSlotsProvider
       dfpNetworkId={defaultNetworkID}
@@ -86,7 +88,7 @@ function DfpAdBase({
       lazyLoad={lazyLoad}
       singleRequest={singleRequest}
     >
-      <AdSlot {{...adConfig, slotId}} />
+      <AdSlot {...adProps} />
     </DFPSlotsProvider>
   );
 }
