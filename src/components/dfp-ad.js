@@ -86,7 +86,7 @@ function DfpAdBase({
       lazyLoad={lazyLoad}
       singleRequest={singleRequest}
     >
-      <AdSlot {...adConfig, slotId} />
+      <AdSlot {{...adConfig, slotId}} />
     </DFPSlotsProvider>
   );
 }
