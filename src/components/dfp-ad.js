@@ -3,8 +3,8 @@ import {AdSlot, DFPSlotsProvider, DFPManager} from 'react-dfp';
 import {connect} from 'react-redux';
 import {withError} from './with-error';
 
-function DfpAdBase({defaultNetworkID, config, collapseEmptyDivs, targetingArguments, adtype, lazyLoad, singleRequest}) {
-  const adConfig = config[adtype];
+function DfpAdBase({defaultNetworkID, config = {}, collapseEmptyDivs, targetingArguments, adtype, lazyLoad, singleRequest}) {
+  const adConfig = config[adtype] || {};
   return <DFPSlotsProvider dfpNetworkId={defaultNetworkID}
                            collapseEmptyDivs={collapseEmptyDivs}
                            targetingArguments={targetingArguments}
