@@ -2,6 +2,10 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+## [2.16.1](https://github.com/quintype/quintype-node-components/compare/v2.16.0...v2.16.1) (2020-03-03)
+
+
+
 # [2.16.0](https://github.com/quintype/quintype-node-components/compare/v2.15.4...v2.16.0) (2020-02-13)
 
 
