@@ -45,7 +45,7 @@ import { withError } from "./with-error";
  */
 export function createDfpAdComponent({
   defaultNetworkID,
-  config,
+  config = {},
   slotId,
   targeting,
   collapseEmptyDivs = true,
@@ -76,7 +76,7 @@ function DfpAdBase({
   lazyLoad,
   singleRequest
 }) {
-  const adConfig = config[adtype];
+  const adConfig = config[adtype] || {};
 
   const adProps = { slotId, ...adConfig };
   return (
