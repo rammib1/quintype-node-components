@@ -1,4 +1,4 @@
-export const USED_PARAMS = ["imageCDN", "defaultWidth", "widths", "imgParams", "slug", "metadata", "aspectRatio", "reactTag", "eager", "imageCDNFormat","publisherData"];
+export const USED_PARAMS = ["imageCDN", "defaultWidth", "widths", "imgParams", "slug", "metadata", "aspectRatio", "reactTag", "eager", "imageCDNFormat",""];
 
 // Add the following CSS somewhere: img.qt-image { width: 100%; object-fit: cover; }
 export function hashString(string) {

@@ -14,6 +14,7 @@ function mapStateToProps(state) {
 
 function ResponsiveImageBase(props) {
   if (process.env.NODE_ENV == 'development' && !props.alt && !props.reactTag) {
+    
     global.console && global.console.warn(`Image Found without an alt attribute: ${props.slug}`);
   }
 
@@ -52,10 +53,7 @@ ResponsiveImageBase.propTypes = {
   imageCDN: string,
 
   /** The Image CDN Format. This comes automatically from redux store, <em>config["image-cdn-format"]</em> (default: <em>"thumbor"</em>) */
-  imageCDNFormat: string,
-
-  /** This contains fallback image we need to use when an image errors out **/
-  publisherData: object
+  imageCDNFormat: string
 };
 
 /**

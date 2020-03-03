@@ -48,11 +48,10 @@ export class ThumborImage extends React.Component {
   }
   componentDidMount() {
     const {publisherData } = this.props;
+    this.shouldLazyLoad() && this.context.lazyLoadObserveImage(this.dom, this);
     this.dom.addEventListener('error', ()=> {
       this.dom.src=  publisherData.fallbackImage;
     })
-    this.shouldLazyLoad() && this.context.lazyLoadObserveImage(this.dom, this);
-
   }
   componentWillUnmount() {
     this.shouldLazyLoad() && this.context.lazyLoadUnobserveImage(this.dom, this);

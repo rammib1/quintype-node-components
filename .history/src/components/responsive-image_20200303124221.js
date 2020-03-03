@@ -5,10 +5,11 @@ import { string, arrayOf, number, object } from 'prop-types';
 import { GumletImage } from "./impl/gumlet-image";
 
 function mapStateToProps(state) {
+  console.log(state)
   return {
     imageCDN: state.qt.config["cdn-image"],
-    imageCDNFormat: state.qt.config["image-cdn-format"] || "thumbor",
-    publisherData: state.qt.config['publisher-attributes']
+    imageCDNFormat: state.qt.config["image-cdn-format"] || "thumbor"
+    publisherData: state.qt.config[publisher-attributes'']
   };
 }
 
@@ -52,10 +53,7 @@ ResponsiveImageBase.propTypes = {
   imageCDN: string,
 
   /** The Image CDN Format. This comes automatically from redux store, <em>config["image-cdn-format"]</em> (default: <em>"thumbor"</em>) */
-  imageCDNFormat: string,
-
-  /** This contains fallback image we need to use when an image errors out **/
-  publisherData: object
+  imageCDNFormat: string
 };
 
 /**

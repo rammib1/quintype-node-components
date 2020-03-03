@@ -23,7 +23,9 @@ function loadGumlet() {
 }
 
 export function GumletImage(props) {
-  const { slug, metadata, aspectRatio, imageCDN, imgParams, reactTag, className, publisherData } = props;
+  console.log("hi from quintype node-----------------")
+ 
+  const { slug, metadata, aspectRatio, imageCDN, imgParams, reactTag, className } = props;
   const image = new FocusedImage(slug, metadata);
   const imageEl = useRef(null);
 
@@ -38,9 +40,10 @@ export function GumletImage(props) {
   useEffect(loadGumlet);
 
   useEffect(()=> {
+    console.log('current image is-------------------------',imageEl.current)
     imageEl.current.addEventListener('error',()=> {
-      if(publisherData.fallbackImage)
-       imageEl.current.src=  publisherData.fallbackImage
+      if(props.publisherData.fallbackImage)
+       imageEl.src= props.publisherData.fallbackImage
     })
   },[])
 

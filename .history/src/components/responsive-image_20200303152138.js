@@ -53,8 +53,8 @@ ResponsiveImageBase.propTypes = {
 
   /** The Image CDN Format. This comes automatically from redux store, <em>config["image-cdn-format"]</em> (default: <em>"thumbor"</em>) */
   imageCDNFormat: string,
-
-  /** This contains fallback image we need to use when an image errors out **/
+  
+  /**  **/
   publisherData: object
 };
 

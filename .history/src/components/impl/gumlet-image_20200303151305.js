@@ -23,6 +23,8 @@ function loadGumlet() {
 }
 
 export function GumletImage(props) {
+
+ 
   const { slug, metadata, aspectRatio, imageCDN, imgParams, reactTag, className, publisherData } = props;
   const image = new FocusedImage(slug, metadata);
   const imageEl = useRef(null);

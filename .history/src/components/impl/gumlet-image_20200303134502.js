@@ -23,7 +23,8 @@ function loadGumlet() {
 }
 
 export function GumletImage(props) {
-  const { slug, metadata, aspectRatio, imageCDN, imgParams, reactTag, className, publisherData } = props;
+  console.log("hi from quintype node-----------------")
+  const { slug, metadata, aspectRatio, imageCDN, imgParams, reactTag, className } = props;
   const image = new FocusedImage(slug, metadata);
   const imageEl = useRef(null);
 
@@ -38,18 +39,17 @@ export function GumletImage(props) {
   useEffect(loadGumlet);
 
   useEffect(()=> {
+    console.log
     imageEl.current.addEventListener('error',()=> {
-      if(publisherData.fallbackImage)
-       imageEl.current.src=  publisherData.fallbackImage
+      if(props.publisherData.fallbackImage)
+       imageEl.src= props.publisherData.fallbackImage
     })
   },[])
 
-  
-
   return <React.Fragment>
-    <Tag ref={imageEl} {...imageProps} {...omit(props, USED_PARAMS)} className={className ? `qt-image ${className}` : 'qt-image'} />
+    <Tag {...imageProps} {...omit(props, USED_PARAMS)} className={className ? `qt-image ${className}` : 'qt-image'} />
     <noscript>
-      <img   src={`https://${imageCDN}/${image.path(aspectRatio, {...imgParams, w: 1200})}`} alt={props.alt || ""} />
+      <img  ref={imageEl} src={`https://${imageCDN}/${image.path(aspectRatio, {...imgParams, w: 1200})}`} alt={props.alt || ""} />
     </noscript>
   </React.Fragment>
 }

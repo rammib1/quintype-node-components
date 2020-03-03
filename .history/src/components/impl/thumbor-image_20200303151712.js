@@ -39,7 +39,6 @@ export class ThumborImage extends React.Component {
     return false;
   }
   render() {
-    
     const imageProps = this.state.showImage ? responsiveProps(this.props) : { src: emptyWebGif };
     return React.createElement(this.props.reactTag || "img", Object.assign(imageProps, omit(this.props, USED_PARAMS), {
       ref: dom => this.dom = dom,
@@ -47,12 +46,8 @@ export class ThumborImage extends React.Component {
     }));
   }
   componentDidMount() {
-    const {publisherData } = this.props;
-    this.dom.addEventListener('error', ()=> {
-      this.dom.src=  publisherData.fallbackImage;
-    })
     this.shouldLazyLoad() && this.context.lazyLoadObserveImage(this.dom, this);
-
+    this.dom.addEventListener('error')
   }
   componentWillUnmount() {
     this.shouldLazyLoad() && this.context.lazyLoadUnobserveImage(this.dom, this);
