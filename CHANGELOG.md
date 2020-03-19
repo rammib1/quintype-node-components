@@ -2,6 +2,15 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+# [2.18.0](https://github.com/quintype/quintype-node-components/compare/v2.17.0...v2.18.0) (2020-03-19)
+
+
+### Features
+
+* **Accesstype:** added support for pay per asset. ([#118](https://github.com/quintype/quintype-node-components/issues/118)) ([addf401](https://github.com/quintype/quintype-node-components/commit/addf401))
+
+
+
 # [2.17.0](https://github.com/quintype/quintype-node-components/compare/v2.15.4...v2.17.0) (2020-03-11)
 
 
