@@ -48,14 +48,19 @@ import { postRequest } from '../api-client';
 export class WithSocialLogin extends React.Component {
   constructor(props) {
     super(props);
-    console.log(props, global.location)
+    console.log(props)
     this.serverSideLoginPath = `/login?auth-provider=${this.props.provider}&remote-host=${global.location && global.location.origin}`;
     this.serverSideSSOLoginPath = `/login?auth-provider=${this.props.provider}&redirect-url=${this.props.sso && this.props.redirectUrl ? this.props.redirectUrl : global.location && global.location.origin}`;
-    console.log(this.serverSideLoginPath,  this.serverSideSSOLoginPath)
   }
 
   componentDidMount() {
     this.props.initialize();
+  }
+
+  componentWillReceiveProps(nextProps){
+    if(nextProps.redirectUrl !== this.props.redirectUrl){
+      this.serverSideSSOLoginPath = `/login?auth-provider=${this.props.provider}&redirect-url=${this.props.sso && nextProps.redirectUrl ? nextProps.redirectUrl : global.location && global.location.origin}`;
+    }
   }
 
   render() {
