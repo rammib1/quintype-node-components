@@ -12,8 +12,8 @@ export function WithFacebookLogin({ appId, children, scope, emailMandatory, redi
     initialize: () => loadFacebookSDK(appId),
     socialLogin: () => loginWithFacebook({ scope, emailMandatory }),
     children: children,
-    redirectUrl,
-    sso
+    redirectUrl: redirectUrl,
+    sso: sso
   });
 }
 
