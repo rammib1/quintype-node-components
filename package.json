@@ -1,6 +1,6 @@
 {
   "name": "@quintype/components",
-  "version": "2.16.1-pay-per-article.0",
+  "version": "2.17.0",
   "description": "Components to help build Quintype Node.js apps",
   "main": "dist/cjs/index.js",
   "module": "dist/es/index.js",
@@ -30,7 +30,7 @@
     "prop-types": "^15.7.2",
     "quintype-js": "^1.2.0",
     "react": "^16.8.6",
-    "react-dfp": "^0.11.2",
+    "react-dfp": "^0.17.1",
     "react-redux": "^7.0.3",
     "react-youtube": "^7.9.0",
     "redux": "^4.0.1",
