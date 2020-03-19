@@ -28,9 +28,9 @@ class AccessTypeBase extends React.Component {
 
         if(accessTypeKey && !global.AccessType && global.document) {
             const accessTypeScript = document.createElement('script');
-            let accessTypeHost = `https://www.accesstype.com/frontend/accesstype.js?key=${accessTypeKey}`;
+            let accessTypeHost = `https://www.accesstype.com/frontend/v2/accesstype.js?key=${accessTypeKey}`;
             if(isStaging){
-                accessTypeHost = `https://staging.accesstype.com/frontend/accesstype.js?key=${accessTypeKey}&env=sandbox`;
+                accessTypeHost = `https://staging.accesstype.com/frontend/v2/accesstype.js?key=${accessTypeKey}&env=sandbox`;
             }
             accessTypeScript.setAttribute("src", accessTypeHost);
             accessTypeScript.setAttribute("data-accessType-script", "1");
@@ -44,12 +44,12 @@ class AccessTypeBase extends React.Component {
         return true;
     };
 
-    setUser = async (emailAddress, mobileNumber) => {
+    setUser = async (emailAddress, mobileNumber, accesstypeJwt) => {
         if(!global.AccessType){
             return {};
         }
 
-        const { error, data: user }  = await awaitHelper(global.AccessType.setUser({ 'emailAddress': emailAddress, 'mobileNumber':  mobileNumber}));
+        const { error, data: user }  = await awaitHelper(global.AccessType.setUser({ 'emailAddress': emailAddress, 'mobileNumber':  mobileNumber, 'accesstypeJwt': accesstypeJwt}));
         if(error) {
             console.warn(`User context setting failed --> `, error);
             return error;
@@ -60,6 +60,7 @@ class AccessTypeBase extends React.Component {
     getSubscription = async () => {
         const accessTypeKey = get(this.props, ['accessTypeKey']);
         const isStaging = get(this.props, ['isStaging']);
+        // TODO: use AccesstypeJS method insead of direct api call
         let accessTypeHost = `https://www.accesstype.com/api/v1/subscription_groups.json?key=${accessTypeKey}`;
         if(isStaging){
             accessTypeHost = `https://staging.accesstype.com/api/v1/subscription_groups.json?key=${accessTypeKey}`;
@@ -87,7 +88,10 @@ class AccessTypeBase extends React.Component {
     };
 
     runSequentialCalls = async () => {
-        const user = await this.setUser(this.props.email, this.props.phone);
+        
+        let jwtResponse = await fetch(`/api/v1/access-token/integrations/${this.props.accessTypeBkIntegrationId}`);
+
+        const user = await this.setUser(this.props.email, this.props.phone, jwtResponse.headers.get('x-integration-token'));
         if(user) {
             try{
                 Promise.all([this.getSubscription(), this.getPaymentOptions()]).then(([subscriptionGroups, paymentOptions]) => {
@@ -142,11 +146,11 @@ class AccessTypeBase extends React.Component {
         return paymentOptions.razorpay.proceed(paymentObject);
     };
 
-    pingBackMeteredStory = async (assetId, accessData) => {
+    pingBackMeteredStory = async (asset, accessData) => {
         const stringData = JSON.stringify(accessData);
 
         if(global.navigator && global.navigator.sendBeacon){
-            global.navigator.sendBeacon(`/api/access/v1/stories/${assetId}/pingback`, stringData);
+            global.navigator.sendBeacon(`/api/access/v1/stories/${asset.id}/pingback`, stringData);
             return true;
         }
 
@@ -157,7 +161,7 @@ class AccessTypeBase extends React.Component {
             },
             body: stringData
         };
-        const {data, error} = await awaitHelper((await global.fetch(`/api/access/v1/stories/${assetId}/pingback`, meteredBody)).json());
+        const {data, error} = await awaitHelper(global.AccessType.pingbackAssetAccess(asset, accessData));
         return true;
     };
 
@@ -169,8 +173,8 @@ class AccessTypeBase extends React.Component {
 
         this.props.accessIsLoading(true);
 
-        const meteringParam = this.props.disableMetering === true ? '?disable-meter=true' : '';
-        const { error, data: accessData }  = await awaitHelper((await global.fetch(`/api/access/v1/stories/${assetId}/access${meteringParam}`)).json());
+        const asset = {id: assetId, type: 'story'};
+        const { error, data: accessData }  = await awaitHelper(global.AccessType.isAssetAccessible(asset, this.props.disableMetering));
 
         const accessById =  {[assetId] : accessData};
 
@@ -178,8 +182,8 @@ class AccessTypeBase extends React.Component {
         this.props.accessIsLoading(false);
 
         const {granted, grantReason, data = {}} = accessData;
-        if(!meteringParam && granted && grantReason === "METERING"){
-            this.pingBackMeteredStory(assetId, {granted, grantReason});
+        if(!this.props.disableMetering && granted && grantReason === "METERING"){
+            this.pingBackMeteredStory(asset, accessData);
             this.props.meterUpdated(data.numberRemaining || -1);
         }
 
@@ -200,7 +204,6 @@ class AccessTypeBase extends React.Component {
         accessUpdated: this.props.accessUpdated,
         accessIsLoading: this.props.accessIsLoading
       });
-
     }
 }
 
@@ -210,7 +213,8 @@ AccessTypeBase.propTypes = {
     phone: PropTypes.number,
     isStaging: PropTypes.bool,
     enableAccesstype: PropTypes.bool.isRequired,
-    accessTypeKey: PropTypes.string.isRequired
+    accessTypeKey: PropTypes.string.isRequired,
+    accessTypeBkIntegrationId: PropTypes.string.isRequired
 };
 
 const mapStateToProps = state => ({
