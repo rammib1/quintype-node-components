@@ -7,15 +7,13 @@ import { WithSocialLogin } from './with-social-login';
  * @category Login
  */
 export function WithFacebookLogin({ appId, children, scope, emailMandatory, redirectUrl, sso }) {
-  console.log("=================with fb login")
-  console.log(redirectUrl, sso)
   return React.createElement(WithSocialLogin, {
     provider: 'facebook',
     initialize: () => loadFacebookSDK(appId),
     socialLogin: () => loginWithFacebook({ scope, emailMandatory }),
     children: children,
-    redirectUrl: redirectUrl,
-    sso: sso
+    redirectUrl,
+    sso
   });
 }
 
