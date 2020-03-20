@@ -167,7 +167,7 @@ function socialLogin(e, login) {
           </td>
           <td>No</td>
           <td></td>
-          <td>"function() {\n  window.location = this.serverSideLoginPath;\n  return Promise.reject('EXPECT_REDIRECT');\n}"</td>
+          <td>"function() {\n  const url = this.props.sso ? this.serverSideSSOLoginPath : this.serverSideLoginPath;\n  window.location = url;\n  return Promise.reject('EXPECT_REDIRECT');\n}"</td>
         </tr>
         
   
@@ -190,6 +190,30 @@ function socialLogin(e, login) {
             
           </td>
           <td>Yes</td>
+          <td></td>
+          <td></td>
+        </tr>
+        
+  
+        <tr class="deep-level-0">
+          <td class="name"><code>sso</code></td>
+          <td>
+            bool
+            
+          </td>
+          <td>No</td>
+          <td></td>
+          <td>"false"</td>
+        </tr>
+        
+  
+        <tr class="deep-level-0">
+          <td class="name"><code>redirectUrl</code></td>
+          <td>
+            string
+            
+          </td>
+          <td>No</td>
           <td></td>
           <td></td>
         </tr>
