@@ -2,6 +2,16 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+# [2.20.0](https://github.com/quintype/quintype-node-components/compare/v2.17.0...v2.20.0) (2020-03-20)
+
+
+### Features
+
+* **Accesstype:** added support for pay per asset. ([#118](https://github.com/quintype/quintype-node-components/issues/118)) ([addf401](https://github.com/quintype/quintype-node-components/commit/addf401))
+* **ssoLogin:** Adding paths for sso server side logins ([#114](https://github.com/quintype/quintype-node-components/issues/114)) ([83d2b44](https://github.com/quintype/quintype-node-components/commit/83d2b44))
+
+
+
 # [2.18.0](https://github.com/quintype/quintype-node-components/compare/v2.17.0...v2.18.0) (2020-03-19)
 
 
