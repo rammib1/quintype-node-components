@@ -6,12 +6,14 @@ import { WithSocialLogin } from './with-social-login';
  * @component
  * @category Login
  */
-export function WithGoogleLogin({ clientId, children, scope, emailMandatory }) {
+export function WithGoogleLogin({ clientId, children, scope, emailMandatory, redirectUrl, sso }) {
   return React.createElement(WithSocialLogin, {
     provider: 'google',
     initialize: () => loadGoogleSDK(clientId, scope),
     socialLogin: () => loginWithGoogle({ emailMandatory }),
-    children: children
+    children: children,
+    redirectUrl,
+    sso
   });
 }
 
