@@ -6,9 +6,11 @@ import { WithSocialLogin } from './with-social-login';
  * @component
  * @category Login
  */
-export function WithTwitterLogin({ clientId, children, scope, emailMandatory }) {
+export function WithTwitterLogin({ clientId, children, scope, emailMandatory, redirectUrl, sso }) {
   return React.createElement(WithSocialLogin, {
     provider: 'twitter',
-    children: children
+    children: children,
+    redirectUrl,
+    sso
   });
 }

@@ -7,7 +7,8 @@ import {
   PAYMENT_OPTIONS_UPDATED,
   SUBSCRIPTION_GROUP_UPDATED,
   METER_UPDATED,
-  ASSET_PLANS
+  ASSET_PLANS,
+  CAMPAIGN_SUBSCRIPTION_GROUP_UPDATED
 } from "../store/actions";
 import PropTypes from "prop-types";
 import { awaitHelper } from "../utils";
@@ -117,6 +118,29 @@ class AccessTypeBase extends React.Component {
     return assetPlans;
   };
 
+  getCampaignSubscription = async () => {
+    const isAccessTypeCampaignEnabled = get(this.props, ["isAccessTypeCampaignEnabled"], false);
+    if(isAccessTypeCampaignEnabled) {
+      const accessTypeKey = get(this.props, ["accessTypeKey"]);
+      const isStaging = get(this.props, ["isStaging"]);
+      const HOST = isStaging ? staging_Host : prod_Host;
+
+      const accessTypeHost = `${HOST}/api/v1/campaigns.json?key=${accessTypeKey}`;
+
+      const { error, data: campaignSubscriptions } = await awaitHelper(
+        (await global.fetch(accessTypeHost)).json()
+      );
+
+      if (error) {
+        return {
+          error: "subscriptions fetch failed"
+        };
+      }
+      return campaignSubscriptions["subscription_groups"] || [];
+    }
+    return [];
+  }
+
   runSequentialCalls = async (storyId = "") => {
     let jwtResponse = await fetch(`/api/v1/access-token/integrations/${this.props.accessTypeBkIntegrationId}`);
     const user = await this.setUser(this.props.email, this.props.phone, jwtResponse.headers.get('x-integration-token'));
@@ -126,12 +150,14 @@ class AccessTypeBase extends React.Component {
         Promise.all([
           this.getSubscription(),
           this.getPaymentOptions(),
-          this.getAssetPlans(storyId)
-        ]).then(([subscriptionGroups, paymentOptions, assetPlans]) => {
+          this.getAssetPlans(storyId),
+          this.getCampaignSubscription()
+        ]).then(([subscriptionGroups, paymentOptions, assetPlans, campaignSubscriptionGroups]) => {
           batch(() => {
             this.props.subscriptionGroupLoaded(subscriptionGroups);
             this.props.paymentOptionsLoaded(paymentOptions);
             this.props.assetPlanLoaded(assetPlans);
+            this.props.campaignSubscriptionGroupLoaded(campaignSubscriptionGroups)
           });
         });
       } catch (e) {
@@ -303,7 +329,9 @@ const mapDispatchToProps = dispatch => ({
   accessIsLoading: loading => dispatch({ type: ACCESS_BEING_LOADED, loading }),
   accessUpdated: access => dispatch({ type: ACCESS_UPDATED, access }),
   meterUpdated: meterCount => dispatch({ type: METER_UPDATED, meterCount }),
-  assetPlanLoaded: assetPlans => dispatch({ type: ASSET_PLANS, assetPlans })
+  assetPlanLoaded: assetPlans => dispatch({ type: ASSET_PLANS, assetPlans }),
+  campaignSubscriptionGroupLoaded: campaignSubscriptions =>
+    dispatch({ type: CAMPAIGN_SUBSCRIPTION_GROUP_UPDATED, campaignSubscriptions })
 });
 
 /**
