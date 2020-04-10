@@ -203,7 +203,6 @@ class AccessTypeBase extends React.Component {
       duration_length: durationLength,
       duration_unit: durationUnit
     } = selectedPlan;
-    console.log("here params", paymentType);
     const paymentObject = {
       type: planType,
       plan: {
