@@ -184,19 +184,16 @@ class AccessTypeBase extends React.Component {
     }
   };
 
-  initRazorPayPayment = (
+  makePaymentObject(
     selectedPlan,
     planType = "",
     storyId = "",
     storyHeadline = "",
-    storySlug = ""
-  ) => {
-    if (!selectedPlan) {
-      console.warn("Razor pay needs a plan");
-      return false;
-    }
-
-    const { paymentOptions } = this.props;
+    storySlug = "",
+    paymentType = "",
+    success_url = "",
+    cancel_url = ""
+  ) {
     const {
       id,
       title,
@@ -206,9 +203,6 @@ class AccessTypeBase extends React.Component {
       duration_length: durationLength,
       duration_unit: durationUnit
     } = selectedPlan;
-    const paymentType = get(selectedPlan, ["recurring"])
-      ? "razorpay_recurring"
-      : "razorpay";
     const paymentObject = {
       type: planType,
       plan: {
@@ -233,7 +227,63 @@ class AccessTypeBase extends React.Component {
         }
       ]
     };
+    if (success_url && cancel_url) {
+      paymentObject.options = {};
+
+      paymentObject.options.urls = {
+        success_url: success_url,
+        cancel_url: cancel_url
+      };
+    }
+    return paymentObject;
+  }
+
+  initRazorPayPayment = (selectedPlan, planType = "", storyId = "", storyHeadline = "", storySlug = "") => {
+    if (!selectedPlan) {
+      console.warn("Razor pay needs a plan");
+      return false;
+    }
+
+    const { paymentOptions } = this.props;
+    const paymentType = get(selectedPlan, ["recurring"]) ? "razorpay_recurring" : "razorpay";
+    const paymentObject = this.makePaymentObject(
+      selectedPlan,
+      planType,
+      storyId,
+      storyHeadline,
+      storySlug,
+      paymentType
+    );
     return paymentOptions.razorpay.proceed(paymentObject);
+  };
+
+  initStripePayment = (
+    selectedPlan,
+    planType = "",
+    success_url = "",
+    cancel_url = "",
+    storyId = "",
+    storyHeadline = "",
+    storySlug = ""
+  ) => {
+    if (!selectedPlan) {
+      console.warn("Stripe pay needs a plan");
+      return false;
+    }
+
+    const { paymentOptions } = this.props;
+    const paymentType = get(selectedPlan, ["recurring"]) ? "stripe_recurring" : "stripe";
+    const paymentObject = this.makePaymentObject(
+      selectedPlan,
+      planType,
+      storyId,
+      storyHeadline,
+      storySlug,
+      paymentType,
+      success_url,
+      cancel_url
+    );
+    return paymentOptions.stripe.proceed(paymentObject);
   };
 
   pingBackMeteredStory = async (assetId, accessData) => {
@@ -302,6 +352,7 @@ class AccessTypeBase extends React.Component {
     return children({
       initAccessType: this.initAccessType,
       initRazorPayPayment: this.initRazorPayPayment,
+      initStripePayment: this.initStripePayment,
       checkAccess: this.checkAccess,
       getSubscriptionForUser: this.getSubscriptionForUser,
       accessUpdated: this.props.accessUpdated,
