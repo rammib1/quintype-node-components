@@ -283,10 +283,10 @@ makePlanObject(selectedPlanObj = {}, planType = "", storyId = "", storyHeadline 
       return false;
     }
 
-    const paymentObj = this.makePlanObject(selectedPlanObj, planType, storyId, storyHeadline, storySlug) //we are doing this to sake of backward compatibility and will be refactored later.
+    const planObject = this.makePlanObject(selectedPlanObj, planType, storyId, storyHeadline, storySlug) //we are doing this to sake of backward compatibility and will be refactored later.
     const { paymentOptions } = this.props;
-    paymentObj["paymentType"] = get(paymentObj.selectedPlan, ["recurring"]) ? "razorpay_recurring" : "razorpay";
-    const paymentObject = this.makePaymentObject(paymentObj);
+    planObject["paymentType"] = get(planObject.selectedPlan, ["recurring"]) ? "razorpay_recurring" : "razorpay";
+    const paymentObject = this.makePaymentObject(planObject);
     return paymentOptions.razorpay.proceed(paymentObject);
   };
 
@@ -302,10 +302,10 @@ makePlanObject(selectedPlanObj = {}, planType = "", storyId = "", storyHeadline 
       return false;
     }
 
-    const paymentObj = this.makePlanObject(selectedPlanObj, planType, storyId, storyHeadline, storySlug) //we are doing this to sake of backward compatibility and will be refactored later.
+    const planObject = this.makePlanObject(selectedPlanObj, planType, storyId, storyHeadline, storySlug) //we are doing this to sake of backward compatibility and will be refactored later.
     const { paymentOptions } = this.props;
-    paymentObj["paymentType"] = get(paymentObj.selectedPlan, ["recurring"]) ? "stripe_recurring" : "stripe";
-    const paymentObject = this.makePaymentObject(paymentObj);
+    planObject["paymentType"] = get(planObject.selectedPlan, ["recurring"]) ? "stripe_recurring" : "stripe";
+    const paymentObject = this.makePaymentObject(planObject);
     return paymentOptions.stripe.proceed(paymentObject);
   };
 
