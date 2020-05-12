@@ -371,7 +371,9 @@ class AccessTypeBase extends React.Component {
       : "paypal";
     const paymentObject = this.makePaymentObject({ paymentType, ...options });
     return paymentOptions.paypal
-      ? paymentOptions.paypal.proceed(paymentObject)
+      ? paymentOptions.paypal
+          .proceed(paymentObject)
+          .then((response) => response.proceed(paymentObject))
       : Promise.reject({ message: "Payment option is loading..." });
   };
 
