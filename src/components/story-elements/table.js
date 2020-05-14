@@ -2,9 +2,10 @@ import React from "react";
 import get from "lodash/get";
 
 
-function renderTableBody(hasHeader, { headerFields, headerData }){
+function renderTableBody(hasHeader, { headerFields, headerData }) {
   let headerRow = [];
-  if(hasHeader) {
+  console.log('headerRow', headerRow)
+  if (hasHeader) {
     headerRow = [<thead><tr>{headerFields.map(headerField => <th>{headerField}</th>)}</tr></thead>];
   }
   else {
@@ -13,7 +14,7 @@ function renderTableBody(hasHeader, { headerFields, headerData }){
   return headerRow.concat(headerData.map(data => <tr>{headerFields.map(headerField => <td>{data[headerField]}</td>)}</tr>));
 }
 
-export function TableView({className, hasHeader, tableModData = {}}) {
+export function TableView({ className, hasHeader, tableModData = {} }) {
   return <table className={className}>{renderTableBody(hasHeader, tableModData)}</table>;
 }
 
@@ -22,24 +23,25 @@ export class Table extends React.Component {
     super(props);
     this.state = {
       tableModData: {
-        headerFields : [],
+        headerFields: [],
         headerData: []
       },
     };
   }
 
+
   formatData(content) {
-    const dataArray = content.split(/\n/);
+    const dataArray = content.split(/\r\n/);
     const headerRowData = get(dataArray, [0], '');
-    const headerFields = headerRowData.split(',').map(headerValue => headerValue.trim());
-    const dataFields = dataArray.slice(1, dataArray.length - 1);
-    const headerData = dataFields.map(dataField => dataField.split(',')
+    const headerFields = headerRowData.split(",\"").map(headerValue => headerValue.trim());
+    const dataFields = dataArray.slice(1, dataArray.length);
+    const headerData = dataFields.map(dataField => dataField.split(",\"")
       .reduce((acc, currEle, index) => {
         acc[get(headerFields, [index], '').trim()] = currEle.trim();
         return acc;
       }, {}));
 
-    this.setState({tableModData: { headerFields, headerData }});
+    this.setState({ tableModData: { headerFields, headerData } });
 
     return {
       headerFields,
@@ -48,13 +50,13 @@ export class Table extends React.Component {
   }
 
   componentDidMount() {
-    const content = get(this.props, ['data','content']);
+    const content = get(this.props, ['data', 'content']);
     this.formatData(content);
   }
 
   componentWillReceiveProps(nextProps) {
-    const prevContent = get(this.props, ['data','content']);
-    const nextContent = get(nextProps, ['data','content']);
+    const prevContent = get(this.props, ['data', 'content']);
+    const nextContent = get(nextProps, ['data', 'content']);
     if (prevContent !== nextContent) {
       this.formatData(nextContent);
     }
