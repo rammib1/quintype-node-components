@@ -161,7 +161,7 @@ class AccessTypeBase extends React.Component {
 
   runSequentialCalls = async (storyId = "") => {
     let jwtResponse = await fetch(`/api/v1/access-token/integrations/${this.props.accessTypeBkIntegrationId}`);
-    const user = await this.setUser(this.props.email, this.props.phone, jwtResponse.headers.get('x-integration-token'));
+    const user = jwtResponse.headers.get('x-integration-token') && await this.setUser(this.props.email, this.props.phone, jwtResponse.headers.get('x-integration-token'));
 
     if (user) {
       try {
