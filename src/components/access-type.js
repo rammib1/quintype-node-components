@@ -29,22 +29,20 @@ class AccessTypeBase extends React.Component {
     if (!enableAccesstype) {
       return false;
     }
-
-    if (accessTypeKey && !global.AccessType && global.document) {
+    const HOST = isStaging ? staging_Host : prod_Host;
+    const environment = isStaging ? "&env=sandbox" : "";
+    const accessTypeHost = `${HOST}/frontend/v2/accesstype.js?key=${accessTypeKey}${environment}`;
+    const isATScriptAlreadyPresent = document.querySelector(`script[src="${accessTypeHost}"]`);
+    if (accessTypeKey && !isATScriptAlreadyPresent && !global.AccessType && global.document) {
       const accessTypeScript = document.createElement("script");
-      const HOST = isStaging ? staging_Host : prod_Host;
-      const environment = isStaging ? "&env=sandbox" : "";
-
-      const accessTypeHost = `${HOST}/frontend/v2/accesstype.js?key=${accessTypeKey}${environment}`;
-
       accessTypeScript.setAttribute("src", accessTypeHost);
+      accessTypeScript.setAttribute("id", 'AccessTypeScript');
       accessTypeScript.setAttribute("data-accessType-script", "1");
       accessTypeScript.async = 1;
       accessTypeScript.onload = () => callback();
       document.body.appendChild(accessTypeScript);
       return true;
     }
-
     global.AccessType && callback();
     return true;
   };
@@ -406,7 +404,7 @@ class AccessTypeBase extends React.Component {
       console.warn("AssetId is required");
       return false;
     }
-
+    
     this.props.accessIsLoading(true);
 
     const asset = { id: assetId, type: "story" };
@@ -433,7 +431,7 @@ class AccessTypeBase extends React.Component {
 
   render() {
     const { children } = this.props;
-
+    
     return children({
       initAccessType: this.initAccessType,
       initRazorPayPayment: this.initRazorPayPayment,
