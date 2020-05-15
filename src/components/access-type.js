@@ -47,16 +47,21 @@ class AccessTypeBase extends React.Component {
     return true;
   };
 
-  setUser = async (emailAddress, mobileNumber, accesstypeJwt) => {
+  setUser = async (emailAddress, mobileNumber, accesstypeJwt, isLoggedIn = true) => {
     if (!global.AccessType) {
-      return {};
+      return null;
     }
-
+    
+    const userObj = isLoggedIn ? {
+      emailAddress: emailAddress,
+      mobileNumber: mobileNumber,
+      accesstypeJwt: accesstypeJwt
+    } : {
+      isLoggedIn: false
+    }
     const { error, data: user } = await awaitHelper(
       global.AccessType.setUser({
-        emailAddress: emailAddress,
-        mobileNumber: mobileNumber,
-        accesstypeJwt: accesstypeJwt,
+        isLoggedIn: false
       })
     );
     if (error) {
@@ -161,22 +166,22 @@ class AccessTypeBase extends React.Component {
     return [];
   };
 
-  runSequentialCalls = async (storyId = "") => {
+  runSequentialCalls = async (callback = () => null) => {
     let jwtResponse = await fetch(
       `/api/v1/access-token/integrations/${this.props.accessTypeBkIntegrationId}`
     );
-    const user = jwtResponse.headers.get('x-integration-token') && await this.setUser(
+    const user = await this.setUser(
       this.props.email,
       this.props.phone,
-      jwtResponse.headers.get("x-integration-token")
+      jwtResponse.headers.get("x-integration-token"),
+      !!jwtResponse.headers.get("x-integration-token")
     );
-
     if (user) {
       try {
         Promise.all([
           this.getSubscription(),
           this.getPaymentOptions(),
-          this.getAssetPlans(storyId),
+          this.getAssetPlans(),
           this.getCampaignSubscription(),
         ]).then(
           ([
@@ -193,11 +198,14 @@ class AccessTypeBase extends React.Component {
                 campaignSubscriptionGroups
               );
             });
+            callback();
           }
         );
       } catch (e) {
         console.log(`Subscription / payments failed`, e);
       }
+    } else {
+      callback();
     }
   };
 
@@ -215,9 +223,9 @@ class AccessTypeBase extends React.Component {
     return subscriptions;
   };
 
-  initAccessType = () => {
+  initAccessType = (callback) => {
     try {
-      this.loadScript(() => this.runSequentialCalls());
+      this.loadScript(() => this.runSequentialCalls(callback));
     } catch (e) {
       console.warn(`Accesstype load fail`, e);
     }
