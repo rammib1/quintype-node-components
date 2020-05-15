@@ -60,9 +60,7 @@ class AccessTypeBase extends React.Component {
       isLoggedIn: false
     }
     const { error, data: user } = await awaitHelper(
-      global.AccessType.setUser({
-        isLoggedIn: false
-      })
+      global.AccessType.setUser(userObj)
     );
     if (error) {
       console.warn(`User context setting failed --> `, error);
