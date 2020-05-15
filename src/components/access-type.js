@@ -51,7 +51,6 @@ class AccessTypeBase extends React.Component {
     if (!global.AccessType) {
       return null;
     }
-    
     const userObj = isLoggedIn ? {
       emailAddress: emailAddress,
       mobileNumber: mobileNumber,
@@ -168,13 +167,13 @@ class AccessTypeBase extends React.Component {
     let jwtResponse = await fetch(
       `/api/v1/access-token/integrations/${this.props.accessTypeBkIntegrationId}`
     );
-    const user = await this.setUser(
+    const { error } = await awaitHelper(this.setUser(
       this.props.email,
       this.props.phone,
       jwtResponse.headers.get("x-integration-token"),
       !!jwtResponse.headers.get("x-integration-token")
-    );
-    if (user) {
+    ));
+    if (!error) {
       try {
         Promise.all([
           this.getSubscription(),
