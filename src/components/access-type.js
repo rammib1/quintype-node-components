@@ -202,8 +202,6 @@ class AccessTypeBase extends React.Component {
       } catch (e) {
         console.log(`Subscription / payments failed`, e);
       }
-    } else {
-      callback();
     }
   };
 
