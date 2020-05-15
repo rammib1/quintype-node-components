@@ -1,4 +1,5 @@
 import React from 'react';
+import loadable from '@loadable/component'
 import { getAssociatedTemplate } from "../../utils";
 
 export function StoryNotImplemented() {
@@ -12,6 +13,17 @@ export function CollectionNotImplemented() {
 export function renderCollectionItem(collectionItem, index, collectionTemplates, storyTemplates, otherProps = {}) {
   switch (collectionItem.type) {
     case "collection":
+      if(otherProps.isLoadedDynamically) {
+        const Component = loadable(() => collectionTemplates(getAssociatedTemplate(collectionItem), index));
+        return React.createElement(Component, {
+          key: `${index}-${collectionItem.id}`,
+          index: index,
+          collection: collectionItem,
+          metadata: collectionItem["associated-metadata"] || {},
+          ...otherProps
+        });
+      }
+      
       return React.createElement(collectionTemplates(getAssociatedTemplate(collectionItem), index), {
         key: `${index}-${collectionItem.id}`,
         index: index,
