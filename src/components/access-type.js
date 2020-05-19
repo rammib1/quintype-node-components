@@ -29,37 +29,37 @@ class AccessTypeBase extends React.Component {
     if (!enableAccesstype) {
       return false;
     }
-
-    if (accessTypeKey && !global.AccessType && global.document) {
+    const HOST = isStaging ? staging_Host : prod_Host;
+    const environment = isStaging ? "&env=sandbox" : "";
+    const accessTypeHost = `${HOST}/frontend/v2/accesstype.js?key=${accessTypeKey}${environment}`;
+    const isATScriptAlreadyPresent = document.querySelector(`script[src="${accessTypeHost}"]`);
+    if (accessTypeKey && !isATScriptAlreadyPresent && !global.AccessType && global.document) {
       const accessTypeScript = document.createElement("script");
-      const HOST = isStaging ? staging_Host : prod_Host;
-      const environment = isStaging ? "&env=sandbox" : "";
-
-      const accessTypeHost = `${HOST}/frontend/v2/accesstype.js?key=${accessTypeKey}${environment}`;
-
       accessTypeScript.setAttribute("src", accessTypeHost);
+      accessTypeScript.setAttribute("id", 'AccessTypeScript');
       accessTypeScript.setAttribute("data-accessType-script", "1");
       accessTypeScript.async = 1;
       accessTypeScript.onload = () => callback();
       document.body.appendChild(accessTypeScript);
       return true;
     }
-
     global.AccessType && callback();
     return true;
   };
 
-  setUser = async (emailAddress, mobileNumber, accesstypeJwt) => {
+  setUser = async (emailAddress, mobileNumber, accesstypeJwt, isLoggedIn = true) => {
     if (!global.AccessType) {
-      return {};
+      return null;
     }
-
+    const userObj = isLoggedIn ? {
+      emailAddress: emailAddress,
+      mobileNumber: mobileNumber,
+      accesstypeJwt: accesstypeJwt
+    } : {
+      isLoggedIn: false
+    }
     const { error, data: user } = await awaitHelper(
-      global.AccessType.setUser({
-        emailAddress: emailAddress,
-        mobileNumber: mobileNumber,
-        accesstypeJwt: accesstypeJwt,
-      })
+      global.AccessType.setUser(userObj)
     );
     if (error) {
       console.warn(`User context setting failed --> `, error);
@@ -163,22 +163,22 @@ class AccessTypeBase extends React.Component {
     return [];
   };
 
-  runSequentialCalls = async (storyId = "") => {
+  runSequentialCalls = async (callback = () => null) => {
     let jwtResponse = await fetch(
       `/api/v1/access-token/integrations/${this.props.accessTypeBkIntegrationId}`
     );
-    const user = await this.setUser(
+    const { error } = await awaitHelper(this.setUser(
       this.props.email,
       this.props.phone,
-      jwtResponse.headers.get("x-integration-token")
-    );
-
-    if (user) {
+      jwtResponse.headers.get("x-integration-token"),
+      !!jwtResponse.headers.get("x-integration-token")
+    ));
+    if (!error) {
       try {
         Promise.all([
           this.getSubscription(),
           this.getPaymentOptions(),
-          this.getAssetPlans(storyId),
+          this.getAssetPlans(),
           this.getCampaignSubscription(),
         ]).then(
           ([
@@ -195,6 +195,7 @@ class AccessTypeBase extends React.Component {
                 campaignSubscriptionGroups
               );
             });
+            callback();
           }
         );
       } catch (e) {
@@ -217,9 +218,9 @@ class AccessTypeBase extends React.Component {
     return subscriptions;
   };
 
-  initAccessType = () => {
+  initAccessType = (callback) => {
     try {
-      this.loadScript(() => this.runSequentialCalls());
+      this.loadScript(() => this.runSequentialCalls(callback));
     } catch (e) {
       console.warn(`Accesstype load fail`, e);
     }
@@ -406,7 +407,7 @@ class AccessTypeBase extends React.Component {
       console.warn("AssetId is required");
       return false;
     }
-
+    
     this.props.accessIsLoading(true);
 
     const asset = { id: assetId, type: "story" };
@@ -433,7 +434,7 @@ class AccessTypeBase extends React.Component {
 
   render() {
     const { children } = this.props;
-
+    
     return children({
       initAccessType: this.initAccessType,
       initRazorPayPayment: this.initRazorPayPayment,
