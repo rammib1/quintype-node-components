@@ -9,10 +9,6 @@ class PolltypeBase extends React.Component {
     this.loadPolltypeJS();
   }
 
-  componentWillUnmount() {
-    global._polltypeAdded = false;
-  }
-
   loadPolltypeJS() {
     const source = this.props.polltypeHost.replace(/^https:|^http:/i, '') + '/embed.js';
     if (!global._polltypeAdded) {
@@ -26,7 +22,7 @@ class PolltypeBase extends React.Component {
 
   render() {
     return (
-      <div data-polltype-embed-id={this.props.id} />
+      <div id={this.props.id} data-polltype-embed-id={this.props.id} />
     );
   }
 }
