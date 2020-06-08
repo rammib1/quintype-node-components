@@ -53,8 +53,8 @@ export const computeAccess = (previousState, currentState) => {
   const currentAccess = get(currentState, ["access"], {});
   const currentStoryId = get(Object.keys(currentAccess), [0], "");
   if(currentStoryId in previousState){
-    const storyAccess = previousState[currentStoryId];
-    if(storyAccess.granted !== currentAccess[currentStoryId].granted || storyAccess.grantReason !== currentAccess[currentStoryId].grantReason){
+    const storyAccess = previousState[currentStoryId] || {};
+    if((storyAccess.granted !== currentAccess[currentStoryId] && currentAccess[currentStoryId].granted) || (storyAccess.grantReason !== currentAccess[currentStoryId] && currentAccess[currentStoryId].grantReason)){
       return {...previousState, ...currentAccess};
     }
     return previousState;

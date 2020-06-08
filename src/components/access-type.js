@@ -403,7 +403,7 @@ class AccessTypeBase extends React.Component {
   };
 
   checkAccess = async (assetId) => {
-    if (!assetId) {
+    if (!assetId || global.AccessType === undefined) {
       console.warn("AssetId is required");
       return false;
     }
