@@ -32,6 +32,7 @@ export * from './components/with-preview';
 export * from './components/social-logins/index';
 export * from './components/update-on-interval';
 export * from './components/access-type';
+export * from './components/accesstype-v2';
 export * from './components/adbutler-ad';
 export * from './components/with-host-url';
 export * from './components/with-lazy';
