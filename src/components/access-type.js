@@ -63,7 +63,7 @@ class AccessTypeBase extends React.Component {
     );
     if (error) {
       console.warn(`User context setting failed --> `, error);
-      return error;
+      return Promise.reject(error);
     }
     return user;
   };
