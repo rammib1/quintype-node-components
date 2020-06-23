@@ -220,9 +220,10 @@ class AccessTypeBase extends React.Component {
 
   initAccessType = (callback) => {
     try {
-      this.loadScript(() => this.runSequentialCalls(callback));
+      return Promise.resolve(this.loadScript(() => this.runSequentialCalls(callback)));
     } catch (e) {
       console.warn(`Accesstype load fail`, e);
+      return Promise.reject(e);
     }
   };
 
