@@ -66,8 +66,10 @@ export class WithSocialLogin extends React.Component {
 
 function createSession(provider, token, loginHandler) {
   const reqPath = loginHandler === "bridgekeeper" ? `/api/auth/v1/login/${provider}` : `/api/login/${provider}`;
+  const accessToken = loginHandler === "bridgekeeper" ? token["access-token"] : token;
+  
   return postRequest(reqPath, {
-    token,
+    token: accessToken,
     'set-session': true
   }).json(r => r);
 }
