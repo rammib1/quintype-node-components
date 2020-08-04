@@ -58,14 +58,15 @@ export class WithSocialLogin extends React.Component {
 
   render() {
     return this.props.children({
-      login: props => this.props.socialLogin.call(this, props).then(token => createSession(this.props.provider, token)),
+      login: props => this.props.socialLogin.call(this, props).then(token => createSession(this.props.provider, token, this.props.loginHandler)),
       serverSideLoginPath: this.props.sso ? this.serverSideSSOLoginPath : this.serverSideLoginPath
     });
   }
 }
 
-function createSession(provider, token) {
-  return postRequest(`/api/login/${provider}`, {
+function createSession(provider, token, loginHandler) {
+  const reqPath = loginHandler === "bridgekeeper" ? `/api/auth/v1/login/${provider}` : `/api/login/${provider}`;
+  return postRequest(reqPath, {
     token,
     'set-session': true
   }).json(r => r);
@@ -77,7 +78,8 @@ WithSocialLogin.propTypes = {
   children: PropTypes.func.isRequired,
   provider: PropTypes.string.isRequired,
   sso: PropTypes.bool,
-  redirectUrl: PropTypes.string
+  redirectUrl: PropTypes.string,
+  loginHandler: PropTypes.string,
 };
 
 WithSocialLogin.defaultProps = {
@@ -88,5 +90,5 @@ WithSocialLogin.defaultProps = {
     window.location = url;
     return Promise.reject('EXPECT_REDIRECT');
   },
-  sso: false
+  sso: false,
 }
