@@ -402,26 +402,30 @@ class AccessTypeBase extends React.Component {
   };
 
   pingBackMeteredStory = async (asset, accessData) => {
-    const stringData = JSON.stringify(accessData);
+    // const stringData = JSON.stringify(accessData);
 
-    if (global.navigator && global.navigator.sendBeacon) {
-      global.navigator.sendBeacon(
-        `/api/access/v2/stories/${asset.id}/pingback`,
-        stringData
-      );
-      return true;
+    // if (global.navigator && global.navigator.sendBeacon) {
+    //   global.navigator.sendBeacon(
+    //     `/api/access/v2/stories/${asset.id}/pingback`,
+    //     stringData
+    //   );
+    //   return true;
+    // }
+
+    // const meteredBody = {
+    //   method: 'POST',
+    //   headers: {
+    //     'Content-Type': 'text/plain',
+    //   },
+    //   body: stringData,
+    // };
+
+    try {
+      global.AccessType.pingbackAssetAccess(asset, accessData)
+    } catch (e) {
+      console.log("error in pingbackAssetAccess", e)
     }
 
-    const meteredBody = {
-      method: 'POST',
-      headers: {
-        'Content-Type': 'text/plain',
-      },
-      body: stringData,
-    };
-    const {data, error} = await awaitHelper(
-      global.AccessType.pingbackAssetAccess(asset, accessData)
-    );
     return true;
   };
 
