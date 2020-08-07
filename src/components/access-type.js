@@ -404,6 +404,14 @@ class AccessTypeBase extends React.Component {
   pingBackMeteredStory = async (asset, accessData) => {
     const stringData = JSON.stringify(accessData);
 
+    if (global.navigator && global.navigator.sendBeacon) {
+      global.navigator.sendBeacon(
+        `/api/access/v2/stories/${asset.id}/pingback`,
+        stringData
+      );
+      return true;
+    }
+
     const meteredBody = {
       method: 'POST',
       headers: {
@@ -411,23 +419,9 @@ class AccessTypeBase extends React.Component {
       },
       body: stringData,
     };
-    console.log('fooo1');
     const {data, error} = await awaitHelper(
       global.AccessType.pingbackAssetAccess(asset, accessData)
     );
-    console.log('fooo2');
-
-    if (global.navigator && global.navigator.sendBeacon) {
-      console.log('fooo3');
-      global.navigator.sendBeacon(
-        `/api/access/v1/stories/${asset.id}/pingback`,
-        stringData
-      );
-      return true;
-    }
-
-    console.log('fooo4');
-
     return true;
   };
 
