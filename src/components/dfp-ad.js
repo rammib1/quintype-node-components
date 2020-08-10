@@ -1,7 +1,8 @@
-import React from "react";
-import { AdSlot, DFPManager, DFPSlotsProvider } from "react-dfp";
-import { connect } from "react-redux";
-import { withError } from "./with-error";
+import React from 'react';
+import {AdSlot, DFPManager, DFPSlotsProvider} from 'react-dfp';
+import {connect} from 'react-redux';
+import {withError} from './with-error';
+import {async} from 'q';
 
 /**
  * This is a function which can be used to manage ad units in a single place. A component must be created, and used with the `adtype` parameter. These ads are lazy-loaded and single-request mode is disabled by default which can be overwritten as follows.
@@ -43,14 +44,14 @@ import { withError } from "./with-error";
  * @category Ads
  * @returns {Component} A component that can
  */
-export function createDfpAdComponent({
+export async function createDfpAdComponent({
   defaultNetworkID,
   config = {},
   slotId,
   targeting,
   collapseEmptyDivs = true,
   lazyLoad = true,
-  singleRequest = false
+  singleRequest = false,
 }) {
   return connect(
     (state, ownProps) => ({
@@ -60,7 +61,7 @@ export function createDfpAdComponent({
       slotId: slotId,
       collapseEmptyDivs: collapseEmptyDivs,
       lazyLoad: lazyLoad,
-      singleRequest: singleRequest
+      singleRequest: singleRequest,
     }),
     () => ({})
   )(withError(DfpAdBase));
@@ -74,11 +75,11 @@ function DfpAdBase({
   targetingArguments,
   adtype,
   lazyLoad,
-  singleRequest
+  singleRequest,
 }) {
   const adConfig = config[adtype] || {};
 
-  const adProps = { slotId, ...adConfig };
+  const adProps = {slotId, ...adConfig};
   return (
     <DFPSlotsProvider
       dfpNetworkId={defaultNetworkID}
