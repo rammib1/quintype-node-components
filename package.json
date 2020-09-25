@@ -1,6 +1,6 @@
 {
   "name": "@quintype/components",
-  "version": "2.22.8",
+  "version": "2.22.8-beta.0",
   "description": "Components to help build Quintype Node.js apps",
   "main": "dist/cjs/index.js",
   "module": "dist/es/index.js",
@@ -31,7 +31,7 @@
     "prop-types": "^15.7.2",
     "quintype-js": "^1.2.0",
     "react": "^16.8.6",
-    "react-dfp": "^0.17.1",
+    "react-dfp": "^0.19.0",
     "react-redux": "^7.0.3",
     "react-youtube": "^7.9.0",
     "redux": "^4.0.1",
@@ -79,7 +79,6 @@
     "clean:dist": "rimraf dist",
     "docs": "rimraf docs && jsdoc -c jsdoc.json",
     "prepack": "npm run build",
-    "prepublishOnly": "./bin-dev-scripts/standard-version-release.sh",
     "sync-files-to": "npx onchange --verbose --wait --await-write-finish 'src/**/*' -- ./bin-dev-scripts/sync-to.sh",
     "test": "jest --config jest.config.js"
   }
