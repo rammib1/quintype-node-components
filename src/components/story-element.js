@@ -95,17 +95,29 @@ function StoryElementImage({
   imageDefaultWidth,
   onClick = () => {},
 }) {
-  console.log('ResponsiveImage####1');
-  const foo = React.createElement(ResponsiveImage, {
-    slug: element['image-s3-key'],
-    metadata: element['metadata'],
-    aspectRatio: null,
-    defaultWidth: imageDefaultWidth || 640,
-    widths: imageWidths || [360, 640, 1200],
-    imgParams: {auto: ['format', 'compress']},
-    alt: element.title || story.headline,
-    onClick,
-  });
+  console.log('ResponsiveImage####2');
+
+  let foo = '';
+
+  if (typeof window === 'undefined') {
+    foo = React.createElement('img', {
+      src:
+        'http://images.prothomalo.com/prothomalo-bangla%2F2020-10%2Ff078e33f-8dc3-41c3-b22c-ebf7a09e6b81%2F11.jpg?w=700&auto=format%2Ccompress',
+      className: 'picture',
+    });
+  } else {
+    foo = React.createElement(ResponsiveImage, {
+      slug: element['image-s3-key'],
+      metadata: element['metadata'],
+      aspectRatio: null,
+      defaultWidth: imageDefaultWidth || 640,
+      widths: imageWidths || [360, 640, 1200],
+      imgParams: {auto: ['format', 'compress']},
+      alt: element.title || story.headline,
+      onClick,
+    });
+  }
+
   return React.createElement(
     'figure',
     {},
