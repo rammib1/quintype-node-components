@@ -95,20 +95,21 @@ function StoryElementImage({
   imageDefaultWidth,
   onClick = () => {},
 }) {
-  console.log('ResponsiveImage####', ResponsiveImage);
+  console.log('ResponsiveImage####1');
+  const foo = React.createElement(ResponsiveImage, {
+    slug: element['image-s3-key'],
+    metadata: element['metadata'],
+    aspectRatio: null,
+    defaultWidth: imageDefaultWidth || 640,
+    widths: imageWidths || [360, 640, 1200],
+    imgParams: {auto: ['format', 'compress']},
+    alt: element.title || story.headline,
+    onClick,
+  });
   return React.createElement(
     'figure',
     {},
-    React.createElement(ResponsiveImage, {
-      slug: element['image-s3-key'],
-      metadata: element['metadata'],
-      aspectRatio: null,
-      defaultWidth: imageDefaultWidth || 640,
-      widths: imageWidths || [360, 640, 1200],
-      imgParams: {auto: ['format', 'compress']},
-      alt: element.title || story.headline,
-      onClick,
-    }),
+    foo,
     React.createElement(
       'div',
       {className: 'story-element-caption-attribution-wrapper'},
