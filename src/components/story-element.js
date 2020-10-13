@@ -88,23 +88,40 @@ function StoryElementAlsoRead({element, story, alsoreadText = 'Also Read: '}) {
   );
 }
 
+const FallBackImage = () => {
+  return (
+    <svg
+      version="1.0"
+      xmlns="http://www.w3.org/2000/svg"
+      width="700"
+      height="400"
+      viewBox="0 0 82 54"
+      style={{background: '#e3e3e3'}}
+    ></svg>
+  );
+};
+
 function StoryElementImage({
   element,
   story = {},
   imageWidths,
   imageDefaultWidth,
   onClick = () => {},
+  fallBackImageUrl,
 }) {
-  let foo = '';
+  let imageElement = '';
 
   if (typeof window === 'undefined' || !element || !story) {
-    foo = React.createElement('img', {
-      src:
-        'https://images.prothomalo.qtstage.io/prothomalo-english%2F2020-10%2Fa2e5f7c5-76c3-4dd7-8558-4883ce57d3a0%2FScreenshot_2020_10_13_at_11_06_21_AM.png?w=500',
-      className: 'default-image',
-    });
+    if (fallBackImageUrl) {
+      imageElement = React.createElement('img', {
+        src: fallBackImageUrl,
+        className: 'default-image',
+      });
+    } else {
+      imageElement = React.createElement(FallBackImage);
+    }
   } else {
-    foo = React.createElement(ResponsiveImage, {
+    imageElement = React.createElement(ResponsiveImage, {
       slug: element['image-s3-key'],
       metadata: element['metadata'],
       aspectRatio: null,
@@ -119,7 +136,7 @@ function StoryElementImage({
   return React.createElement(
     'figure',
     {},
-    foo,
+    imageElement,
     React.createElement(
       'div',
       {className: 'story-element-caption-attribution-wrapper'},
