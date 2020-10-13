@@ -95,15 +95,13 @@ function StoryElementImage({
   imageDefaultWidth,
   onClick = () => {},
 }) {
-  console.log('ResponsiveImage####2');
-
   let foo = '';
 
-  if (typeof window === 'undefined') {
+  if (typeof window === 'undefined' || !element || !story) {
     foo = React.createElement('img', {
       src:
-        'http://images.prothomalo.com/prothomalo-bangla%2F2020-10%2Ff078e33f-8dc3-41c3-b22c-ebf7a09e6b81%2F11.jpg?w=700&auto=format%2Ccompress',
-      className: 'picture',
+        'https://images.prothomalo.qtstage.io/prothomalo-english%2F2020-10%2Fa2e5f7c5-76c3-4dd7-8558-4883ce57d3a0%2FScreenshot_2020_10_13_at_11_06_21_AM.png?w=500',
+      className: 'default-image',
     });
   } else {
     foo = React.createElement(ResponsiveImage, {
