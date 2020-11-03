@@ -95,18 +95,7 @@ export default class StoryElementYoutube extends React.Component {
   };
 
   render() {
-    if (
-      (this.state.showVideo || !this.props.loadIframeOnClick) &&
-      isLibraryLoaded()
-    ) {
-      return React.createElement(YouTube, {
-        videoId: getYouTubeID(this.props.element.url),
-        opts: this.opts,
-        onPlay: this.onPlayCallback,
-        onPause: this.onPauseCallback,
-        onEnd: this.onEndCallback,
-      });
-    } else if (!this.state.showVideo && this.props.loadIframeOnClick) {
+    if (!this.state.showVideo && this.props.loadIframeOnClick) {
       return (
         <div className="thumbnail-wrapper">
           <button
@@ -124,6 +113,17 @@ export default class StoryElementYoutube extends React.Component {
           />
         </div>
       );
+    } else if (
+      (this.state.showVideo || !this.props.loadIframeOnClick) &&
+      isLibraryLoaded()
+    ) {
+      return React.createElement(YouTube, {
+        videoId: getYouTubeID(this.props.element.url),
+        opts: this.opts,
+        onPlay: this.onPlayCallback,
+        onPause: this.onPauseCallback,
+        onEnd: this.onEndCallback,
+      });
     } else return <div></div>;
   }
 }
