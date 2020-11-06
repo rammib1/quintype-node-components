@@ -94,7 +94,7 @@ import { getQliticsSchema } from "../utils";
  * Example
  * ```javascript
  * import { StoryElement } from '@quintype/components';
- * function StoryCard(props){
+ * function StoryCard(props){ 
  *   return &lt;div>
  *     {props.card['story-elements'].map((element, index) => &lt;StoryElement element={element} key={index} story={props.story}>&lt;/StoryElement>)}
  *   &lt;/div>
@@ -103,6 +103,11 @@ import { getQliticsSchema } from "../utils";
  * For different quality images in Image Story Element, pass `imageWidths` and `imageDefaultWidth` as props
  * ```javascript
  * &lt;StoryElement story={story} element={element} imageWidths={[420,1040,1600]} imageDefaultWidth={1040}/>
+ * ```
+ * ```
+ * For rendering only the youtube thumbnail and generating the iframe on click, pass `loadIframeOnClick` as props
+ * ```javascript
+ * &lt;StoryElement story={story} element={element} loadIframeOnClick/>
  * ```
  *
  * FIXME: the templates property will allow you to pass in a custom template to override the story elements type.
