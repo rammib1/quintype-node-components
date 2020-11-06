@@ -2,6 +2,15 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+# [2.23.0](https://github.com/quintype/quintype-node-components/compare/v2.22.8...v2.23.0) (2020-11-06)
+
+
+### Features
+
+* add a toggle to load the youtube iframe on click of thumbnail ([#158](https://github.com/quintype/quintype-node-components/issues/158)) ([e869ddd](https://github.com/quintype/quintype-node-components/commit/e869ddd91735c7844795f97a5f639c9812f1d967))
+
+
+
 ## [2.22.8](https://github.com/quintype/quintype-node-components/compare/v2.22.7...v2.22.8) (2020-08-27)
 
 
