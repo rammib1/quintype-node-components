@@ -86,19 +86,21 @@ function StoryCard(props){
     {props.card['story-elements'].map((element, index) => &lt;StoryElement element={element} key={index} story={props.story}>&lt;/StoryElement>)}
   &lt;/div>
 }
-<div></div>
 </code></pre>
-<p>Image element customisation:</p>
+<pre>
+
+<b>Image element customisation:</b>
 <p>For different quality images in Image Story Element, pass <code>imageWidths</code> and <code>imageDefaultWidth</code> as props</p>
 <pre class="prettyprint source lang-javascript"><code>&lt;StoryElement story={story} element={element} imageWidths={[420,1040,1600]} imageDefaultWidth={1040}/>
-<div></div>
 </code></pre>
-<p>Youtube element customisation:</p>
+
+<b>Youtube element customisation:</b>
 <p>Instead of rendering the Youtube iframe along with its related JS on page load itself which can harm the page speed, pass <code>loadIframeOnClick</code> as a prop so that only the thumbnail of the video loads by default. On clicking on the thumbnail, the iframe will be loaded and the video will start playing.</p>
 <pre class="prettyprint source lang-javascript"><code>&lt;StoryElement story={story} element={element} loadIframeOnClick/>
 </code></pre>
-<div></div>
+
 <p>FIXME: the templates property will allow you to pass in a custom template to override the story elements type.</p></div>
+</pre>
         
     
 </header> 
