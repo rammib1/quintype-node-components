@@ -100,12 +100,14 @@ import { getQliticsSchema } from "../utils";
  *   &lt;/div>
  * }
  * ```
+ * Image element customisation:
  * For different quality images in Image Story Element, pass `imageWidths` and `imageDefaultWidth` as props
  * ```javascript
  * &lt;StoryElement story={story} element={element} imageWidths={[420,1040,1600]} imageDefaultWidth={1040}/>
  * ```
  * ```
- * For rendering only the youtube thumbnail and generating the iframe on click, pass `loadIframeOnClick` as props
+ * Youtube element customisation:
+ * Instead of rendering the Youtube iframe along with its related JS on page load itself which can harm the page speed, pass `loadIframeOnClick` as a prop so that only the thumbnail of the video loads by default. On clicking on the thumbnail, the iframe will be loaded and the video will start playing.
  * ```javascript
  * &lt;StoryElement story={story} element={element} loadIframeOnClick/>
  * ```
